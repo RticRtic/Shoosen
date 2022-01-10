@@ -10,22 +10,10 @@ import Firebase
 
 struct ContentView: View {
     
-    var db = Firestore.firestore()
-    
     var body: some View {
-        Button {
-            saveToFireBase()
-        } label: {
-            Text("Save")
-        }
-
+        Text("Sign in")
+       TapBar()
     }
-    
-    func saveToFireBase() {
-        db.collection("Name").addDocument(data: ["Name" : "Janne"])
-    }
-    
-    
 }
 
 struct ContentView_Previews: PreviewProvider {
