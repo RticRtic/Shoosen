@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		898F1F3D278C1FBA00955BBB /* Shoe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898F1F3C278C1FBA00955BBB /* Shoe.swift */; };
 		89DA1F422788741800AB247F /* ShoosenApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DA1F412788741800AB247F /* ShoosenApp.swift */; };
 		89DA1F442788741800AB247F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DA1F432788741800AB247F /* ContentView.swift */; };
 		89DA1F462788741900AB247F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 89DA1F452788741900AB247F /* Assets.xcassets */; };
@@ -45,6 +46,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		898F1F3C278C1FBA00955BBB /* Shoe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shoe.swift; sourceTree = "<group>"; };
 		89DA1F3E2788741800AB247F /* Shoosen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Shoosen.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		89DA1F412788741800AB247F /* ShoosenApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoosenApp.swift; sourceTree = "<group>"; };
 		89DA1F432788741800AB247F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -96,6 +98,7 @@
 		89DA1F352788741800AB247F = {
 			isa = PBXGroup;
 			children = (
+				898F1F3C278C1FBA00955BBB /* Shoe.swift */,
 				89DA1F6B2788748800AB247F /* GoogleService-Info.plist */,
 				89DA1F402788741800AB247F /* Shoosen */,
 				89DA1F512788741900AB247F /* ShoosenTests */,
@@ -296,6 +299,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				898F1F3D278C1FBA00955BBB /* Shoe.swift in Sources */,
 				89DA1F442788741800AB247F /* ContentView.swift in Sources */,
 				89DA1F422788741800AB247F /* ShoosenApp.swift in Sources */,
 			);
