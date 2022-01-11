@@ -21,9 +21,20 @@ struct CategoryView: View {
                     
                     ForEach(shoes) { shoe in
                         HStack {
-                            Text(shoe.brand)
+                            AsyncImage(url: URL(string: shoe.brandlogo)) { image in
+                                image
+                                    .resizable()
+                                    .scaledToFit()
+                                    
+                                
+                            } placeholder: {
+                                Image(systemName: "photo")
+                            }
+                            
+                            
+                            
                             Spacer()
-                            NavigationLink(destination: ShoeCard()) {
+                            NavigationLink(destination: ShoeCard(shoeInfo: shoe)) {
                                 
                             }
 
