@@ -14,42 +14,39 @@ struct CategoryView: View {
     @State var shoes = [Shoe]()
     
     var body: some View {
-        VStack {
-            
-            List {
+        NavigationView {
+            VStack {
                 
-                ForEach(shoes) { shoe in
-                    HStack {
-                        Text(shoe.brand)
-                        Spacer()
-                        
-                        
+                List {
+                    
+                    ForEach(shoes) { shoe in
+                        HStack {
+                            Text(shoe.brand)
+                            Spacer()
+                            NavigationLink(destination: ShoeCard()) {
+                                
+                            }
+
+                        }
                         
                     }
                     
+                    
                 }
                 
+                .onAppear() {
+                    listenToFireStore()
+                }
+                .padding(.vertical)
                 
             }
-            Button {
-                saveToFireBase()
-            } label: {
-                Text("Save")
-            }
-            .onAppear() {
-                listenToFireStore()
-            }
             .padding(.vertical)
-            
+            .navigationTitle("Categories")
         }
-        .padding(.vertical)
-        
+        .navigationViewStyle(.stack)
     }
     
-    func saveToFireBase() {
-        //db.collection("Shoes").addDocument(data: ["brand" : "adidas"])
-        
-    }
+    
     
     func listenToFireStore() {
         

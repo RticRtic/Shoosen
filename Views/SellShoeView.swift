@@ -6,10 +6,33 @@
 //
 
 import SwiftUI
+import Firebase
 
 struct SellShoeView: View {
+    
+    var shoeInfo: Shoe? = nil
+    
     var body: some View {
-        Text("Sell Shoes")
+        NavigationView {
+            
+            Button {
+                saveToFireBase()
+            } label: {
+                Text("Save")
+            }
+            
+            .navigationTitle("Sell Shoe/s")
+            
+        }
+        .navigationViewStyle(.stack)
+    }
+    
+    
+    
+    
+    func saveToFireBase() {
+        //db.collection("Shoes").addDocument(data: ["brand" : "adidas"])
+        
     }
 }
 
