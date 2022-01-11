@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		89247857278DC6FD00DB3239 /* ShoeCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89247856278DC6FD00DB3239 /* ShoeCard.swift */; };
 		898F1F3D278C1FBA00955BBB /* Shoe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898F1F3C278C1FBA00955BBB /* Shoe.swift */; };
 		898F1F3F278C39A100955BBB /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898F1F3E278C39A100955BBB /* HomeView.swift */; };
 		898F1F45278C611500955BBB /* TapBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898F1F44278C611500955BBB /* TapBar.swift */; };
@@ -52,6 +53,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		89247856278DC6FD00DB3239 /* ShoeCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoeCard.swift; sourceTree = "<group>"; };
 		898F1F3C278C1FBA00955BBB /* Shoe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shoe.swift; sourceTree = "<group>"; };
 		898F1F3E278C39A100955BBB /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		898F1F44278C611500955BBB /* TapBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapBar.swift; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 			children = (
 				898F1F3C278C1FBA00955BBB /* Shoe.swift */,
 				898F1F44278C611500955BBB /* TapBar.swift */,
+				89247856278DC6FD00DB3239 /* ShoeCard.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -124,6 +127,7 @@
 				898F1F46278C622400955BBB /* CategoryView.swift */,
 				898F1F48278C64BC00955BBB /* FavoritesView.swift */,
 				898F1F4C278C659300955BBB /* SellShoeView.swift */,
+				89DA1F432788741800AB247F /* ContentView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -155,7 +159,6 @@
 			isa = PBXGroup;
 			children = (
 				89DA1F412788741800AB247F /* ShoosenApp.swift */,
-				89DA1F432788741800AB247F /* ContentView.swift */,
 				89DA1F452788741900AB247F /* Assets.xcassets */,
 				89DA1F472788741900AB247F /* Preview Content */,
 			);
@@ -339,6 +342,7 @@
 				898F1F45278C611500955BBB /* TapBar.swift in Sources */,
 				898F1F4D278C659300955BBB /* SellShoeView.swift in Sources */,
 				898F1F4B278C651E00955BBB /* SearchView.swift in Sources */,
+				89247857278DC6FD00DB3239 /* ShoeCard.swift in Sources */,
 				898F1F49278C64BC00955BBB /* FavoritesView.swift in Sources */,
 				89DA1F442788741800AB247F /* ContentView.swift in Sources */,
 				89DA1F422788741800AB247F /* ShoosenApp.swift in Sources */,
