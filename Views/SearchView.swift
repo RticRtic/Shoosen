@@ -9,7 +9,10 @@ import SwiftUI
 
 struct SearchView: View {
     var body: some View {
-        Text("Search shoe")
+        NavigationView {
+            Text("Search shoe")
+                .navigationTitle("Search Shoe/s")
+        }
     }
 }
 
