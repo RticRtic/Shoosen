@@ -19,5 +19,9 @@ struct Shoe: Identifiable, Codable {
     let image: String
     let brandlogo: String
 
+    var showshoe: Bool
+
+
+
 }
 
