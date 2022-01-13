@@ -9,11 +9,12 @@ import SwiftUI
 import Firebase
 
 struct SellShoeView: View {
-    
-    var shoeInfo: Shoe? = nil
-    
     var body: some View {
         NavigationView {
+            
+            VStack {
+                Text("Sell shoe/s")
+            }
             
             Button {
                 saveToFireBase()

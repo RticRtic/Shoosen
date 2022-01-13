@@ -12,21 +12,29 @@ struct CategoryView: View {
     
     var db = Firestore.firestore()
     @State var shoes = [Shoe]()
+    //@State var brandLogos = [BrandLogo]()
     
     var body: some View {
         NavigationView {
             VStack {
-                
                 List {
-                    
                     ForEach(shoes) { shoe in
                         HStack {
-                            Text(shoe.brand)
-                            Spacer()
-                            NavigationLink(destination: ShoeCard()) {
-                                
+                            // Problem att logon visas fler gånger
+                            NavigationLink(destination: ShoeCard(shoeInfo: shoe)) {
+                                AsyncImage(url: URL(string: shoe.brandlogo)) { image in
+                                    image
+                                        .resizable()
+                                        .scaledToFit()
+                                        
+                                    
+                                } placeholder: {
+                                    Image(systemName: "photo")
+                                }
                             }
-
+                            
+                            
+                            
                         }
                         
                     }
@@ -41,7 +49,7 @@ struct CategoryView: View {
                 
             }
             .padding(.vertical)
-            .navigationTitle("Categories")
+            .navigationTitle("Brands")
         }
         .navigationViewStyle(.stack)
     }

@@ -16,6 +16,11 @@ struct Shoe: Identifiable, Codable {
     let shoetype: String
     let price: Int
     let size: Int
+    let image: String
+    let brandlogo: String
+    
+    
     
     
 }
+
