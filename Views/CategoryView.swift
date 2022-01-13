@@ -12,51 +12,47 @@ struct CategoryView: View {
     
     var db = Firestore.firestore()
     @State var shoes = [Shoe]()
+    //@State var brandLogos = [BrandLogo]()
     
     var body: some View {
         NavigationView {
             VStack {
-                
                 List {
-                    
                     ForEach(shoes) { shoe in
                         HStack {
-                            AsyncImage(url: URL(string: shoe.brandlogo)) { image in
-                                image
-                                    .resizable()
-                                    .scaledToFit()
-                                    
-                                
-                            } placeholder: {
-                                Image(systemName: "photo")
-                            }
-                            
-                            
-                            
-                            Spacer()
+                            // Problem att logon visas fler gånger
                             NavigationLink(destination: ShoeCard(shoeInfo: shoe)) {
+                                AsyncImage(url: URL(string: shoe.brandlogo)) { image in
+                                    image
+                                        .resizable()
+                                        .scaledToFit()
+                                    
+                                    
+                                } placeholder: {
+                                    Image(systemName: "photo")
+                                }
+                                
+                                
                                 
                             }
-
+                            
                         }
+                        
                         
                     }
                     
+                    .onAppear() {
+                        listenToFireStore()
+                    }
+                    .padding(.vertical)
                     
                 }
-                
-                .onAppear() {
-                    listenToFireStore()
-                }
                 .padding(.vertical)
-                
+                .navigationTitle("Brands")
             }
-            .padding(.vertical)
-            .navigationTitle("Categories")
+            .navigationViewStyle(.stack)
         }
-        .navigationViewStyle(.stack)
     }
-    
     
     
     func listenToFireStore() {

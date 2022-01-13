@@ -23,12 +23,30 @@
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
-			<integer>1</integer>
+			<integer>0</integer>
 		</dict>
 		<key>Shoosen.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>0</integer>
+			<integer>1</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>89DA1F3D2788741800AB247F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>89DA1F4D2788741900AB247F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>89DA1F572788741900AB247F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>

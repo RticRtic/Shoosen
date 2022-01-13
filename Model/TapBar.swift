@@ -16,7 +16,7 @@ struct TapBar: View {
                 }
             CategoryView()
                 .tabItem {
-                    Label("Categories", systemImage: "square.fill.text.grid.1x2")
+                    Label("Brands", systemImage: "square.fill.text.grid.1x2")
                 }
             FavoritesView()
                 .tabItem {
