@@ -26,34 +26,33 @@ struct CategoryView: View {
                                     image
                                         .resizable()
                                         .scaledToFit()
-                                        
+                                    
                                     
                                 } placeholder: {
                                     Image(systemName: "photo")
                                 }
+                                
+                                
+                                
                             }
-                            
-                            
                             
                         }
                         
+                        
                     }
                     
+                    .onAppear() {
+                        listenToFireStore()
+                    }
+                    .padding(.vertical)
                     
                 }
-                
-                .onAppear() {
-                    listenToFireStore()
-                }
                 .padding(.vertical)
-                
+                .navigationTitle("Brands")
             }
-            .padding(.vertical)
-            .navigationTitle("Brands")
+            .navigationViewStyle(.stack)
         }
-        .navigationViewStyle(.stack)
     }
-    
     
     
     func listenToFireStore() {
