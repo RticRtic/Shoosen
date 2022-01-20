@@ -16,21 +16,19 @@ struct SearchView: View {
     @State  var brandInput: String = ""
     @State var sizeInput : Int = 43
     @State var shoetypeInput : String = ""
-    @State var ifChanged : Bool = false
+    
+ 
     
    
     
     var body: some View {
+        NavigationView {
         VStack{
             HStack{
                 TextField(
                     "Search by brand",
                     text: $brandInput)
-                Button(action: {
-                    sortByBrand()
-                }, label: {
-                    Text("Search by brand")
-                })
+                Button(action: {sortByBrand()}, label: {Text("Search by brand")})
             }
             HStack{
             Group{
@@ -54,26 +52,36 @@ struct SearchView: View {
                     Text("Search by shoetype")
                 })
             }
-
-            
-            
             List {
-               
-                ForEach(shoes) { shoe in
+            ForEach(shoes) { shoe in
+                 
+                 HStack {
                     
-                   // if shoe.showshoe == true {
-                            Text(shoe.brand)
-                    
-                    //}
-                 }
-                }
+                if shoe.showshoe == true {
+                    // Not done in long ways
+                    NavigationLink(destination: ShoeCard()) {
                 
-            }.onAppear() {
-                listenToFireStore()
-                checkIfChanged()
+                AsyncImage(url: URL(string: shoe.brandlogo)) { image in
+                    image
+                        .resizable()
+                        .scaledToFit()
+                    
+                } placeholder: {
+                    Image(systemName: "photo")
+                }
+                    }
+            }
+            }
+        }
+            }
+    
+}.onAppear() {
+    listenToFireStore()
+                
                 
             }
-        
+    }
+                .navigationViewStyle(.stack)
         }
     
    
@@ -87,10 +95,12 @@ struct SearchView: View {
     
         if shoe.brand.hasPrefix(brandinputprefix) {
             shoe.showshoe = true
-            print("\(shoe.brand) = true")
+         
+            
+            print("\(shoe.brand) = \(shoe.showshoe)")
         }
     }
-        checkIfChanged()
+        
 }
     
     func sortBySize() {
@@ -99,10 +109,11 @@ struct SearchView: View {
            
             if sizeInput == shoe.size {
                 shoe.showshoe = true
-                print("\(shoe.brand) = true")
-                }
-         }
-    checkIfChanged()
+                print("\(shoe.brand) = \(shoe.showshoe)")
+                listenToFireStore()
+            }
+            }
+    
     }
 
     func sortByShoeType(){
@@ -113,23 +124,13 @@ struct SearchView: View {
         
             if shoe.shoetype.hasPrefix(shoetypeInputPrefix) {
                 shoe.showshoe = true
-                print("\(shoe.brand) = true")
+                print("\(shoe.brand) = \(shoe.showshoe)")
         }
     }
-        checkIfChanged()
+      
 }
     
-    func checkIfChanged() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-        for shoe in shoes {
-            if shoe.showshoe == true {
-                ifChanged = true
-            }
-            }
-        
-        }
-        
-    }
+   
     
         
     
