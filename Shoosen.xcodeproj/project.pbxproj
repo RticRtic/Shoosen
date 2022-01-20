@@ -36,6 +36,8 @@
 		89DA1F7D278874F200AB247F /* FirebaseInAppMessagingSwift-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 89DA1F7C278874F200AB247F /* FirebaseInAppMessagingSwift-Beta */; };
 		89DA1F7F278874F200AB247F /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 89DA1F7E278874F200AB247F /* FirebaseMessaging */; };
 		89DA1F81278874F200AB247F /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 89DA1F80278874F200AB247F /* FirebaseStorage */; };
+		DC0C160727981E6E00071879 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0C160627981E6E00071879 /* StorageManager.swift */; };
+		DC0C1609279826FE00071879 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0C1608279826FE00071879 /* ImagePickerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +80,8 @@
 		89DA1F5C2788741900AB247F /* ShoosenUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoosenUITests.swift; sourceTree = "<group>"; };
 		89DA1F5E2788741900AB247F /* ShoosenUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoosenUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		89DA1F6B2788748800AB247F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		DC0C160627981E6E00071879 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StorageManager.swift; path = Views/StorageManager.swift; sourceTree = SOURCE_ROOT; };
+		DC0C1608279826FE00071879 /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ImagePickerView.swift; path = Views/ImagePickerView.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +122,7 @@
 		898F1F40278C39AC00955BBB /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				DC0C160627981E6E00071879 /* StorageManager.swift */,
 				895DA2F7278F0DB300F353D3 /* SignIn.swift */,
 				89040591278EC80A00F1DA05 /* BrandLogo.swift */,
 				898F1F3C278C1FBA00955BBB /* Shoe.swift */,
@@ -130,6 +135,7 @@
 		898F1F43278C3F8600955BBB /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				DC0C1608279826FE00071879 /* ImagePickerView.swift */,
 				898F1F3E278C39A100955BBB /* HomeView.swift */,
 				898F1F4A278C651E00955BBB /* SearchView.swift */,
 				898F1F46278C622400955BBB /* CategoryView.swift */,
@@ -348,6 +354,8 @@
 				898F1F3D278C1FBA00955BBB /* Shoe.swift in Sources */,
 				895DA2F8278F0DB300F353D3 /* SignIn.swift in Sources */,
 				898F1F3F278C39A100955BBB /* HomeView.swift in Sources */,
+				DC0C160727981E6E00071879 /* StorageManager.swift in Sources */,
+				DC0C1609279826FE00071879 /* ImagePickerView.swift in Sources */,
 				898F1F47278C622400955BBB /* CategoryView.swift in Sources */,
 				895DA2F6278ED36300F353D3 /* ShoeView.swift in Sources */,
 				898F1F45278C611500955BBB /* TapBar.swift in Sources */,
@@ -521,6 +529,7 @@
 				DEVELOPMENT_TEAM = F34T79K87Z;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need the camera permission";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -550,6 +559,7 @@
 				DEVELOPMENT_TEAM = F34T79K87Z;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need the camera permission";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
