@@ -31,35 +31,36 @@ struct SellShoeView: View {
     
     var body: some View {
         NavigationView{
-            List{
+            
             VStack{
-                Spacer()
                 TextField("Wich brand is it?", text: $brandInput)
                 TextField("What type of shoe is it?", text: $shoetypeInput)
                 TextField("Wich size are they?", value: $sizeInput, formatter: NumberFormatter())
                 TextField("Wich color are they?", text: $colorInput)
                 TextField("Wich price?", value: $priceInput, formatter: NumberFormatter())
-                Button(action:{addToFireStore()}, label: {Text("Save")})
-                Spacer()
+            
+            
+               
+                
+               
                 
                 if selectedImage != nil {
                     Image(uiImage: selectedImage!)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: 300, height: 300)
-                        .onChange(of: selectedImage!, perform: { image in
-                            storageManager.upload(image: image)
-                           
-                        })
+                        .frame(width: 50, height: 50)
+                        
                 } else {
                     Image(systemName: "photo")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: 300, height: 300)
+                        .frame(width: 50, height: 50)
                     
                 }
+            
                 HStack{
-                Button("Camera"){
+                
+                    Button("Camera"){
                     self.sourceType = .camera
                     self.isImagePickerDisplay.toggle()
                 }.padding()
@@ -68,29 +69,44 @@ struct SellShoeView: View {
                     self.sourceType = .photoLibrary
                     self.isImagePickerDisplay.toggle()
                 }.padding()
+                    
+                   Button("Save"){
+                        addToFireStore()
+                    }.padding()
+                    Spacer()
                 }
             }
-            }
-            
+        }
                 
             
+            
+                
             .navigationBarTitle("Sell your shoe")
             .sheet(isPresented: self.$isImagePickerDisplay) {
                 ImagePickerView(selectedImage: self.$selectedImage, sourceType: self.sourceType)
             }
         }
-    }
+
+    
     func addToFireStore(){
         
-        let shoes = Shoe(id: "" , brand: brandInput.lowercased(), color: colorInput.lowercased(), shoetype: shoetypeInput.lowercased(), price: priceInput, size: sizeInput, image: "", brandlogo: "", showshoe: true)
-        
-        do {
-              let _ = try db.collection("Shoes").addDocument(from: shoes)
-            }
-            catch {
-              print(error)
+        if let selectedImage = selectedImage {
+            storageManager.upload(image: selectedImage){ url in
+                
+                let shoes = Shoe(id: "" , brand: brandInput.lowercased(), color: colorInput.lowercased(), shoetype: shoetypeInput.lowercased(), price: priceInput, size: sizeInput, image: url, brandlogo: "", showshoe: true)
+                
+                
+                do {
+                      let _ = try db.collection("Shoes").addDocument(from: shoes)
+                    }
+                    catch {
+                      print(error)
+                    }
+                }
             }
         }
+        
+        
         
 }
 

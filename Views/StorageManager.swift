@@ -13,11 +13,10 @@ public class StorageManager: ObservableObject{
     let storage = Storage.storage()
     
     
-    func upload(image : UIImage){
+    func upload(image : UIImage, completion :  @escaping (String) -> () ){
         
         let id = UUID()
-        
-        let storageRef = storage.reference().child("images/\(id).jpg")
+        let storageRef = storage.reference().child("Default Pictures/\(id).jpg")
         
         let reziedImage = image
         
@@ -33,6 +32,17 @@ public class StorageManager: ObservableObject{
                 }
                 if let metadata = metadata{
                     print("Metadata:", metadata)
+                    storageRef.downloadURL { url, error in
+                    
+                        if let url = url{
+                            completion(url.absoluteString)
+                            print("!!! ! ! !!!!! ! !", url.absoluteString)
+                            
+                            
+                            
+                            
+                        }
+                    }
                 }
             }
         }
