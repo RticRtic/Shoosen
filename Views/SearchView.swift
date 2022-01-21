@@ -59,17 +59,17 @@ struct SearchView: View {
                     
                 if shoe.showshoe == true {
                     // Not done in long ways
-                    NavigationLink(destination: ShoeCard()) {
-                
-                AsyncImage(url: URL(string: shoe.brandlogo)) { image in
-                    image
-                        .resizable()
-                        .scaledToFit()
-                    
-                } placeholder: {
-                    Image(systemName: "photo")
-                }
-                    }
+//                    NavigationLink(destination: ShoeCard()) {
+//                
+//                AsyncImage(url: URL(string: shoe.brandlogo)) { image in
+//                    image
+//                        .resizable()
+//                        .scaledToFit()
+//                    
+//                } placeholder: {
+//                    Image(systemName: "photo")
+//                }
+//                    }
             }
             }
         }
