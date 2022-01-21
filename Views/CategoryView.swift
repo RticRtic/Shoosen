@@ -15,10 +15,6 @@ struct CategoryView: View {
     var db = Firestore.firestore()
     @State var brandLogos = [BrandLogo]()
     
-    
-    
-    //@State var brandLogos = [BrandLogo]()
-    
     var body: some View {
         
         NavigationView {
@@ -36,13 +32,14 @@ struct CategoryView: View {
                                 } placeholder: {
                                     Image(systemName: "photo")
                                 }
+                                
                             }
                         }
                     }
                 }
                 .onAppear() {
                     listenToFireStore()
-                    //getMultiple()
+                    
                     
                 }
                 .padding(.vertical)
@@ -51,6 +48,7 @@ struct CategoryView: View {
             .navigationTitle("Brands")
         }
         .navigationViewStyle(.stack)
+       
         
     }
     

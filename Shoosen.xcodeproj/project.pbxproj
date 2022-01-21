@@ -115,14 +115,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8953B36127999C2800D898B9 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				898F1F44278C611500955BBB /* TapBar.swift */,
+				89247856278DC6FD00DB3239 /* ShoeCard.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 		898F1F40278C39AC00955BBB /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				895DA2F7278F0DB300F353D3 /* SignIn.swift */,
 				89040591278EC80A00F1DA05 /* BrandLogo.swift */,
 				898F1F3C278C1FBA00955BBB /* Shoe.swift */,
-				898F1F44278C611500955BBB /* TapBar.swift */,
-				89247856278DC6FD00DB3239 /* ShoeCard.swift */,
+				8953B36127999C2800D898B9 /* Components */,
 			);
 			path = Model;
 			sourceTree = "<group>";
