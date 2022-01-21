@@ -9,9 +9,11 @@ import Foundation
 import FirebaseFirestoreSwift
 
 
-struct BrandLogo: Identifiable {
+struct BrandLogo: Identifiable, Codable {
     
     @DocumentID var id: String?
-    let brandlogo: String
+    let brandname: String
+    let image: String
+    
     
 }
