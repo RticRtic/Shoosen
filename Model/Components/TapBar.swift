@@ -18,7 +18,7 @@ struct TapBar: View {
                 .tabItem {
                     Label("Brands", systemImage: "square.fill.text.grid.1x2")
                 }
-            FavoritesView()
+            FavoritesView(favoriteShoeImage: Shoe(id: "", brand: "", color: "", shoetype: "", price: 0, size: 0, image: "", brandlogo: "", showshoe: false))
                 .tabItem {
                     Label("Favorites", systemImage: "heart")
                 }

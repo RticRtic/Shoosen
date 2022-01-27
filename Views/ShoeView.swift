@@ -13,7 +13,13 @@ import Firebase
 struct ShoeView: View {
     
     var brandInfo: Shoe
+    @State var userCollection = [UserCollection]()
+    @State var isShowingFavoriteView = false
+    
     var db = Firestore.firestore()
+    var auth = Auth.auth()
+    
+    @StateObject var viewModel = ShoeModelView()
     
     var body: some View {
         NavigationView {
@@ -22,7 +28,10 @@ struct ShoeView: View {
                     AsyncImage(url: URL(string: brandInfo.image)) { image in
                         image
                             .resizable()
-                            .scaledToFit()
+                            .aspectRatio(contentMode: .fit)
+//                            .scaledToFit()
+//                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                        
                         
                     } placeholder: {
                         Image(systemName: "photo")
@@ -31,69 +40,117 @@ struct ShoeView: View {
                             .frame(width: 100, height: 100, alignment: .center)
                             .foregroundColor(.white.opacity(0.7))
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        
+                        
                     }
+                    
+                    
                     VStack(spacing: 30) {
-                        Text(brandInfo.brand.uppercased())
-                            .font(.largeTitle)
-                            .bold()
-                            .background()
-                            .cornerRadius(5)
-                            .shadow(color: .black, radius: 3, x: 3, y: 3)
-                            .multilineTextAlignment(.center)
-                            .shadow(color: .black, radius: 3, x: 3, y: 3)
+                        HStack {
+                            Text(brandInfo.brand.uppercased())
+                                .font(.largeTitle)
+                                .bold()
+                                .background()
+                                .cornerRadius(5)
+                                .shadow(color: .black, radius: 3, x: 3, y: 3)
+                                .multilineTextAlignment(.center)
+                                .shadow(color: .black, radius: 3, x: 3, y: 3)
+                            
+                            NavigationLink(destination: FavoritesView(favoriteShoeImage: brandInfo),isActive: $isShowingFavoriteView) {
+                                
+                                Button(action: {
+                                    viewModel.saveToFirestore(shoe: brandInfo)
+                                    print("Saving")
+                                    isShowingFavoriteView = true
+                                    
+                                }, label: {
+                                    VStack {
+                                        Text("Add to Favorite")
+                                            .foregroundColor(.black)
+                                            .bold()
+                                        Image(systemName: "heart.fill")
+                                            .foregroundColor(.red)
+                                            
+                                    }
+                                    
+                                        
+                                    
+                                })
+                                        .padding(.leading)
+                                
+                            }
+                        }
                         
-                        
-                        VStack(alignment: .leading, spacing: 30) {
+                        VStack(alignment: .leading) {
                             HStack {
                                 Text("Color: ")
                                     .font(.headline)
                                     .bold()
                                     .multilineTextAlignment(.center)
-                                    .cornerRadius(10)
+                                    .background(.white)
+                                    .cornerRadius(5)
                                     .shadow(color: .black, radius: 3, x: 3, y: 3)
+                                    .padding()
                                 
                                 Text(brandInfo.color.uppercased())
+                                    .font(.headline)
                                 
                             }
                             
-                            VStack(alignment: .leading, spacing: 30) {
+                            VStack(alignment: .leading) {
                                 HStack {
                                     Text("Shoetype: ")
                                         .font(.headline)
                                         .bold()
+                                        .background(.white)
+                                        .cornerRadius(5)
                                         .multilineTextAlignment(.center)
                                         .shadow(color: .black, radius: 3, x: 3, y: 3)
+                                        .padding()
+                                    
                                     
                                     Text(brandInfo.shoetype.uppercased())
+                                        .font(.headline)
                                 }
                                 
-                                VStack(alignment: .leading, spacing: 30) {
+                                VStack(alignment: .leading) {
                                     HStack {
                                         Text("Size:")
                                             .font(.headline)
                                             .bold()
+                                            .background(.white)
+                                            .cornerRadius(5)
                                             .multilineTextAlignment(.center)
                                             .shadow(color: .black, radius: 3, x: 3, y: 3)
+                                            .padding()
+                                        
                                         
                                         Text("\(brandInfo.size)")
+                                            .font(.headline)
                                     }
                                     
-                                    VStack(alignment: .leading, spacing: 30) {
+                                    VStack(alignment: .leading) {
                                         HStack {
                                             Text("Price:")
                                                 .font(.headline)
                                                 .bold()
+                                                .background(.white)
+                                                .cornerRadius(5)
                                                 .multilineTextAlignment(.center)
                                                 .shadow(color: .black, radius: 3, x: 3, y: 3)
+                                                .padding()
+                                            
                                             
                                             Text("\(brandInfo.price):-")
+                                                .font(.headline)
                                         }
                                     }
                                 }
                             }
+                            
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        
+                        Spacer()
                     }
                     Button(action: {
                         print("Contacting seller")
@@ -105,20 +162,35 @@ struct ShoeView: View {
                             .background(Color.gray)
                             .cornerRadius(15)
                             .shadow(color: .white, radius: 10, x: 3, y: 3)
-                            .padding(80)
+                            .padding(25)
                     })
                         .frame(maxHeight: .infinity, alignment: .bottom)
                 }
                 .background(.brown)
-                .cornerRadius(30)
+                //.cornerRadius(30)
+                
+                
             }
-            .ignoresSafeArea(.container, edges: .top)
             
+            .ignoresSafeArea(.container, edges: .top)
+        
         }
-        .padding(.horizontal)
+        .navigationViewStyle(.stack)
+  
+        
         
         
     }
+
+    
+    
+    //    func toggle(shoe: Shoe) {
+    //        if let id = brandInfo.id {
+    //            guard let uid = auth.currentUser?.uid else {return}
+    //            db.collection("Shoes").document(uid).collection(brandInfo.brand).document(id)
+    //            .updateData(["addtofavorite" : !brandInfo.addtofavorite ] )
+    //        }
+    //    }
     
     
     
