@@ -26,7 +26,9 @@ struct ContentView: View {
                             .background(.white)
                             .foregroundColor(.blue)
                             .padding()
-                    })
+                    }) 
+                    
+                    
                 }
                 
             } else {
