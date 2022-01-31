@@ -22,15 +22,16 @@ struct ShoeView: View {
     @StateObject var viewModel = ShoeModelView()
     
     var body: some View {
-        NavigationView {
             ScrollView {
                 VStack {
                     AsyncImage(url: URL(string: brandInfo.image)) { image in
                         image
                             .resizable()
-                            .aspectRatio(contentMode: .fit)
-//                            .scaledToFit()
-//                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                            .scaledToFit()
+                            .background(LinearGradient(gradient: Gradient(colors: [Color(.gray).opacity(0.3), Color(.gray)]), startPoint: .top, endPoint: .bottom))
+                        
+                            .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+                            .shadow(color: Color.black.opacity(0.3), radius: 15, x: 0, y: 10)
                         
                         
                     } placeholder: {
@@ -50,11 +51,10 @@ struct ShoeView: View {
                             Text(brandInfo.brand.uppercased())
                                 .font(.largeTitle)
                                 .bold()
-                                .background()
-                                .cornerRadius(5)
-                                .shadow(color: .black, radius: 3, x: 3, y: 3)
-                                .multilineTextAlignment(.center)
-                                .shadow(color: .black, radius: 3, x: 3, y: 3)
+                                .background(LinearGradient(gradient: Gradient(colors: [Color(.white).opacity(0.3), Color(.gray)]), startPoint: .top, endPoint: .bottom))
+                            
+                                .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                                .shadow(color: Color.black.opacity(0.3), radius: 15, x: 0, y: 10)
                             
                             NavigationLink(destination: FavoritesView(favoriteShoeImage: brandInfo),isActive: $isShowingFavoriteView) {
                                 
@@ -68,6 +68,7 @@ struct ShoeView: View {
                                         Text("Add to Favorite")
                                             .foregroundColor(.black)
                                             .bold()
+                                        
                                         Image(systemName: "heart.fill")
                                             .foregroundColor(.red)
                                             
@@ -86,10 +87,10 @@ struct ShoeView: View {
                                 Text("Color: ")
                                     .font(.headline)
                                     .bold()
-                                    .multilineTextAlignment(.center)
-                                    .background(.white)
-                                    .cornerRadius(5)
-                                    .shadow(color: .black, radius: 3, x: 3, y: 3)
+                                    .background(LinearGradient(gradient: Gradient(colors: [Color(.white).opacity(0.3), Color(.gray)]), startPoint: .top, endPoint: .bottom))
+                                
+                                    .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+                                    .shadow(color: Color.black.opacity(0.3), radius: 15, x: 0, y: 10)
                                     .padding()
                                 
                                 Text(brandInfo.color.uppercased())
@@ -102,10 +103,10 @@ struct ShoeView: View {
                                     Text("Shoetype: ")
                                         .font(.headline)
                                         .bold()
-                                        .background(.white)
-                                        .cornerRadius(5)
-                                        .multilineTextAlignment(.center)
-                                        .shadow(color: .black, radius: 3, x: 3, y: 3)
+                                        .background(LinearGradient(gradient: Gradient(colors: [Color(.white).opacity(0.3), Color(.gray)]), startPoint: .top, endPoint: .bottom))
+                                    
+                                        .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+                                        .shadow(color: Color.black.opacity(0.3), radius: 15, x: 0, y: 10)
                                         .padding()
                                     
                                     
@@ -118,10 +119,10 @@ struct ShoeView: View {
                                         Text("Size:")
                                             .font(.headline)
                                             .bold()
-                                            .background(.white)
-                                            .cornerRadius(5)
-                                            .multilineTextAlignment(.center)
-                                            .shadow(color: .black, radius: 3, x: 3, y: 3)
+                                            .background(LinearGradient(gradient: Gradient(colors: [Color(.white).opacity(0.3), Color(.gray)]), startPoint: .top, endPoint: .bottom))
+                                        
+                                            .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+                                            .shadow(color: Color.black.opacity(0.3), radius: 15, x: 0, y: 10)
                                             .padding()
                                         
                                         
@@ -134,15 +135,16 @@ struct ShoeView: View {
                                             Text("Price:")
                                                 .font(.headline)
                                                 .bold()
-                                                .background(.white)
-                                                .cornerRadius(5)
-                                                .multilineTextAlignment(.center)
-                                                .shadow(color: .black, radius: 3, x: 3, y: 3)
+                                                .background(LinearGradient(gradient: Gradient(colors: [Color(.white).opacity(0.3), Color(.gray)]), startPoint: .top, endPoint: .bottom))
+                                            
+                                                .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+                                                .shadow(color: Color.black.opacity(0.3), radius: 15, x: 0, y: 10)
                                                 .padding()
                                             
                                             
                                             Text("\(brandInfo.price):-")
                                                 .font(.headline)
+                                            
                                         }
                                     }
                                 }
@@ -164,21 +166,16 @@ struct ShoeView: View {
                             .shadow(color: .white, radius: 10, x: 3, y: 3)
                             .padding(25)
                     })
-                        .frame(maxHeight: .infinity, alignment: .bottom)
+                    
+                        
                 }
-                .background(.brown)
+                .background(.white)
                 //.cornerRadius(30)
                 
                 
             }
             
             .ignoresSafeArea(.container, edges: .top)
-        
-        }
-        .navigationViewStyle(.stack)
-  
-        
-        
         
     }
 

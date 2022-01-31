@@ -13,6 +13,7 @@
 		895C5F2E27A1574100DC8ABA /* UserCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895C5F2D27A1574100DC8ABA /* UserCollection.swift */; };
 		895DA2F6278ED36300F353D3 /* ShoeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895DA2F5278ED36300F353D3 /* ShoeView.swift */; };
 		895DA2F8278F0DB300F353D3 /* SignIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895DA2F7278F0DB300F353D3 /* SignIn.swift */; };
+		8967DF7027A41E9D00741D60 /* SignOut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8967DF6F27A41E9D00741D60 /* SignOut.swift */; };
 		898F1F3D278C1FBA00955BBB /* Shoe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898F1F3C278C1FBA00955BBB /* Shoe.swift */; };
 		898F1F3F278C39A100955BBB /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898F1F3E278C39A100955BBB /* HomeView.swift */; };
 		898F1F45278C611500955BBB /* TapBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898F1F44278C611500955BBB /* TapBar.swift */; };
@@ -66,6 +67,7 @@
 		895C5F2D27A1574100DC8ABA /* UserCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCollection.swift; sourceTree = "<group>"; };
 		895DA2F5278ED36300F353D3 /* ShoeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoeView.swift; sourceTree = "<group>"; };
 		895DA2F7278F0DB300F353D3 /* SignIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignIn.swift; sourceTree = "<group>"; };
+		8967DF6F27A41E9D00741D60 /* SignOut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignOut.swift; sourceTree = "<group>"; };
 		898F1F3C278C1FBA00955BBB /* Shoe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shoe.swift; sourceTree = "<group>"; };
 		898F1F3E278C39A100955BBB /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		898F1F44278C611500955BBB /* TapBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapBar.swift; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 			isa = PBXGroup;
 			children = (
 				DC0C1608279826FE00071879 /* ImagePickerView.swift */,
+				8967DF6F27A41E9D00741D60 /* SignOut.swift */,
 				898F1F3E278C39A100955BBB /* HomeView.swift */,
 				898F1F4A278C651E00955BBB /* SearchView.swift */,
 				898F1F46278C622400955BBB /* CategoryView.swift */,
@@ -374,6 +377,7 @@
 				898F1F47278C622400955BBB /* CategoryView.swift in Sources */,
 				895DA2F6278ED36300F353D3 /* ShoeView.swift in Sources */,
 				898F1F45278C611500955BBB /* TapBar.swift in Sources */,
+				8967DF7027A41E9D00741D60 /* SignOut.swift in Sources */,
 				898F1F4D278C659300955BBB /* SellShoeView.swift in Sources */,
 				8919CD9427A005D800BB1568 /* ShoeModelView.swift in Sources */,
 				898F1F4B278C651E00955BBB /* SearchView.swift in Sources */,

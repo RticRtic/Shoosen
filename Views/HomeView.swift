@@ -9,12 +9,16 @@ import SwiftUI
 import Firebase
 
 struct HomeView: View {
-    
-    
-    
     var body: some View {
-        Text("HomeView")
+
+            Text("HomeView")
+            
+                .navigationTitle("")
+                
+            
+       
         
+            
     }
 }
 
