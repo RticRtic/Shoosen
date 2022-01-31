@@ -27,12 +27,12 @@ struct CategoryView: View {
                                 AsyncImage(url: URL(string: logo.image)) { image in
                                     image
                                         .resizable()
+
                                         .scaledToFit()
 
                                 } placeholder: {
                                     Image(systemName: "photo")
                                 }
-                                
                             }
                         }
                     }
