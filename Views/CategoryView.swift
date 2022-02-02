@@ -21,7 +21,7 @@ struct CategoryView: View {
         VStack {
             List {
                 ForEach(brandLogos) { logo in
-                    NavigationLink(destination: ShoeCard(brandName: logo)) {
+                    NavigationLink(destination: ShoeBrandView(brandName: logo)) {
                         AsyncImage(url: URL(string: logo.image)) { image in
                             image
                                 .resizable()
@@ -49,7 +49,6 @@ struct CategoryView: View {
             
             
             
-            .navigationViewStyle(.stack)
         } 
         
         

@@ -12,9 +12,11 @@ import Firebase
 
 struct ShoeView: View {
     
-    var brandInfo: Shoe
+    var selectedShoe: Shoe
     @State var userCollection = [UserCollection]()
+    @State var showingOptions = false
     @State var isShowingFavoriteView = false
+    @Environment(\.dismiss) var dismiss
     
     var db = Firestore.firestore()
     var auth = Auth.auth()
@@ -22,69 +24,97 @@ struct ShoeView: View {
     @StateObject var viewModel = ShoeModelView()
     
     var body: some View {
-            ScrollView {
-                VStack {
-                    AsyncImage(url: URL(string: brandInfo.image)) { image in
-                        image
-                            .resizable()
-                            .scaledToFit()
-                            .background(LinearGradient(gradient: Gradient(colors: [Color(.gray).opacity(0.3), Color(.gray)]), startPoint: .top, endPoint: .bottom))
+        ScrollView {
+            VStack {
+                AsyncImage(url: URL(string: selectedShoe.image)) { image in
+                    image
+                        .resizable()
+                        .scaledToFit()
+                        .background(LinearGradient(gradient: Gradient(colors: [Color(.gray).opacity(0.3), Color(.gray)]), startPoint: .top, endPoint: .bottom))
+                    
+                        .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+                        .shadow(color: Color.black.opacity(0.3), radius: 15, x: 0, y: 10)
+                    
+                    
+                } placeholder: {
+                    Image(systemName: "photo")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 100, height: 100, alignment: .center)
+                        .foregroundColor(.white.opacity(0.7))
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    
+                    
+                }
+                
+                
+                VStack(spacing: 30) {
+                    HStack {
+                        Text(selectedShoe.brand.uppercased())
+                            .font(.largeTitle)
+                            .bold()
+                            .background(LinearGradient(gradient: Gradient(colors: [Color(.white).opacity(0.3), Color(.gray)]), startPoint: .top, endPoint: .bottom))
                         
-                            .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+                            .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
                             .shadow(color: Color.black.opacity(0.3), radius: 15, x: 0, y: 10)
                         
                         
-                    } placeholder: {
-                        Image(systemName: "photo")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 100, height: 100, alignment: .center)
-                            .foregroundColor(.white.opacity(0.7))
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        NavigationLink(destination: FavoritesView(), isActive: $isShowingFavoriteView) {
+                            Button(action: {
+                                // kolla att skon inte finns i Favorites
+                                viewModel.saveToFirestore(shoe: selectedShoe)
+                                print("Saving")
+                                showingOptions = true
+                                
+                                
+                            }, label: {
+                                VStack {
+                                    Text("Add to Favorite")
+                                        .foregroundColor(.black)
+                                        .bold()
+                                    
+                                    Image(systemName: "heart.fill")
+                                        .foregroundColor(.red)
+                                    
+                                }
+                                
+                                
+                                
+                            })
+                        }
+                        .padding(.leading)
+                        .actionSheet(isPresented: $showingOptions) {
+                            ActionSheet(title: Text("Added to favorites"), buttons: [
+                                .default(Text("Check out your favorites")) {
+                                    isShowingFavoriteView = true
+                                },
+                                .default(Text("Continue shopping")) {
+                                    dismiss()
+                                }])
+                        }
                         
                         
                     }
                     
-                    
-                    VStack(spacing: 30) {
+                    VStack(alignment: .leading) {
                         HStack {
-                            Text(brandInfo.brand.uppercased())
-                                .font(.largeTitle)
+                            Text("Color: ")
+                                .font(.headline)
                                 .bold()
                                 .background(LinearGradient(gradient: Gradient(colors: [Color(.white).opacity(0.3), Color(.gray)]), startPoint: .top, endPoint: .bottom))
                             
-                                .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                                .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
                                 .shadow(color: Color.black.opacity(0.3), radius: 15, x: 0, y: 10)
+                                .padding()
                             
-                            NavigationLink(destination: FavoritesView(favoriteShoeImage: brandInfo),isActive: $isShowingFavoriteView) {
-                                
-                                Button(action: {
-                                    viewModel.saveToFirestore(shoe: brandInfo)
-                                    print("Saving")
-                                    isShowingFavoriteView = true
-                                    
-                                }, label: {
-                                    VStack {
-                                        Text("Add to Favorite")
-                                            .foregroundColor(.black)
-                                            .bold()
-                                        
-                                        Image(systemName: "heart.fill")
-                                            .foregroundColor(.red)
-                                            
-                                    }
-                                    
-                                        
-                                    
-                                })
-                                        .padding(.leading)
-                                
-                            }
+                            Text(selectedShoe.color.uppercased())
+                                .font(.headline)
+                            
                         }
                         
                         VStack(alignment: .leading) {
                             HStack {
-                                Text("Color: ")
+                                Text("Shoetype: ")
                                     .font(.headline)
                                     .bold()
                                     .background(LinearGradient(gradient: Gradient(colors: [Color(.white).opacity(0.3), Color(.gray)]), startPoint: .top, endPoint: .bottom))
@@ -93,14 +123,14 @@ struct ShoeView: View {
                                     .shadow(color: Color.black.opacity(0.3), radius: 15, x: 0, y: 10)
                                     .padding()
                                 
-                                Text(brandInfo.color.uppercased())
-                                    .font(.headline)
                                 
+                                Text(selectedShoe.shoetype.uppercased())
+                                    .font(.headline)
                             }
                             
                             VStack(alignment: .leading) {
                                 HStack {
-                                    Text("Shoetype: ")
+                                    Text("Size:")
                                         .font(.headline)
                                         .bold()
                                         .background(LinearGradient(gradient: Gradient(colors: [Color(.white).opacity(0.3), Color(.gray)]), startPoint: .top, endPoint: .bottom))
@@ -110,13 +140,13 @@ struct ShoeView: View {
                                         .padding()
                                     
                                     
-                                    Text(brandInfo.shoetype.uppercased())
+                                    Text("\(selectedShoe.size)")
                                         .font(.headline)
                                 }
                                 
                                 VStack(alignment: .leading) {
                                     HStack {
-                                        Text("Size:")
+                                        Text("Price:")
                                             .font(.headline)
                                             .bold()
                                             .background(LinearGradient(gradient: Gradient(colors: [Color(.white).opacity(0.3), Color(.gray)]), startPoint: .top, endPoint: .bottom))
@@ -126,59 +156,43 @@ struct ShoeView: View {
                                             .padding()
                                         
                                         
-                                        Text("\(brandInfo.size)")
+                                        Text("\(selectedShoe.price):-")
                                             .font(.headline)
-                                    }
-                                    
-                                    VStack(alignment: .leading) {
-                                        HStack {
-                                            Text("Price:")
-                                                .font(.headline)
-                                                .bold()
-                                                .background(LinearGradient(gradient: Gradient(colors: [Color(.white).opacity(0.3), Color(.gray)]), startPoint: .top, endPoint: .bottom))
-                                            
-                                                .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-                                                .shadow(color: Color.black.opacity(0.3), radius: 15, x: 0, y: 10)
-                                                .padding()
-                                            
-                                            
-                                            Text("\(brandInfo.price):-")
-                                                .font(.headline)
-                                            
-                                        }
+                                        
                                     }
                                 }
                             }
-                            
                         }
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        Spacer()
-                    }
-                    Button(action: {
-                        print("Contacting seller")
-                    }, label: {
-                        Text("Buy!")
-                            .foregroundColor(.white)
-                            .bold()
-                            .frame(width: 200, height: 40)
-                            .background(Color.gray)
-                            .cornerRadius(15)
-                            .shadow(color: .white, radius: 10, x: 3, y: 3)
-                            .padding(25)
-                    })
-                    
                         
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    Spacer()
                 }
-                .background(.white)
-                //.cornerRadius(30)
+                Button(action: {
+                    print("Contacting seller")
+                }, label: {
+                    Text("Buy!")
+                        .foregroundColor(.white)
+                        .bold()
+                        .frame(width: 200, height: 40)
+                        .background(Color.gray)
+                        .cornerRadius(15)
+                        .shadow(color: .white, radius: 10, x: 3, y: 3)
+                        .padding(25)
+                })
                 
                 
             }
+            .background(.white)
+            //.cornerRadius(30)
             
-            .ignoresSafeArea(.container, edges: .top)
+            
+        }
+        
+        .ignoresSafeArea(.container, edges: .top)
         
     }
-
+    
     
     
     //    func toggle(shoe: Shoe) {
@@ -197,6 +211,6 @@ struct ShoeView: View {
 
 struct ShoeView_Previews: PreviewProvider {
     static var previews: some View {
-        ShoeView(brandInfo: Shoe(id: "", brand: "birkenstock", color: "green", shoetype: "sandal", price: 110, size: 41, image: "https://firebasestorage.googleapis.com/v0/b/shoosen-413a3.appspot.com/o/Default%20Pictures%2Fbirkenstock_green.jpeg?alt=media&token=fca4a817-8a74-4b50-9dda-285d89967616", brandlogo: "", showshoe: false))
+        ShoeView(selectedShoe: Shoe(id: "", brand: "birkenstock", color: "green", shoetype: "sandal", price: 110, size: 41, image: "https://firebasestorage.googleapis.com/v0/b/shoosen-413a3.appspot.com/o/Default%20Pictures%2Fbirkenstock_green.jpeg?alt=media&token=fca4a817-8a74-4b50-9dda-285d89967616", brandlogo: "", showshoe: false))
     }
 }
