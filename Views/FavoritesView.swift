@@ -44,6 +44,7 @@ struct FavoritesView: View {
                                     VStack(alignment: .trailing) {
                                         HStack {
                                             Button(action: {
+                                               // deleteShoe(shoe: shoe)
                                                 showingOptions = true
                                                 
                                             }, label: {
