@@ -18,6 +18,7 @@ struct CategoryView: View {
     
     var body: some View {
         
+
         VStack {
             List {
                 ForEach(brandLogos) { logo in
@@ -36,6 +37,7 @@ struct CategoryView: View {
                             
                         } placeholder: {
                             Image(systemName: "photo")
+
                         }
                         
                     }
