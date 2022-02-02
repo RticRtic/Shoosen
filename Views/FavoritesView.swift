@@ -8,21 +8,27 @@
 import SwiftUI
 import Firebase
 
+
 struct FavoritesView: View {
     
-    var favoriteShoeImage: Shoe
     @State var favorite = [Shoe]()
-    //@State var userCollection = [UserCollection]()
+    @State var showingOptions = false
+    @Environment(\.dismiss) var dismiss
+    
     
     var db = Firestore.firestore()
     var auth = Auth.auth()
+    let data = (1...100).map { "Shoe \($0)" }
+    let columns = [
+        GridItem(.adaptive(minimum: 150))
+    ]
     
     
     var body: some View {
         
         VStack {
             ScrollView {
-                HStack {
+                LazyVGrid(columns: columns, spacing: 20) {
                     ForEach(favorite) { shoe in
                         AsyncImage(url: URL(string: shoe.image)) {image in
                             image
@@ -36,11 +42,9 @@ struct FavoritesView: View {
                                 .padding()
                                 .overlay {
                                     VStack(alignment: .trailing) {
-                                        Spacer()
                                         HStack {
-                                            Spacer()
                                             Button(action: {
-                                                print("deleting")
+                                                showingOptions = true
                                                 
                                             }, label: {
                                                 Image(systemName: "trash.fill")
@@ -50,20 +54,30 @@ struct FavoritesView: View {
                                                     .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
                                                     .shadow(color: Color.black.opacity(0.3), radius: 15, x: 0, y: 10)
                                             }) .padding()
-                                        } .frame(width: 200, height: 200, alignment: .top)
+                                            
+                                                .actionSheet(isPresented: $showingOptions) {
+                                                    ActionSheet(title: Text("Delete shoe?"), buttons: [
+                                                        .default(Text("Yes")) {
+                                                            deleteShoe(shoe: shoe)
+                                                        },
+                                                        .default(Text("No")) {
+                                                            dismiss()
+                                                        }])
+                                                }
+                                        }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
                                     }
                                 }
-                            
                             
                         } placeholder: {
                             Image(systemName: "photo")
                         }
                         
-                        
-                        
                     }
+                    
                 }
+                
             }
+            
         } .onAppear {
             
             getMultiple()
@@ -72,6 +86,7 @@ struct FavoritesView: View {
         } .onDisappear {
             favorite.removeAll()
         }
+        
         
     }
     
@@ -86,7 +101,7 @@ struct FavoritesView: View {
                     print("Could not find document: \(err)")
                     //                    db.collection("UserCollection").document(uid).collection("favorites").addDocument(data: ["favorite" : shoe.id])
                 } else {
-                    favoritesId.removeAll()
+                    //favoritesId.removeAll()
                     for document in querySnapshot!.documents {
                         if let data = document.data() as? [String: String] {
                             if let id = data["favorite"] {
@@ -128,77 +143,50 @@ struct FavoritesView: View {
         
     }
     
-    //    func getMultiple() {
-    //        db.collection("Shoes").whereField("brand", isEqualTo: brandName.brandname)
-    //            .getDocuments() { (querySnapshot, err) in
-    //                if let err = err {
-    //                    print("Could not find document: \(err)")
-    //
-    //                } else {
-    //                    shoes.removeAll()
-    //                    for document in querySnapshot!.documents {
-    //                        let result = Result {
-    //                            try document.data(as: Shoe.self)
-    //                        }
-    //                        switch result {
-    //                        case .success(let shoe):
-    //                            if let shoe = shoe {
-    //                                shoes.append(shoe)
-    //                                print("SHOE: \(shoe)")
-    //                            } else {
-    //                                print("Error to get document")
-    //                            }
-    //                        case .failure(let error):
-    //                            print("Error \(error)")
-    //                        }
-    //                    }
-    //                }
-    //
-    //            }
-    //
-    //    }
+    
+    
+    func deleteShoe(shoe: Shoe) {
+        guard let uid = auth.currentUser?.uid else {return}
+        if let shoeId = shoe.id {
+            db.collection("UserCollection").document(uid).collection("favorites").document(shoeId).delete() { err in
+                if let err = err {
+                    print("Error removing document: \(err)")
+                } else {
+                    print("Document successfully removed!")
+                }
+            }
+            
+        }
+        
+    }
     
     
     
     
-    //    func listenToFireStore() {
-    //        guard let uid = auth.currentUser?.uid else {return}
-    //        db.collection("UserCollection").document(uid).collection("favorites").addSnapshotListener { snapshot, err in
-    //            guard let snapshot = snapshot else {return}
-    //
-    //            if let err = err {
-    //
-    //                print("Could not find document: \(err)")
-    //
-    //            } else {
-    //                userCollection.removeAll()
-    //                for document in snapshot.documents {
-    //                    let result = Result {
-    //                        try document.data(as: UserCollection.self)
-    //                    }
-    //                    switch result {
-    //                    case.success(let favoriteShoe):
-    //
-    //                        if let favoriteShoe = favoriteShoe {
-    //                            print("FAVORITE SHOEVIEW: \(favoriteShoe)")
-    //                            print("-----------------")
-    //                            print("USER: \(uid)")
-    //                            userCollection.append(favoriteShoe)
-    //
-    //                        } else {
-    //                            print("Document does not exist")
-    //                        }
-    //                    case.failure(let error):
-    //                        print("Error decoding Favorite: \(error)")
-    //                    }
-    //                }
-    //            }
-    //        }
-    //    }
+    
+    
 }
 
 struct FavoritesView_Previews: PreviewProvider {
     static var previews: some View {
-        FavoritesView(favoriteShoeImage: Shoe(id: "", brand: "", color: "", shoetype: "", price: 0, size: 0, image: "https://firebasestorage.googleapis.com/v0/b/shoosen-413a3.appspot.com/o/Default%20Pictures%2Fbirkenstock_green.jpeg?alt=media&token=fca4a817-8a74-4b50-9dda-285d89967616", brandlogo: "", showshoe: false))
+        FavoritesView()
     }
 }
+
+//struct SheetView: View {
+//    @Environment(\.dismiss) var dismiss
+//
+//    var body: some View {
+//        Button("The shoe is not anymore in your favorites") {
+//            dismiss()
+//        }
+//        .font(.largeTitle)
+//        .foregroundColor(.black)
+//        .background(LinearGradient(gradient: Gradient(colors: [Color(.white).opacity(0.3), Color(.gray)]), startPoint: .top, endPoint: .bottom))
+//
+//        .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+//        .shadow(color: Color.black.opacity(0.3), radius: 15, x: 0, y: 10)
+//        .padding()
+//    }
+//}
+
