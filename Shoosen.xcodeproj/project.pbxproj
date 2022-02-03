@@ -41,6 +41,13 @@
 		89DA1F81278874F200AB247F /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 89DA1F80278874F200AB247F /* FirebaseStorage */; };
 		DC0C160727981E6E00071879 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0C160627981E6E00071879 /* StorageManager.swift */; };
 		DC0C1609279826FE00071879 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0C1608279826FE00071879 /* ImagePickerView.swift */; };
+		DC0C161127A41F0F00071879 /* BrandsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0C161027A41F0F00071879 /* BrandsCache.swift */; };
+		DC0C161327A41F2600071879 /* BrandsFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0C161227A41F2600071879 /* BrandsFile.swift */; };
+		DC0C161527A41F3D00071879 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0C161427A41F3D00071879 /* Utils.swift */; };
+		DC0C161B27A4270B00071879 /* Autocomplete.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0C161A27A4270B00071879 /* Autocomplete.swift */; };
+		DC0C162227A4315A00071879 /* brands.txt in Resources */ = {isa = PBXBuildFile; fileRef = DC0C162127A4315A00071879 /* brands.txt */; };
+		DC0C162427A954C700071879 /* SellShoeSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0C162327A954C700071879 /* SellShoeSheetView.swift */; };
+		DC0C162627AABB7C00071879 /* SearchSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0C162527AABB7C00071879 /* SearchSheetView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +95,13 @@
 		89DA1F6B2788748800AB247F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DC0C160627981E6E00071879 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StorageManager.swift; path = Views/StorageManager.swift; sourceTree = SOURCE_ROOT; };
 		DC0C1608279826FE00071879 /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ImagePickerView.swift; path = Views/ImagePickerView.swift; sourceTree = SOURCE_ROOT; };
+		DC0C161027A41F0F00071879 /* BrandsCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandsCache.swift; sourceTree = "<group>"; };
+		DC0C161227A41F2600071879 /* BrandsFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandsFile.swift; sourceTree = "<group>"; };
+		DC0C161427A41F3D00071879 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		DC0C161A27A4270B00071879 /* Autocomplete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Autocomplete.swift; sourceTree = "<group>"; };
+		DC0C162127A4315A00071879 /* brands.txt */ = {isa = PBXFileReference; explicitFileType = text; fileEncoding = 4; path = brands.txt; sourceTree = "<group>"; };
+		DC0C162327A954C700071879 /* SellShoeSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SellShoeSheetView.swift; sourceTree = "<group>"; };
+		DC0C162527AABB7C00071879 /* SearchSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSheetView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,6 +150,7 @@
 		898F1F40278C39AC00955BBB /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				DC0C160F27A41EBD00071879 /* AutoCompletionSearchView */,
 				DC0C160627981E6E00071879 /* StorageManager.swift */,
 				895C5F2D27A1574100DC8ABA /* UserCollection.swift */,
 				895DA2F7278F0DB300F353D3 /* SignIn.swift */,
@@ -154,12 +169,15 @@
 				8967DF6F27A41E9D00741D60 /* SignOut.swift */,
 				898F1F3E278C39A100955BBB /* HomeView.swift */,
 				898F1F4A278C651E00955BBB /* SearchView.swift */,
+				DC0C162527AABB7C00071879 /* SearchSheetView.swift */,
 				898F1F46278C622400955BBB /* CategoryView.swift */,
 				898F1F48278C64BC00955BBB /* FavoritesView.swift */,
 				898F1F4C278C659300955BBB /* SellShoeView.swift */,
 				89DA1F432788741800AB247F /* ContentView.swift */,
 				895DA2F5278ED36300F353D3 /* ShoeView.swift */,
-				89247856278DC6FD00DB3239 /* ShoeBrandView.swift */,
+        DC0C162327A954C700071879 /* SellShoeSheetView.swift */,
+        89247856278DC6FD00DB3239 /* ShoeBrandView.swift */,
+
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -220,6 +238,18 @@
 				89DA1F5E2788741900AB247F /* ShoosenUITestsLaunchTests.swift */,
 			);
 			path = ShoosenUITests;
+			sourceTree = "<group>";
+		};
+		DC0C160F27A41EBD00071879 /* AutoCompletionSearchView */ = {
+			isa = PBXGroup;
+			children = (
+				DC0C161027A41F0F00071879 /* BrandsCache.swift */,
+				DC0C162127A4315A00071879 /* brands.txt */,
+				DC0C161227A41F2600071879 /* BrandsFile.swift */,
+				DC0C161427A41F3D00071879 /* Utils.swift */,
+				DC0C161A27A4270B00071879 /* Autocomplete.swift */,
+			);
+			path = AutoCompletionSearchView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -343,6 +373,7 @@
 			files = (
 				89DA1F492788741900AB247F /* Preview Assets.xcassets in Resources */,
 				89DA1F462788741900AB247F /* Assets.xcassets in Resources */,
+				DC0C162227A4315A00071879 /* brands.txt in Resources */,
 				89DA1F6C2788748800AB247F /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -368,19 +399,27 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+
+				DC0C161327A41F2600071879 /* BrandsFile.swift in Sources */,
 				895C5F2E27A1574100DC8ABA /* UserCollection.swift in Sources */,
 				898F1F3D278C1FBA00955BBB /* Shoe.swift in Sources */,
 				895DA2F8278F0DB300F353D3 /* SignIn.swift in Sources */,
+				DC0C162627AABB7C00071879 /* SearchSheetView.swift in Sources */,
 				898F1F3F278C39A100955BBB /* HomeView.swift in Sources */,
 				DC0C160727981E6E00071879 /* StorageManager.swift in Sources */,
 				DC0C1609279826FE00071879 /* ImagePickerView.swift in Sources */,
 				898F1F47278C622400955BBB /* CategoryView.swift in Sources */,
+				DC0C161B27A4270B00071879 /* Autocomplete.swift in Sources */,
 				895DA2F6278ED36300F353D3 /* ShoeView.swift in Sources */,
+				DC0C162427A954C700071879 /* SellShoeSheetView.swift in Sources */,
 				898F1F45278C611500955BBB /* TapBar.swift in Sources */,
 				8967DF7027A41E9D00741D60 /* SignOut.swift in Sources */,
 				898F1F4D278C659300955BBB /* SellShoeView.swift in Sources */,
 				8919CD9427A005D800BB1568 /* ShoeModelView.swift in Sources */,
 				898F1F4B278C651E00955BBB /* SearchView.swift in Sources */,
+				DC0C161527A41F3D00071879 /* Utils.swift in Sources */,
+				DC0C161127A41F0F00071879 /* BrandsCache.swift in Sources */,
+				89247857278DC6FD00DB3239 /* ShoeCard.swift in Sources */,
 				89247857278DC6FD00DB3239 /* ShoeBrandView.swift in Sources */,
 				898F1F49278C64BC00955BBB /* FavoritesView.swift in Sources */,
 				89DA1F442788741800AB247F /* ContentView.swift in Sources */,

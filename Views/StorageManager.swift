@@ -48,35 +48,6 @@ public class StorageManager: ObservableObject{
         }
     }
 
-    func listAllFiles(){
-        let storageRef = storage.reference().child("images")
-        
-        storageRef.listAll{ (result, error) in
-            if let error = error {
-                print("Error while listing all files", error)
-            }
-            for item in result.items {
-                print("Item in images folder", item)
-            }
-        }
-    }
- 
-    
-    func listItem(){
-        
-        let storageRef = storage.reference().child("images")
-        
-        let handler : (StorageListResult, Error?) -> Void = {(result, error) in
-            if let error = error{
-                print("error", error)
-            }
-            
-            let item = result.items
-            print("item: ", item )
-        }
-    
-        storageRef.list(maxResults: 1, completion: handler)
-    }
     
     func deleteItem(item: StorageReference){
         item.delete { error in
