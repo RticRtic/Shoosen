@@ -18,15 +18,6 @@ struct ContentView: View {
             if signIn.signedIn {
                 VStack {
                     TapBar()
-                    Button(action: {
-                        signIn.signOut()
-                    }, label: {
-                        Text("Sign out")
-                            .frame(width: 200, height: 50)
-                            .background(.white)
-                            .foregroundColor(.blue)
-                            .padding()
-                    })
                 }
                 
             } else {
@@ -34,7 +25,8 @@ struct ContentView: View {
             }
         } .onAppear {
             signIn.signedIn = signIn.isSignedIn
-        }
+        } 
+        .navigationViewStyle(.stack)
     }
     
     
@@ -87,7 +79,7 @@ struct ContentView: View {
                     
                     Spacer()
                 }
-                .navigationTitle("Sign In")
+                //.navigationTitle("Sign In")
             }
             
         }
