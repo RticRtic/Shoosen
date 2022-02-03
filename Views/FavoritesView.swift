@@ -67,23 +67,23 @@ struct FavoritesView: View {
                                                 }
                                         }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
                                         HStack {
-                                                Button(action: {
-                                                    // Skapa att man kommer tillbaka till den skons shoeView när man trycker på info
-                                                    
-                                                    if let shoeId = shoe.id {
-                                                        if favorite.contains(where: {$0.id == shoeId}) {
-                                                            isShowingShoe = true
-                                                            print(shoeId)
-                                                        }
+                                            Button(action: {
+                                                // Skapa att man kommer tillbaka till den skons shoeView när man trycker på info
+                                                
+                                                if let shoeId = shoe.id {
+                                                    if favorite.contains(where: {$0.id == shoeId}) {
+                                                        isShowingShoe = true
+                                                        print(shoeId)
                                                     }
-                                                    print("To ShoeView")
-                                                }, label: {
-                                                    Text("Info")
-                                                        .font(.headline)
-                                                        .foregroundColor(.black)
-                                                        .shadow(color: .black, radius: 3, x: 0, y: 0)
-                                                        .frame(maxWidth: 136)
-                                                }).padding()
+                                                }
+                                                print("To ShoeView")
+                                            }, label: {
+                                                Text("Info")
+                                                    .font(.headline)
+                                                    .foregroundColor(.black)
+                                                    .shadow(color: .black, radius: 3, x: 0, y: 0)
+                                                    .frame(maxWidth: 136)
+                                            }).padding()
                                         }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
                                     }
                                     

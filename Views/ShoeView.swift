@@ -13,7 +13,7 @@ import Firebase
 struct ShoeView: View {
     
     var selectedShoe: Shoe
-    @State var shoeId = [Shoe]()
+    // @State var shoeId = [Shoe]()
     @State var showingOptions = false
     @State var isShowingFavoriteView = false
     @Environment(\.dismiss) var dismiss
@@ -62,11 +62,11 @@ struct ShoeView: View {
                         NavigationLink(destination: FavoritesView(), isActive: $isShowingFavoriteView) {
                             Button(action: {
                                 // kolla att skon inte finns i Favorites
+                                compareShoeId(shoe: selectedShoe)
                                 
-                                
-                                viewModel.saveToFirestore(shoe: selectedShoe)
-                                print("Saving")
-                                showingOptions = true
+                                //                                viewModel.saveToFirestore(shoe: selectedShoe)
+                                //                                print("Saving")
+                                //                                showingOptions = true
                                 
                                 
                             }, label: {
@@ -191,73 +191,40 @@ struct ShoeView: View {
             
         }.onAppear{
             //print(selectedShoe.id!)
-            getMultiple()
+            // getMultiple()
         }
         
         .ignoresSafeArea(.container, edges: .top)
         
     }
     
-    func getMultiple() {
+    func compareShoeId(shoe: Shoe) {
         guard let uid = auth.currentUser?.uid else {return}
-        var favoritesId: [String] = []
-        
-        db.collection("UserCollection").document(uid).collection("favorites")
-            .getDocuments() { (querySnapshot, err) in
-                if let err = err {
-                    print("Could not find document: \(err)")
-                    //                    db.collection("UserCollection").document(uid).collection("favorites").addDocument(data: ["favorite" : shoe.id])
-                } else {
-                    //favoritesId.removeAll()
-                    for document in querySnapshot!.documents {
-                        if let data = document.data() as? [String: String] {
-                            if let id = data["favorite"] {
-                                favoritesId.append(id)
-                                print("favoritesID contains: \(id)")
-                            }
-                            
-                        }
-                        
-                    }
-                    
-                    
-                    
-                    for id in favoritesId {
-                        db.collection("Shoe").document(id).getDocument() {
-                            (document, err) in
-
-
-                            let result = Result {
-                                try document?.data(as: Shoe.self)
-                            }
-
-                            switch result {
-                            case .success(let shoe):
-                                if let shoe = shoe {
-                                    shoeId.append(shoe)
-                                    print("SHOE ID: \(shoe)")
-
-                                } else {
-                                    print("document does not exist")
-                                }
-                            case .failure(let error):
-                                print("ERROR: \(error)")
-                            }
-
-                        }
-                    }
-                    
-                }
-                
+        if let shoeId = shoe.id {
+            db.collection("UserCollection").document(uid).collection("favorites").document(shoeId)
+            print(shoeId)
+            
+            if shoeId == shoeId {
+                print("Shoe already exist")
+            } else {
+                viewModel.saveToFirestore(shoe: selectedShoe)
+                print("Saving")
+                showingOptions = true
             }
-        
+            
+        }
     }
     
     
     
     
     
-    }
+    
+    
+}
+
+
+
 
 struct ShoeView_Previews: PreviewProvider {
     static var previews: some View {
