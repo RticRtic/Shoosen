@@ -8,133 +8,111 @@
 import SwiftUI
 import Firebase
 
+
 struct SearchView: View {
     
     var db = Firestore.firestore()
    
     @State var shoes = [Shoe]()
     @State  var brandInput: String = ""
-    @State var sizeInput : Int = 43
+    @State var sizeInput : Int?
     @State var shoetypeInput : String = ""
+    @State var priceInput : Int?
+    @State var colorInput : String = ""
+    @ObservedObject private var autocomplete = AutocompleteObject()
     
- 
+    
+    
     
    
     
     var body: some View {
         NavigationView {
-        VStack{
-            HStack{
-                TextField(
-                    "Search by brand",
-                    text: $brandInput)
-                Button(action: {sortByBrand()}, label: {Text("Search by brand")})
+        List {
+            VStack {
+                TextField("Search by brand", text: $brandInput)
+                    .textFieldStyle(.roundedBorder)
+                    .padding()
+                    .onChange(of: brandInput) { newValue in
+                        autocomplete.autocomplete(brandInput)
+                    }
             }
-            HStack{
-            Group{
-            TextField(
-                "Search by size",
-                value: $sizeInput , formatter: NumberFormatter())
-                Button(action: {
-                    sortBySize()
-                }, label: {
-                    Text("Search by size")
-                })
+            List(autocomplete.suggestions, id: \.self) { suggestion in
+                ZStack {
+                    Text(suggestion)
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+                .onTapGesture {
+                    brandInput = suggestion
+                }
             }
-            }
-            HStack{
-                TextField(
-                    "Search by shoetype",
-                    text: $shoetypeInput)
-                Button(action: {
-                    sortByShoeType()
-                }, label: {
-                    Text("Search by shoetype")
-                })
-            }
-            List {
+    
+        Spacer()
+        
+            VStack {
+                TextField("Search by size", value: $sizeInput , formatter: NumberFormatter())
+            TextField("Search by price", value: $priceInput , formatter: NumberFormatter())
+                TextField("Search by shoetype",text: $shoetypeInput)
+                TextField("Search by color", text: $colorInput)
+           
+                
+                Button("Search"){
+                   
+                searchForShoe()
+                    
+                }
+            
             ForEach(shoes) { shoe in
                  
-                 HStack {
-                    
-                if shoe.showshoe == true {
-                    // Not done in long ways
-//                    NavigationLink(destination: ShoeCard()) {
-//                
-//                AsyncImage(url: URL(string: shoe.brandlogo)) { image in
-//                    image
-//                        .resizable()
-//                        .scaledToFit()
-//                    
-//                } placeholder: {
-//                    Image(systemName: "photo")
-//                }
-//                    }
-            }
-            }
+                Text(shoe.brand)
         }
-            }
-    
-}.onAppear() {
+        }
+        
+        .onAppear() {
     listenToFireStore()
-                
-                
-            }
-    }
-                .navigationViewStyle(.stack)
+           }
         }
+        .navigationViewStyle(.stack)
+        }
+    }
     
-   
     
+    func searchForShoe(){
+    
+        var query = db.collection("Shoes").whereField("showshoe", isEqualTo: false)
+        
+        
+        if brandInput != "" {
+            query = query.whereField("brand", isEqualTo: brandInput.lowercased())
+        }
+        if colorInput != "" {
+            query = query.whereField("color", isEqualTo: colorInput.lowercased())
+        }
+        if sizeInput != nil {
+            query = query.whereField("size", isEqualTo: sizeInput!)
+        }
+        if priceInput != nil {
+            query = query.whereField("price", isEqualTo: priceInput!)
+        }
+        if shoetypeInput != ""{
+            query = query.whereField("shoetype", isEqualTo: shoetypeInput.lowercased())
+        }
+        query.getDocuments() { (querySnapshot, err) in
+                            if let err = err {
+                                print("Error getting documents: \(err)")
+                            } else {
+                                for document in querySnapshot!.documents {
+                                    print("!!!! !!!! !!!!!", query)
+                                    print("SHOE!: \(document.documentID) => \(document.data())")
+                                    
+                        }
             
-        
-    func sortByBrand() {
-    let brandinputprefix = brandInput.lowercased().prefix(3)
-    
-    for var shoe in shoes {
-    
-        if shoe.brand.hasPrefix(brandinputprefix) {
-            shoe.showshoe = true
-         
-            
-            print("\(shoe.brand) = \(shoe.showshoe)")
-        }
-    }
-        
-}
-    
-    func sortBySize() {
-        
-        for var shoe in shoes {
-           
-            if sizeInput == shoe.size {
-                shoe.showshoe = true
-                print("\(shoe.brand) = \(shoe.showshoe)")
-                listenToFireStore()
+                    }
             }
-            }
-    
     }
-
-    func sortByShoeType(){
-        
-        let shoetypeInputPrefix = shoetypeInput.lowercased().prefix(3)
-        
-        for var shoe in shoes {
-        
-            if shoe.shoetype.hasPrefix(shoetypeInputPrefix) {
-                shoe.showshoe = true
-                print("\(shoe.brand) = \(shoe.showshoe)")
-        }
-    }
-      
-}
-    
-   
-    
         
     
-
+    
     func listenToFireStore() {
         
         db.collection("Shoes").addSnapshotListener { snapshot, err in
@@ -167,6 +145,9 @@ struct SearchView: View {
             }
         }
     }
+
+
+
 }
 
 struct SearchView_Previews: PreviewProvider {
@@ -174,3 +155,5 @@ struct SearchView_Previews: PreviewProvider {
         SearchView()
     }
 }
+
+

@@ -8,7 +8,7 @@
 import SwiftUI
 import Firebase
 
-struct ShoeBrandView: View {
+struct ShoeCard: View {
     
     var db = Firestore.firestore()
     
@@ -19,7 +19,7 @@ struct ShoeBrandView: View {
         VStack {
             List {
                 ForEach(shoes) { shoe in
-                    NavigationLink(destination: ShoeView(selectedShoe: shoe)) {
+                    NavigationLink(destination: ShoeView(brandInfo: shoe)) {
                         AsyncImage(url: URL(string: shoe.image)) { image in
                             image
                                 .resizable()
@@ -126,6 +126,6 @@ struct ShoeBrandView: View {
 
 struct ShoeCard_Previews: PreviewProvider {
     static var previews: some View {
-        ShoeBrandView(brandName: BrandLogo.init(id: "", brandname: "birkenstock", image: ""))
+        ShoeCard(brandName: BrandLogo.init(id: "", brandname: "birkenstock", image: ""))
     }
 }
