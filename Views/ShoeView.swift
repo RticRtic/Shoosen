@@ -13,7 +13,7 @@ import Firebase
 struct ShoeView: View {
     
     var selectedShoe: Shoe
-    @State var userCollection = [UserCollection]()
+    @State var shoeId = [Shoe]()
     @State var showingOptions = false
     @State var isShowingFavoriteView = false
     @Environment(\.dismiss) var dismiss
@@ -62,6 +62,8 @@ struct ShoeView: View {
                         NavigationLink(destination: FavoritesView(), isActive: $isShowingFavoriteView) {
                             Button(action: {
                                 // kolla att skon inte finns i Favorites
+                                
+                                
                                 viewModel.saveToFirestore(shoe: selectedShoe)
                                 print("Saving")
                                 showingOptions = true
@@ -187,27 +189,75 @@ struct ShoeView: View {
             //.cornerRadius(30)
             
             
+        }.onAppear{
+            //print(selectedShoe.id!)
+            getMultiple()
         }
         
         .ignoresSafeArea(.container, edges: .top)
         
     }
     
+    func getMultiple() {
+        guard let uid = auth.currentUser?.uid else {return}
+        var favoritesId: [String] = []
+        
+        db.collection("UserCollection").document(uid).collection("favorites")
+            .getDocuments() { (querySnapshot, err) in
+                if let err = err {
+                    print("Could not find document: \(err)")
+                    //                    db.collection("UserCollection").document(uid).collection("favorites").addDocument(data: ["favorite" : shoe.id])
+                } else {
+                    //favoritesId.removeAll()
+                    for document in querySnapshot!.documents {
+                        if let data = document.data() as? [String: String] {
+                            if let id = data["favorite"] {
+                                favoritesId.append(id)
+                                print("favoritesID contains: \(id)")
+                            }
+                            
+                        }
+                        
+                    }
+                    
+                    
+                    
+                    for id in favoritesId {
+                        db.collection("Shoe").document(id).getDocument() {
+                            (document, err) in
+
+
+                            let result = Result {
+                                try document?.data(as: Shoe.self)
+                            }
+
+                            switch result {
+                            case .success(let shoe):
+                                if let shoe = shoe {
+                                    shoeId.append(shoe)
+                                    print("SHOE ID: \(shoe)")
+
+                                } else {
+                                    print("document does not exist")
+                                }
+                            case .failure(let error):
+                                print("ERROR: \(error)")
+                            }
+
+                        }
+                    }
+                    
+                }
+                
+            }
+        
+    }
     
     
-    //    func toggle(shoe: Shoe) {
-    //        if let id = brandInfo.id {
-    //            guard let uid = auth.currentUser?.uid else {return}
-    //            db.collection("Shoes").document(uid).collection(brandInfo.brand).document(id)
-    //            .updateData(["addtofavorite" : !brandInfo.addtofavorite ] )
-    //        }
-    //    }
     
     
     
-    
-    
-}
+    }
 
 struct ShoeView_Previews: PreviewProvider {
     static var previews: some View {
