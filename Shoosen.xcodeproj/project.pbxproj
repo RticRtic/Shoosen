@@ -43,6 +43,8 @@
 		DC0C161527A41F3D00071879 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0C161427A41F3D00071879 /* Utils.swift */; };
 		DC0C161B27A4270B00071879 /* Autocomplete.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0C161A27A4270B00071879 /* Autocomplete.swift */; };
 		DC0C162227A4315A00071879 /* brands.txt in Resources */ = {isa = PBXBuildFile; fileRef = DC0C162127A4315A00071879 /* brands.txt */; };
+		DC0C162427A954C700071879 /* SellShoeSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0C162327A954C700071879 /* SellShoeSheetView.swift */; };
+		DC0C162627AABB7C00071879 /* SearchSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0C162527AABB7C00071879 /* SearchSheetView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,6 +94,8 @@
 		DC0C161427A41F3D00071879 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		DC0C161A27A4270B00071879 /* Autocomplete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Autocomplete.swift; sourceTree = "<group>"; };
 		DC0C162127A4315A00071879 /* brands.txt */ = {isa = PBXFileReference; explicitFileType = text; fileEncoding = 4; path = brands.txt; sourceTree = "<group>"; };
+		DC0C162327A954C700071879 /* SellShoeSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SellShoeSheetView.swift; sourceTree = "<group>"; };
+		DC0C162527AABB7C00071879 /* SearchSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSheetView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,11 +161,13 @@
 				DC0C1608279826FE00071879 /* ImagePickerView.swift */,
 				898F1F3E278C39A100955BBB /* HomeView.swift */,
 				898F1F4A278C651E00955BBB /* SearchView.swift */,
+				DC0C162527AABB7C00071879 /* SearchSheetView.swift */,
 				898F1F46278C622400955BBB /* CategoryView.swift */,
 				898F1F48278C64BC00955BBB /* FavoritesView.swift */,
 				898F1F4C278C659300955BBB /* SellShoeView.swift */,
 				89DA1F432788741800AB247F /* ContentView.swift */,
 				895DA2F5278ED36300F353D3 /* ShoeView.swift */,
+				DC0C162327A954C700071879 /* SellShoeSheetView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -386,12 +392,14 @@
 				DC0C161327A41F2600071879 /* BrandsFile.swift in Sources */,
 				898F1F3D278C1FBA00955BBB /* Shoe.swift in Sources */,
 				895DA2F8278F0DB300F353D3 /* SignIn.swift in Sources */,
+				DC0C162627AABB7C00071879 /* SearchSheetView.swift in Sources */,
 				898F1F3F278C39A100955BBB /* HomeView.swift in Sources */,
 				DC0C160727981E6E00071879 /* StorageManager.swift in Sources */,
 				DC0C1609279826FE00071879 /* ImagePickerView.swift in Sources */,
 				898F1F47278C622400955BBB /* CategoryView.swift in Sources */,
 				DC0C161B27A4270B00071879 /* Autocomplete.swift in Sources */,
 				895DA2F6278ED36300F353D3 /* ShoeView.swift in Sources */,
+				DC0C162427A954C700071879 /* SellShoeSheetView.swift in Sources */,
 				898F1F45278C611500955BBB /* TapBar.swift in Sources */,
 				898F1F4D278C659300955BBB /* SellShoeView.swift in Sources */,
 				898F1F4B278C651E00955BBB /* SearchView.swift in Sources */,
