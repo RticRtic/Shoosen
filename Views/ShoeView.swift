@@ -190,8 +190,7 @@ struct ShoeView: View {
             
             
         }.onAppear{
-            //print(selectedShoe.id!)
-            // getMultiple()
+            //compareShoeId(shoe: selectedShoe)
         }
         
         .ignoresSafeArea(.container, edges: .top)
@@ -206,8 +205,16 @@ struct ShoeView: View {
                     print("Error getting documents: \(err)")
                 } else {
                     for document in querySnapShot!.documents {
-                        viewModel.saveToFirestore(shoe: selectedShoe)
-                        print("\(document.documentID) => \(document.data())")
+                        //viewModel.saveToFirestore(shoe: selectedShoe)
+                        print("Shoe ID: \(document.documentID) => \(document.data()) exist in favorites")
+                        print("Tapped shoeID is: \(shoeId)")
+                        
+                        if document.documentID == shoeId {
+                            print("Not possible")
+                        } else {
+                            print("Ok")
+                            viewModel.saveToFirestore(shoe: selectedShoe)
+                        }
                      
                     }
                 }

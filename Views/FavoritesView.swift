@@ -120,7 +120,7 @@ struct FavoritesView: View {
             .getDocuments() { (querySnapshot, err) in
                 if let err = err {
                     print("Could not find document: \(err)")
-                    //                    db.collection("UserCollection").document(uid).collection("favorites").addDocument(data: ["favorite" : shoe.id])
+                    //db.collection("UserCollection").document(uid).collection("favorites").addDocument(data: ["favorite" : shoe.id])
                 } else {
                     //favoritesId.removeAll()
                     for document in querySnapshot!.documents {
