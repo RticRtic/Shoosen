@@ -70,7 +70,7 @@ struct ShoeView: View {
                                         .foregroundColor(.black)
                                         .bold()
                                     
-                                    Image(systemName: "heart.fill")
+                                    Image(systemName: "heart")
                                         .foregroundColor(.red)
                                     
                                 }

@@ -12,7 +12,7 @@ import Firebase
 struct FavoritesView: View {
     
     @State var favorite = [Shoe]()
-    @State var showingOptions = false
+    @State var isShowingDeleteOptions = false
     @State var isShowingShoe = false
     @Environment(\.dismiss) var dismiss
     
@@ -45,7 +45,8 @@ struct FavoritesView: View {
                                     VStack(alignment: .trailing) {
                                         HStack {
                                             Button(action: {
-                                                showingOptions = true
+                                                isShowingDeleteOptions = true
+                                                //deleteShoe(shoe: shoe)
                                                 
                                             }, label: {
                                                 Image(systemName: "trash.fill")
@@ -56,10 +57,24 @@ struct FavoritesView: View {
                                                     .shadow(color: Color.black.opacity(0.3), radius: 15, x: 0, y: 10)
                                             }) .padding()
                                             
-                                                .actionSheet(isPresented: $showingOptions) {
+                                                .actionSheet(isPresented: $isShowingDeleteOptions) {
                                                     ActionSheet(title: Text("Delete shoe?"), buttons: [
                                                         .default(Text("Yes")) {
-                                                            deleteShoe(shoe: shoe)
+                                                            var deleteShoeId = false
+                                                            
+                                                            for id in favorite {
+                                                                if id.id == shoe.id! {
+                                                                    print("ID ID ID: \(id)")
+                                                                    deleteShoeId = true
+                                                                    deleteShoe(shoe: shoe)
+                                                                    
+                                                                }
+                                                                if deleteShoeId {
+                                                                    //deleteShoe(shoe: shoe)
+                                                                }
+                                                            }
+                                                            //deleteShoe(shoe: shoe)
+                                                            
                                                         },
                                                         .default(Text("No")) {
                                                             dismiss()
@@ -68,9 +83,10 @@ struct FavoritesView: View {
                                         }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
                                         HStack {
                                             Button(action: {
-                                              
+                                                
                                                 isShowingShoe.toggle()
-                                                print("To ShoeView")
+                                                
+                                                
                                             }, label: {
                                                 Text("Info")
                                                     .font(.headline)
@@ -99,7 +115,7 @@ struct FavoritesView: View {
             
         } .onAppear {
             getMultiple()
-           
+            
             
         } .onDisappear {
             favorite.removeAll()
@@ -178,14 +194,14 @@ struct FavoritesView: View {
         
     }
     
-   
-    }
     
-    
-    
-    
-    
-    
+}
+
+
+
+
+
+
 
 
 struct FavoritesView_Previews: PreviewProvider {
