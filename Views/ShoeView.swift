@@ -13,7 +13,7 @@ import Firebase
 struct ShoeView: View {
     
     var selectedShoe: Shoe
-    // @State var shoeId = [Shoe]()
+    @State var iD = [Shoe]()
     @State var showingOptions = false
     @State var isShowingFavoriteView = false
     @Environment(\.dismiss) var dismiss
@@ -201,27 +201,40 @@ struct ShoeView: View {
     func compareShoeId(shoe: Shoe) {
         guard let uid = auth.currentUser?.uid else {return}
         if let shoeId = shoe.id {
-            db.collection("UserCollection").document(uid).collection("favorites").document(shoeId)
-            print(shoeId)
-            
-            if shoeId == shoeId {
-                print("Shoe already exist")
-            } else {
-                viewModel.saveToFirestore(shoe: selectedShoe)
-                print("Saving")
-                showingOptions = true
+            db.collection("UserCollection").document(uid).collection("favorites").getDocuments() {(querySnapShot, err) in
+                if let err = err {
+                    print("Error getting documents: \(err)")
+                } else {
+                    for document in querySnapShot!.documents {
+                        viewModel.saveToFirestore(shoe: selectedShoe)
+                        print("\(document.documentID) => \(document.data())")
+                     
+                    }
+                }
             }
-            
         }
+        
+        
     }
     
     
     
     
-    
-    
-    
 }
+
+
+
+//        db.collection("cities").getDocuments() { (querySnapshot, err) in
+//            if let err = err {
+//                print("Error getting documents: \(err)")
+//            } else {
+//                for document in querySnapshot!.documents {
+//                    print("\(document.documentID) => \(document.data())")
+//                }
+//            }
+//        }
+
+
 
 
 
