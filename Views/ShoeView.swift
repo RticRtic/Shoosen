@@ -63,10 +63,8 @@ struct ShoeView: View {
                             Button(action: {
                                 // kolla att skon inte finns i Favorites
                                 compareShoeId(shoe: selectedShoe)
-                                
-                                //                                viewModel.saveToFirestore(shoe: selectedShoe)
-                                //                                print("Saving")
-                                //                                showingOptions = true
+                                //viewModel.saveToFirestore(shoe: selectedShoe)
+                                //showingOptions = true
                                 
                                 
                             }, label: {
@@ -197,6 +195,8 @@ struct ShoeView: View {
         
     }
     
+    
+    
     func compareShoeId(shoe: Shoe) {
         guard let uid = auth.currentUser?.uid else {return}
         if let shoeId = shoe.id {
@@ -204,19 +204,25 @@ struct ShoeView: View {
                 if let err = err {
                     print("Error getting documents: \(err)")
                 } else {
+                    var alreadyExsit = false
                     for document in querySnapShot!.documents {
                         //viewModel.saveToFirestore(shoe: selectedShoe)
-                        print("Shoe ID: \(document.documentID) => \(document.data()) exist in favorites")
-                        print("Tapped shoeID is: \(shoeId)")
+                        //print("Shoe ID: \(document.documentID) => \(document.data()) exist in favorites, TAPPED SHOE IS \(shoeId)")
+                        
                         
                         if document.documentID == shoeId {
+                            alreadyExsit = true
                             print("Not possible")
-                        } else {
-                            print("Ok")
+                            
+//                        } else {
+//                            print("possible")
+//                            viewModel.saveToFirestore(shoe: selectedShoe)
+//                            showingOptions = true
+//                        }
+                    }
+                        if !alreadyExsit {
                             viewModel.saveToFirestore(shoe: selectedShoe)
                         }
-                     
-                    }
                 }
             }
         }
@@ -228,7 +234,7 @@ struct ShoeView: View {
     
     
 }
-
+}
 
 
 //        db.collection("cities").getDocuments() { (querySnapshot, err) in
