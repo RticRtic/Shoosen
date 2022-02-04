@@ -13,7 +13,6 @@ import Firebase
 struct ShoeView: View {
     
     var selectedShoe: Shoe
-    @State var iD = [Shoe]()
     @State var showingOptions = false
     @State var isShowingFavoriteView = false
     @State var showingAlert = false

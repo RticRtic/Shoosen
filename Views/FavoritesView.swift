@@ -68,14 +68,8 @@ struct FavoritesView: View {
                                         }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
                                         HStack {
                                             Button(action: {
-                                                // Skapa att man kommer tillbaka till den skons shoeView när man trycker på info
-                                                
-                                                if let shoeId = shoe.id {
-                                                    if favorite.contains(where: {$0.id == shoeId}) {
-                                                        isShowingShoe = true
-                                                        print(shoeId)
-                                                    }
-                                                }
+                                              
+                                                isShowingShoe.toggle()
                                                 print("To ShoeView")
                                             }, label: {
                                                 Text("Info")
@@ -84,6 +78,10 @@ struct FavoritesView: View {
                                                     .shadow(color: .black, radius: 3, x: 0, y: 0)
                                                     .frame(maxWidth: 136)
                                             }).padding()
+                                                .sheet(isPresented: $isShowingShoe) {
+                                                    ShoeView(selectedShoe: shoe)
+                                                    
+                                                }
                                         }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
                                     }
                                     
@@ -100,9 +98,8 @@ struct FavoritesView: View {
             }
             
         } .onAppear {
-            
             getMultiple()
-            
+           
             
         } .onDisappear {
             favorite.removeAll()
@@ -181,12 +178,15 @@ struct FavoritesView: View {
         
     }
     
+   
+    }
     
     
     
     
     
-}
+    
+
 
 struct FavoritesView_Previews: PreviewProvider {
     static var previews: some View {
