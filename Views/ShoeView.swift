@@ -16,6 +16,7 @@ struct ShoeView: View {
     @State var iD = [Shoe]()
     @State var showingOptions = false
     @State var isShowingFavoriteView = false
+    @State var showingAlert = false
     @Environment(\.dismiss) var dismiss
     
     var db = Firestore.firestore()
@@ -61,11 +62,8 @@ struct ShoeView: View {
                         
                         NavigationLink(destination: FavoritesView(), isActive: $isShowingFavoriteView) {
                             Button(action: {
-                                // kolla att skon inte finns i Favorites
-                                compareShoeId(shoe: selectedShoe)
-                                //viewModel.saveToFirestore(shoe: selectedShoe)
-                                //showingOptions = true
                                 
+                                compareShoeId(shoe: selectedShoe)
                                 
                             }, label: {
                                 VStack {
@@ -83,6 +81,7 @@ struct ShoeView: View {
                             })
                         }
                         .padding(.leading)
+                        
                         .actionSheet(isPresented: $showingOptions) {
                             ActionSheet(title: Text("Added to favorites"), buttons: [
                                 .default(Text("Check out your favorites")) {
@@ -92,6 +91,10 @@ struct ShoeView: View {
                                     dismiss()
                                 }])
                         }
+                        .alert(isPresented: $showingAlert) {
+                            Alert(title: Text("Ops.."), message: Text("Shoe already exist in favorites"), dismissButton: .default(Text("Got it!")))
+                        }
+                        
                         
                         
                     }
@@ -204,48 +207,44 @@ struct ShoeView: View {
                 if let err = err {
                     print("Error getting documents: \(err)")
                 } else {
-                    var alreadyExsit = false
+                    var alreadyExist = false
                     for document in querySnapShot!.documents {
-                        //viewModel.saveToFirestore(shoe: selectedShoe)
-                        //print("Shoe ID: \(document.documentID) => \(document.data()) exist in favorites, TAPPED SHOE IS \(shoeId)")
-                        
-                        
+                       
                         if document.documentID == shoeId {
-                            alreadyExsit = true
-                            print("Not possible")
+                            alreadyExist = true
+                            showingAlert = true
+                            print("not possible")
                             
-//                        } else {
-//                            print("possible")
-//                            viewModel.saveToFirestore(shoe: selectedShoe)
-//                            showingOptions = true
-//                        }
-                    }
-                        if !alreadyExsit {
-                            viewModel.saveToFirestore(shoe: selectedShoe)
                         }
+                        
+                        if !alreadyExist {
+                            viewModel.saveToFirestore(shoe: selectedShoe)
+                            showingOptions = true
+                        }
+                    }
                 }
             }
+            
+            
         }
         
         
+        
+        
     }
-    
-    
-    
-    
-}
-}
-
-
-//        db.collection("cities").getDocuments() { (querySnapshot, err) in
-//            if let err = err {
-//                print("Error getting documents: \(err)")
-//            } else {
-//                for document in querySnapshot!.documents {
-//                    print("\(document.documentID) => \(document.data())")
-//                }
-//            }
+//    func showAlert() {
+//        @State var showingAlert = false
+//        Button("") {
+//            showingAlert = true
 //        }
+//        .alert(isPresented: $showingAlert) {
+//            Alert(title: Text("Ops.."), message: Text("The shoe already exsist in your favorites"), dismissButton: .default(Text("Got it!")))
+//        }
+//    }
+}
+
+
+
 
 
 
