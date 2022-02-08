@@ -28,6 +28,7 @@ struct SearchView: View {
     
     
     
+    
     var body: some View {
         NavigationView {
             TabView(selection: $tabSelection) {
@@ -48,8 +49,8 @@ struct SearchView: View {
                         .onTapGesture {
                             brandInput = suggestion
                             self.tabSelection = 2
-                                
-                                
+                            
+                            
                         }
                     }
                 }
@@ -58,7 +59,7 @@ struct SearchView: View {
                 
                 
                 VStack {
-                  
+                    
                     Text("Get more specific")
                         .font(.system(size: 32, weight: .light))
                         .padding()
@@ -66,9 +67,13 @@ struct SearchView: View {
                     TextField("Search by size", value: $sizeInput , formatter: NumberFormatter())
                         .textFieldStyle(.roundedBorder)
                         .padding()
-                    TextField("Search by price", value: $priceInput , formatter: NumberFormatter())
+                    
+                    
+                    Text("Search by price")
+                    TextField("Max price", value: $priceInput , formatter: NumberFormatter())
                         .textFieldStyle(.roundedBorder)
                         .padding()
+                    
                     TextField("Search by shoetype",text: $shoetypeInput)
                         .textFieldStyle(.roundedBorder)
                         .padding()
@@ -78,7 +83,7 @@ struct SearchView: View {
                     
                     
                     Button("Search"){
-                        showSheet = true
+                        
                         searchForShoe()
                         
                     }
@@ -87,22 +92,24 @@ struct SearchView: View {
                 }
                 .tag(2)
                 
-                .onAppear() {
-                    listenToFireStore()
-                }
+                
             }
             .tabViewStyle(.page)
             .indexViewStyle(.page(backgroundDisplayMode: .always))
         }
         .navigationViewStyle(.stack)
         .sheet(isPresented: $showSheet, content: {
-           SearchSheetView()
-        
+            SearchSheetView(shoes: shoes)
+               
         } )
     }
     
     
+    
+    
     func searchForShoe(){
+        
+        shoes.removeAll()
         
         var query = db.collection("Shoes").whereField("showshoe", isEqualTo: false)
         
@@ -116,8 +123,10 @@ struct SearchView: View {
         if sizeInput != nil {
             query = query.whereField("size", isEqualTo: sizeInput!)
         }
+        
         if priceInput != nil {
-            query = query.whereField("price", isEqualTo: priceInput!)
+            print("PRICEINPUT ::: \(priceInput) CHECKED")
+            query = query.whereField("price", isLessThanOrEqualTo: priceInput!)
         }
         if shoetypeInput != ""{
             query = query.whereField("shoetype", isEqualTo: shoetypeInput.lowercased())
@@ -127,12 +136,25 @@ struct SearchView: View {
                 print("Error getting documents: \(err)")
             } else {
                 for document in querySnapshot!.documents {
-                    print("!!!! !!!! !!!!!", query)
-                
-                    print("SHOE!: \(document.documentID) => \(document.data())")
+                    
+                    let result = Result {
+                        try document.data(as: Shoe.self)
+                    }
+                    switch result {
+                    case .success(let shoe):
+                        if let shoe = shoe {
+                            shoes.append(shoe)
+                            print("SHOE: \(shoe)")
+                        } else {
+                            print("Error to get document")
+                        }
+                    case .failure(let error):
+                        print("Error \(error)")
+                    }
                     
                 }
-                
+                print("!!! number of shoes: \(shoes.count)")
+                showSheet = true
             }
         }
     }
