@@ -275,6 +275,7 @@ struct ShoeView: View {
                         }
                         
                         if !alreadyExist {
+                            // lös
                             viewModel.saveToFirestore(shoe: selectedShoe)
                             showingOptions = true
 //                            toggle(favorite: selectedShoe)
