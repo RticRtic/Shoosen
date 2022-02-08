@@ -198,37 +198,7 @@ struct FavoritesView: View {
         }
         
     }
-    //    func compareShoeId(shoe: Shoe) {
-    //        guard let uid = auth.currentUser?.uid else {return}
-    //        if let shoeId = shoe.id {
-    //            db.collection("UserCollection").document(uid).collection("favorites").getDocuments() {(querySnapShot, err) in
-    //                if let err = err {
-    //                    print("Error getting documents: \(err)")
-    //                } else {
-    //                    var IfEqualId = false
-    //                    for document in querySnapShot!.documents {
-    //
-    //                        if document.documentID == shoeId {
-    //                            IfEqualId = true
-    //                            deleteShoe(shoe: shoe)
-    //                            print("Deleted shoe: \(document.documentID)")
-    //
-    //                        }
-    //
-    //                        if !IfEqualId {
-    //                            dismiss()
-    //                        }
-    //                    }
-    //                }
-    //            }
-    //
-    //
-    //        }
-    //
-    //
-    //
-    //
-    //    }
+    
     
     
 }

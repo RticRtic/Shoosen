@@ -214,6 +214,7 @@ struct ShoeView: View {
         }.onAppear{
             toggle(favorite: selectedShoe)
             
+            
         }
         
         .ignoresSafeArea(.container, edges: .top)
