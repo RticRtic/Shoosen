@@ -58,7 +58,7 @@ struct CategoryView: View {
         
         
         
-        
+    
     }
     
     func listenToFireStore() {

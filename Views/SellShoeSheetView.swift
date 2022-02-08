@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import Firebase
+import FirebaseAuth
 
 
 struct SellShoeSheetView : View {
@@ -18,6 +19,7 @@ struct SellShoeSheetView : View {
     @State private var selectedImage: UIImage?
     @State private var isImagePickerDisplay = false
     var db = Firestore.firestore()
+    var auth = Auth.auth()
     @ObservedObject private var autocomplete = AutocompleteObject()
     
     
@@ -209,6 +211,16 @@ struct SellShoeSheetView : View {
                             .buttonStyle(.bordered)
                             .foregroundColor(.black)
                             
+                            Button(self.multiButton) {
+                                colorInput = "multi"
+                                multiButton = "X"
+                                
+                            }
+                            .buttonStyle(.bordered)
+                            .foregroundColor(.black)
+                            .background(LinearGradient(gradient: Gradient(colors: [Color(.yellow).opacity(0.3), Color(.purple)]), startPoint: .top, endPoint: .bottom)).background(LinearGradient(gradient: Gradient(colors: [Color(.green).opacity(0.3), Color(.red)]), startPoint: .top, endPoint: .bottom))
+
+
                             
                             
                         }
@@ -292,14 +304,17 @@ struct SellShoeSheetView : View {
     
     
     
+    
+    
     func addToFireStore(){
         
+        guard let uid = auth.currentUser?.uid else {return}
         
         if priceInput != nil || sizeInput != nil {
             if let selectedImage = selectedImage {
                 storageManager.upload(image: selectedImage){ url in
                     
-                    let shoes = Shoe(id: "" , brand: brandInput.lowercased(), color: colorInput.lowercased(), shoetype: shoetypeInput.lowercased(), price: priceInput!, size: sizeInput!, image: url, brandlogo: "", showshoe: true)
+                    let shoes = Shoe(id: "" , brand: brandInput.lowercased(), color: colorInput.lowercased(), shoetype: shoetypeInput.lowercased(), price: priceInput!, size: sizeInput!, image: url, brandlogo: "", showshoe: false, currentSeller: uid )
                     
                     
                     do {

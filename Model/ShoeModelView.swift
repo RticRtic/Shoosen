@@ -17,6 +17,7 @@ class ShoeModelView: ObservableObject {
     
     
     
+    
     func saveToFirestore(shoe: Shoe) {
         guard let uid = auth.currentUser?.uid else {return}
         if let shoeId = shoe.id {
