@@ -20,7 +20,7 @@ struct FavoritesView: View {
     
     var db = Firestore.firestore()
     var auth = Auth.auth()
-    let data = (1...50).map { "Shoe \($0)" }
+    let data = (1...20).map { "Shoe \($0)" }
     let columns = [
         GridItem(.adaptive(minimum: 150))
     ]

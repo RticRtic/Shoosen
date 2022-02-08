@@ -14,7 +14,7 @@ struct ShoeView: View {
     
     var selectedShoe: Shoe
     //var toggleShoe: UserCollection
-    @State var changeFavoriteText = false
+    //@State var changeFavoriteText = false
     @State var showingOptions = false
     @State var isShowingFavoriteView = false
     @State var showingAlert = false
@@ -67,29 +67,27 @@ struct ShoeView: View {
                                 
                                 compareShoeId(shoe: selectedShoe)
                                 toggle(favorite: selectedShoe)
+                                //viewModel.saveToFirestore(shoe: selectedShoe)
+                               
+                                
                                 
                             }, label: {
                                 VStack {
-                                    if changeFavoriteText {
-                                        Text("Add to Favorite")
-                                            .foregroundColor(.black)
-                                            .bold()
-                                    } else {
-                                        Text("Delete Favorite")
-                                            .foregroundColor(.black)
-                                            .bold()
-                                    }
-                                    
                                     
                                     //Image(systemName: selectedShoe.toggle ? "heart.fill" : "heart")
                                     
                                     if !savedToFavorites {
-                                        
-                                        Image(systemName: "heart.fill")
+                                        Text("Add to Favorite")
+                                            .foregroundColor(.black)
+                                            .bold()
+                                        Image(systemName: "heart")
                                             .foregroundColor(.red)
                                         
                                     } else {
-                                        Image(systemName: "heart")
+                                        Text("Delete Favorite")
+                                            .foregroundColor(.black)
+                                            .bold()
+                                        Image(systemName: "heart.fill")
                                             .foregroundColor(.red)
                                         
                                     }
@@ -107,6 +105,7 @@ struct ShoeView: View {
                             ActionSheet(title: Text("Added to favorites"), buttons: [
                                 .default(Text("Check out your favorites")) {
                                     isShowingFavoriteView = true
+//                                    viewModel.saveToFirestore(shoe: selectedShoe)
                                 },
                                 .default(Text("Continue shopping")) {
                                     dismiss()
@@ -235,13 +234,15 @@ struct ShoeView: View {
                             isInFavorite = true
                             print(document.documentID)
                             print("Exist in favorite: heart.fill")
+                            savedToFavorites.toggle()
+
 
                         }
                         if !isInFavorite {
                             print("Not exist in favorite: heart")
                             if !savedToFavorites {
-                                savedToFavorites.toggle()
-                                changeFavoriteText.toggle()
+//                                savedToFavorites.toggle()
+
 
                             }
                             
@@ -264,36 +265,32 @@ struct ShoeView: View {
                 } else {
                     var alreadyExist = false
                     for document in querySnapShot!.documents {
-                        
+
                         if document.documentID == shoeId {
                             alreadyExist = true
                             showingAlert = true
                             deleteShoe(shoe: selectedShoe)
-//                            toggle(favorite: selectedShoe)
-                            
-                            
+
                         }
-                        
+
                         if !alreadyExist {
                             // lös
                             viewModel.saveToFirestore(shoe: selectedShoe)
                             showingOptions = true
-//                            toggle(favorite: selectedShoe)
-                            
-                            
+
+
+
                         }
                     }
                 }
             }
-            
-            
+
+
         }
-        
-        
-        
-        
-        
     }
+    
+    
+    
     //    func showAlert() {
     //        @State var showingAlert = false
     //        Button("") {
