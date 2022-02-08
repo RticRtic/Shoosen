@@ -11,14 +11,16 @@ import Firebase
 
 struct FavoritesView: View {
     
-    @State var favorite = [Shoe]()
-    @State var showingOptions = false
-    @Environment(\.dismiss) var dismiss
     
+    @State var favorite = [Shoe]()
+    @State var isShowingDeleteOptions = false
+    @State var isShowingShoe = false
+    
+    @Environment(\.dismiss) var dismiss
     
     var db = Firestore.firestore()
     var auth = Auth.auth()
-    let data = (1...100).map { "Shoe \($0)" }
+    let data = (1...20).map { "Shoe \($0)" }
     let columns = [
         GridItem(.adaptive(minimum: 150))
     ]
@@ -30,46 +32,84 @@ struct FavoritesView: View {
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 20) {
                     ForEach(favorite) { shoe in
-                        AsyncImage(url: URL(string: shoe.image)) {image in
-                            image
-                            
-                                .resizable()
-                                .scaledToFit()
-                                .background(LinearGradient(gradient: Gradient(colors: [Color(.white).opacity(0.3), Color(.gray)]), startPoint: .top, endPoint: .bottom))
-                            
-                                .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-                                .shadow(color: Color.black.opacity(0.3), radius: 15, x: 0, y: 10)
-                                .padding()
-                                .overlay {
-                                    VStack(alignment: .trailing) {
-                                        HStack {
-                                            Button(action: {
-                                                showingOptions = true
-                                                
-                                            }, label: {
-                                                Image(systemName: "trash.fill")
-                                                    .foregroundColor(.black)
-                                                    .background(LinearGradient(gradient: Gradient(colors: [Color(.white).opacity(0.3), Color(.gray)]), startPoint: .top, endPoint: .bottom))
-                                                
-                                                    .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-                                                    .shadow(color: Color.black.opacity(0.3), radius: 15, x: 0, y: 10)
-                                            }) .padding()
-                                            
-                                                .actionSheet(isPresented: $showingOptions) {
-                                                    ActionSheet(title: Text("Delete shoe?"), buttons: [
-                                                        .default(Text("Yes")) {
-                                                            deleteShoe(shoe: shoe)
-                                                        },
-                                                        .default(Text("No")) {
-                                                            dismiss()
-                                                        }])
-                                                }
-                                        }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+                       
+                        NavigationLink(destination:ShoeView(selectedShoe: shoe)) {
+                            AsyncImage(url: URL(string: shoe.image)) {image in
+                                image
+                                
+                                    .resizable()
+                                    .scaledToFit()
+                                    .background(LinearGradient(gradient: Gradient(colors: [Color(.white).opacity(0.3), Color(.gray)]), startPoint: .top, endPoint: .bottom))
+                                
+                                    .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                                    .shadow(color: Color.black.opacity(0.3), radius: 15, x: 0, y: 10)
+                                    .padding()
+                                    .overlay {
+                                        VStack(alignment: .trailing) {
+                                            Text("\(shoe.price):-")
+                                                .font(.headline)
+                                                .foregroundColor(.black)
+                                                .padding()
+                                        } .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+                                        
+                                        
+//                                        VStack(alignment: .trailing) {
+//                                            HStack {
+//                                                Button(action: {
+//                                                    print("Shoe ID: \(shoe.id!)")
+//                                                    isShowingDeleteOptions = true
+//                                                    deleteShoe(shoe: shoe)
+//
+//                                                }, label: {
+//                                                    Image(systemName: "trash.fill")
+//                                                        .foregroundColor(.black)
+//                                                        .background(LinearGradient(gradient: Gradient(colors: [Color(.white).opacity(0.3), Color(.gray)]), startPoint: .top, endPoint: .bottom))
+//
+//                                                        .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+//                                                        .shadow(color: Color.black.opacity(0.3), radius: 15, x: 0, y: 10)
+//                                                }) .padding()
+//    //                                                .alert(isPresented: $isShowingDeleteOptions) {
+//    //                                                    Alert(title: Text(""), message: Text("Shoe is removed from favorites"))
+//    //                                                }
+////                                                    .actionSheet(isPresented: $isShowingDeleteOptions) {
+////                                                        ActionSheet(title: Text("Delete shoe?"), buttons: [
+////                                                            .default(Text("Yes")) {
+////                                                             //deleteShoe(shoe: shoe)
+////
+////                                                            },
+////                                                            .default(Text("No")) {
+////                                                                dismiss()
+////                                                            }])
+////                                                    }
+//                                            }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+//                                            HStack {
+//                                                Button(action: {
+//
+//                                                    isShowingShoe.toggle()
+//
+//
+//                                                }, label: {
+//                                                    Text("Info")
+//                                                        .font(.headline)
+//                                                        .foregroundColor(.black)
+//                                                        .shadow(color: .black, radius: 3, x: 0, y: 0)
+//                                                        .frame(maxWidth: 136)
+//                                                }).padding()
+////                                                    .sheet(isPresented: $isShowingShoe) {
+////                                                        ShoeView(selectedShoe: shoe)
+////
+////
+////
+////                                                    }
+//
+//                                            }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+//                                        }
+//
                                     }
-                                }
-                            
-                        } placeholder: {
-                            Image(systemName: "photo")
+                                
+                            } placeholder: {
+                                Image(systemName: "photo")
+                        }
                         }
                         
                     }
@@ -79,12 +119,11 @@ struct FavoritesView: View {
             }
             
         } .onAppear {
-            
             getMultiple()
             
             
         } .onDisappear {
-            favorite.removeAll()
+            //favorite.removeAll()
         }
         
         
@@ -99,7 +138,7 @@ struct FavoritesView: View {
             .getDocuments() { (querySnapshot, err) in
                 if let err = err {
                     print("Could not find document: \(err)")
-                    //                    db.collection("UserCollection").document(uid).collection("favorites").addDocument(data: ["favorite" : shoe.id])
+                    //db.collection("UserCollection").document(uid).collection("favorites").addDocument(data: ["favorite" : shoe.id])
                 } else {
                     //favoritesId.removeAll()
                     for document in querySnapshot!.documents {
@@ -162,10 +201,14 @@ struct FavoritesView: View {
     
     
     
-    
-    
-    
 }
+
+
+
+
+
+
+
 
 struct FavoritesView_Previews: PreviewProvider {
     static var previews: some View {

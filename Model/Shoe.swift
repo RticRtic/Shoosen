@@ -18,10 +18,10 @@ struct Shoe: Identifiable, Codable {
     let size: Int
     var image: String
     let brandlogo: String
-   // var addtofavorite: Bool
+    //var toggle: Bool = false
 
     var showshoe: Bool
-    var currentSeller: String? = nil
+    var currentSeller: String
 
 
 

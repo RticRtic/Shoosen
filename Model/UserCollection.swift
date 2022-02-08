@@ -11,4 +11,5 @@ import FirebaseFirestoreSwift
 struct UserCollection: Codable, Identifiable {
     @DocumentID var id: String?
     let favorite: String
+   // var toggle: Bool = false
 }
