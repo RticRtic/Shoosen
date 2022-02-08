@@ -24,8 +24,7 @@ struct SearchView: View {
     @State var isActive = false
     
     var body: some View {
-        NavigationView {
-            TabView(selection: $tabSelection) {
+       TabView(selection: $tabSelection) {
                 VStack {
                     
                     TextField("Search by brand", text: $brandInput)
@@ -91,7 +90,7 @@ struct SearchView: View {
             }
             .tabViewStyle(.page)
             .indexViewStyle(.page(backgroundDisplayMode: .always))
-        }
+        
         .navigationViewStyle(.stack)
         
     }
