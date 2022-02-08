@@ -21,7 +21,7 @@ struct Shoe: Identifiable, Codable {
    // var addtofavorite: Bool
 
     var showshoe: Bool
-    var currentSeller: String
+    var currentSeller: String? = nil
 
 
 
