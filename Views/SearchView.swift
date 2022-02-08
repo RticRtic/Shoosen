@@ -21,7 +21,7 @@ struct SearchView: View {
     @State var colorInput : String = ""
     @ObservedObject private var autocomplete = AutocompleteObject()
     @State private var tabSelection = 1
-    @State private var showSheet = false
+    
     
     
     
@@ -81,11 +81,13 @@ struct SearchView: View {
                         .textFieldStyle(.roundedBorder)
                         .padding()
                     
+                    NavigationLink(destination: SearchSheetView(shoes: shoes)) {
+                    Text("Search")
+                    }
                     
-                    Button("Search"){
-                        
+                    Button("Search") {
                         searchForShoe()
-                        
+                        SearchSheetView(shoes: shoes)
                     }
                     Spacer()
                     
@@ -98,10 +100,7 @@ struct SearchView: View {
             .indexViewStyle(.page(backgroundDisplayMode: .always))
         }
         .navigationViewStyle(.stack)
-        .sheet(isPresented: $showSheet, content: {
-            SearchSheetView(shoes: shoes)
-               
-        } )
+        
     }
     
     
@@ -125,7 +124,6 @@ struct SearchView: View {
         }
         
         if priceInput != nil {
-            print("PRICEINPUT ::: \(priceInput) CHECKED")
             query = query.whereField("price", isLessThanOrEqualTo: priceInput!)
         }
         if shoetypeInput != ""{
@@ -154,7 +152,7 @@ struct SearchView: View {
                     
                 }
                 print("!!! number of shoes: \(shoes.count)")
-                showSheet = true
+                // The next view starts here
             }
         }
     }

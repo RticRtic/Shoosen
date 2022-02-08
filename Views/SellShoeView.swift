@@ -87,7 +87,7 @@ struct SellShoeView: View {
         
         guard let uid = auth.currentUser?.uid else {return}
         
-        var query = db.collection("Shoes").whereField("currentSeller", isEqualTo: uid)
+        let query = db.collection("Shoes").whereField("currentSeller", isEqualTo: uid)
         
         query.getDocuments() { (querySnapshot, err) in
             if let err = err {

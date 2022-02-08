@@ -9,11 +9,8 @@ import Foundation
 import SwiftUI
 
 struct SearchSheetView : View {
-    @Environment(\.presentationMode) var presentationMode
-    
+   
     var shoes : [Shoe]
-    
-    
     
     var body: some View {
         
@@ -53,11 +50,6 @@ struct SearchSheetView : View {
                 }
             }
         }
-//        .onAppear {
-//
-//        } .onDisappear {
-//            shoes.removeAll()
-//        }
     }
 }
 
