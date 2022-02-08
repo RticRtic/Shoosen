@@ -13,9 +13,12 @@ import Firebase
 struct ShoeView: View {
     
     var selectedShoe: Shoe
+    //var toggleShoe: UserCollection
+    @State var changeFavoriteText = false
     @State var showingOptions = false
     @State var isShowingFavoriteView = false
     @State var showingAlert = false
+    @State var savedToFavorites = false
     @Environment(\.dismiss) var dismiss
     
     var db = Firestore.firestore()
@@ -63,15 +66,34 @@ struct ShoeView: View {
                             Button(action: {
                                 
                                 compareShoeId(shoe: selectedShoe)
+                                toggle(favorite: selectedShoe)
                                 
                             }, label: {
                                 VStack {
-                                    Text("Add to Favorite")
-                                        .foregroundColor(.black)
-                                        .bold()
+                                    if changeFavoriteText {
+                                        Text("Add to Favorite")
+                                            .foregroundColor(.black)
+                                            .bold()
+                                    } else {
+                                        Text("Delete Favorite")
+                                            .foregroundColor(.black)
+                                            .bold()
+                                    }
                                     
-                                    Image(systemName: "heart")
-                                        .foregroundColor(.red)
+                                    
+                                    //Image(systemName: selectedShoe.toggle ? "heart.fill" : "heart")
+                                    
+                                    if !savedToFavorites {
+                                        
+                                        Image(systemName: "heart.fill")
+                                            .foregroundColor(.red)
+                                        
+                                    } else {
+                                        Image(systemName: "heart")
+                                            .foregroundColor(.red)
+                                        
+                                    }
+                                    
                                     
                                 }
                                 
@@ -91,7 +113,7 @@ struct ShoeView: View {
                                 }])
                         }
                         .alert(isPresented: $showingAlert) {
-                            Alert(title: Text("Ops.."), message: Text("Shoe already exist in favorites"), dismissButton: .default(Text("Got it!")))
+                            Alert(title: Text(""), message: Text("Deleted from favorites"), dismissButton: .default(Text("Got it!")))
                         }
                         
                         
@@ -190,11 +212,44 @@ struct ShoeView: View {
             
             
         }.onAppear{
-            //compareShoeId(shoe: selectedShoe)
+            toggle(favorite: selectedShoe)
+            
         }
         
         .ignoresSafeArea(.container, edges: .top)
         
+    }
+    
+    func toggle(favorite: Shoe) {
+        if let id = favorite.id {
+            guard let uid = auth.currentUser?.uid else {return}
+            db.collection("UserCollection").document(uid).collection("favorites").getDocuments() {(querySnapshot, err) in
+                if let err = err {
+                    print("Error getting id: \(err)")
+                    
+                } else {
+                    var isInFavorite = false
+                    for document in querySnapshot!.documents {
+                        if document.documentID == id {
+                            isInFavorite = true
+                            print(document.documentID)
+                            print("Exist in favorite: heart.fill")
+
+                        }
+                        if !isInFavorite {
+                            print("Not exist in favorite: heart")
+                            if !savedToFavorites {
+                                savedToFavorites.toggle()
+                                changeFavoriteText.toggle()
+
+                            }
+                            
+                        }
+                    }
+                }
+            }
+            
+        }
     }
     
     
@@ -208,17 +263,22 @@ struct ShoeView: View {
                 } else {
                     var alreadyExist = false
                     for document in querySnapShot!.documents {
-                       
+                        
                         if document.documentID == shoeId {
                             alreadyExist = true
                             showingAlert = true
-                            print("not possible")
+                            deleteShoe(shoe: selectedShoe)
+//                            toggle(favorite: selectedShoe)
+                            
                             
                         }
                         
                         if !alreadyExist {
                             viewModel.saveToFirestore(shoe: selectedShoe)
                             showingOptions = true
+//                            toggle(favorite: selectedShoe)
+                            
+                            
                         }
                     }
                 }
@@ -230,16 +290,31 @@ struct ShoeView: View {
         
         
         
+        
     }
-//    func showAlert() {
-//        @State var showingAlert = false
-//        Button("") {
-//            showingAlert = true
-//        }
-//        .alert(isPresented: $showingAlert) {
-//            Alert(title: Text("Ops.."), message: Text("The shoe already exsist in your favorites"), dismissButton: .default(Text("Got it!")))
-//        }
-//    }
+    //    func showAlert() {
+    //        @State var showingAlert = false
+    //        Button("") {
+    //            showingAlert = true
+    //        }
+    //        .alert(isPresented: $showingAlert) {
+    //            Alert(title: Text("Ops.."), message: Text("The shoe already exsist in your favorites"), dismissButton: .default(Text("Got it!")))
+    //        }
+    //    }
+    func deleteShoe(shoe: Shoe) {
+        guard let uid = auth.currentUser?.uid else {return}
+        if let shoeId = shoe.id {
+            db.collection("UserCollection").document(uid).collection("favorites").document(shoeId).delete() { err in
+                if let err = err {
+                    print("Error removing document: \(err)")
+                } else {
+                    print("Document successfully removed!")
+                }
+            }
+            
+        }
+        
+    }
 }
 
 
