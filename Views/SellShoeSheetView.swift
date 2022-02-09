@@ -49,15 +49,16 @@ struct SellShoeSheetView : View {
     
     
     var body: some View {
-        NavigationView{
+       
             
             TabView {
                 
                 VStack {
-                    
+                    Spacer()
                     Text("Wich brand is it?")
                         .font(.system(size: 32, weight: .light))
-                    Spacer()
+                        .padding()
+                
                     
                     TextField("Search by brand", text: $brandInput)
                         .textFieldStyle(.roundedBorder)
@@ -82,9 +83,10 @@ struct SellShoeSheetView : View {
                 }
                 
                 VStack{
-                    
+                    Spacer()
                     Text("What type of shoe is it?")
                         .font(.system(size: 32, weight: .light))
+                        .padding()
                     Spacer()
                     
                     
@@ -95,9 +97,10 @@ struct SellShoeSheetView : View {
                 }
                 
                 VStack {
-                    
+                    Spacer()
                     Text("Wich size are they?")
                         .font(.system(size: 32, weight: .light))
+                        .padding()
                     Spacer()
                     
                     
@@ -110,8 +113,10 @@ struct SellShoeSheetView : View {
                 
                 
                 VStack {
+                    Spacer()
                     Text("Wich color are they?")
                         .font(.system(size: 32, weight: .light))
+                        .padding()
                     Spacer()
                     VStack {
                         HStack{
@@ -234,8 +239,10 @@ struct SellShoeSheetView : View {
                 
                 
                 VStack {
+                    Spacer()
                     Text("How much do you want to sell them for?")
                         .font(.system(size: 32, weight: .light))
+                        .padding()
                     Spacer()
                     TextField("Input price here", value: $priceInput, formatter: NumberFormatter())
                         .textFieldStyle(.roundedBorder)
@@ -245,8 +252,10 @@ struct SellShoeSheetView : View {
                 
                 
                 VStack{
+                    Spacer()
                     Text("Add photo")
                         .font(.system(size: 32, weight: .light))
+                        .padding()
                     Spacer()
                     
                     if selectedImage != nil {
@@ -272,7 +281,7 @@ struct SellShoeSheetView : View {
                             .buttonStyle(.bordered)
                         
                         
-                        Button("photo"){
+                        Button("Photo"){
                             self.sourceType = .photoLibrary
                             self.isImagePickerDisplay.toggle()
                         }.padding()
@@ -292,11 +301,13 @@ struct SellShoeSheetView : View {
                 }
             }.tabViewStyle(.page)
                 .indexViewStyle(.page(backgroundDisplayMode: .always))
+                
             
-        }
+        
         .navigationBarTitle("Sell your shoe")
         .sheet(isPresented: self.$isImagePickerDisplay) {
             ImagePickerView(selectedImage: self.$selectedImage, sourceType: self.sourceType)
+                
         }
     }
     

@@ -21,17 +21,10 @@ struct SearchView: View {
     @State var colorInput : String = ""
     @ObservedObject private var autocomplete = AutocompleteObject()
     @State private var tabSelection = 1
-    
-    
-    
-    
-    
-    
-    
+    @State var isActive = false
     
     var body: some View {
-        NavigationView {
-            TabView(selection: $tabSelection) {
+       TabView(selection: $tabSelection) {
                 VStack {
                     
                     TextField("Search by brand", text: $brandInput)
@@ -81,13 +74,12 @@ struct SearchView: View {
                         .textFieldStyle(.roundedBorder)
                         .padding()
                     
-                    NavigationLink(destination: SearchSheetView(shoes: shoes)) {
-                    Text("Search")
-                    }
+                    NavigationLink(destination: SearchSheetView(shoes: shoes), isActive: $isActive) { EmptyView() 
+                        }
                     
                     Button("Search") {
                         searchForShoe()
-                        SearchSheetView(shoes: shoes)
+                       
                     }
                     Spacer()
                     
@@ -98,7 +90,7 @@ struct SearchView: View {
             }
             .tabViewStyle(.page)
             .indexViewStyle(.page(backgroundDisplayMode: .always))
-        }
+        
         .navigationViewStyle(.stack)
         
     }
@@ -152,7 +144,7 @@ struct SearchView: View {
                     
                 }
                 print("!!! number of shoes: \(shoes.count)")
-                // The next view starts here
+                isActive = true
             }
         }
     }

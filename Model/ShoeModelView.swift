@@ -34,18 +34,7 @@ class ShoeModelView: ObservableObject {
             }
         }
         
-        
-        
-       
     }
     
-
-    
-
-    
-
-    
-    
-
     
 }
