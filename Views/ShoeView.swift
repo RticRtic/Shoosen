@@ -21,6 +21,8 @@ struct ShoeView: View {
     @State var savedToFavorites = false
     @Environment(\.dismiss) var dismiss
     
+    
+    
     var db = Firestore.firestore()
     var auth = Auth.auth()
     
@@ -244,6 +246,7 @@ struct ShoeView: View {
                 deleteShoe(shoe: selectedShoe)
                 showingAlert = true
                 
+                
             } else {
                 viewModel.saveToFirestore(shoe: selectedShoe)
                 isShowingSaveOption = true
@@ -264,6 +267,8 @@ struct ShoeView: View {
     //            Alert(title: Text("Ops.."), message: Text("The shoe already exsist in your favorites"), dismissButton: .default(Text("Got it!")))
     //        }
     //    }
+    
+    
     func deleteShoe(shoe: Shoe) {
         guard let uid = auth.currentUser?.uid else {return}
         if let shoeId = shoe.id {
