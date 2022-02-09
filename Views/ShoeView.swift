@@ -33,7 +33,7 @@ struct ShoeView: View {
                     image
                         .resizable()
                         .scaledToFit()
-                        .background(LinearGradient(gradient: Gradient(colors: [Color(.gray).opacity(0.3), Color(.gray)]), startPoint: .top, endPoint: .bottom))
+                       
                     
                         .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
                         .shadow(color: Color.black.opacity(0.3), radius: 15, x: 0, y: 10)
@@ -44,7 +44,7 @@ struct ShoeView: View {
                         .resizable()
                         .scaledToFit()
                         .frame(width: 100, height: 100, alignment: .center)
-                        .foregroundColor(.white.opacity(0.7))
+                      
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                     
                     
@@ -56,8 +56,7 @@ struct ShoeView: View {
                         Text(selectedShoe.brand.uppercased())
                             .font(.largeTitle)
                             .bold()
-                            .background(LinearGradient(gradient: Gradient(colors: [Color(.white).opacity(0.3), Color(.gray)]), startPoint: .top, endPoint: .bottom))
-                        
+                                                    
                             .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
                             .shadow(color: Color.black.opacity(0.3), radius: 15, x: 0, y: 10)
                         
@@ -78,14 +77,14 @@ struct ShoeView: View {
                                     
                                     if !savedToFavorites {
                                         Text("Add to Favorite")
-                                            .foregroundColor(.black)
+                                            
                                             .bold()
                                         Image(systemName: "heart")
                                             .foregroundColor(.red)
                                         
                                     } else {
                                         Text("Delete Favorite")
-                                            .foregroundColor(.black)
+                                            
                                             .bold()
                                         Image(systemName: "heart.fill")
                                             .foregroundColor(.red)
@@ -124,7 +123,7 @@ struct ShoeView: View {
                             Text("Color: ")
                                 .font(.headline)
                                 .bold()
-                                .background(LinearGradient(gradient: Gradient(colors: [Color(.white).opacity(0.3), Color(.gray)]), startPoint: .top, endPoint: .bottom))
+                              
                             
                                 .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
                                 .shadow(color: Color.black.opacity(0.3), radius: 15, x: 0, y: 10)
@@ -140,7 +139,7 @@ struct ShoeView: View {
                                 Text("Shoetype: ")
                                     .font(.headline)
                                     .bold()
-                                    .background(LinearGradient(gradient: Gradient(colors: [Color(.white).opacity(0.3), Color(.gray)]), startPoint: .top, endPoint: .bottom))
+                                  
                                 
                                     .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
                                     .shadow(color: Color.black.opacity(0.3), radius: 15, x: 0, y: 10)
@@ -156,7 +155,7 @@ struct ShoeView: View {
                                     Text("Size:")
                                         .font(.headline)
                                         .bold()
-                                        .background(LinearGradient(gradient: Gradient(colors: [Color(.white).opacity(0.3), Color(.gray)]), startPoint: .top, endPoint: .bottom))
+                                       
                                     
                                         .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
                                         .shadow(color: Color.black.opacity(0.3), radius: 15, x: 0, y: 10)
@@ -172,7 +171,7 @@ struct ShoeView: View {
                                         Text("Price:")
                                             .font(.headline)
                                             .bold()
-                                            .background(LinearGradient(gradient: Gradient(colors: [Color(.white).opacity(0.3), Color(.gray)]), startPoint: .top, endPoint: .bottom))
+                                           
                                         
                                             .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
                                             .shadow(color: Color.black.opacity(0.3), radius: 15, x: 0, y: 10)
@@ -206,7 +205,7 @@ struct ShoeView: View {
                 
                 
             }
-            .background(.white)
+            //.background(.white)
             //.cornerRadius(30)
             
             

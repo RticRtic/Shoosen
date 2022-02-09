@@ -281,7 +281,7 @@ struct SellShoeSheetView : View {
                             .buttonStyle(.bordered)
                         
                         
-                        Button("photo"){
+                        Button("Photo"){
                             self.sourceType = .photoLibrary
                             self.isImagePickerDisplay.toggle()
                         }.padding()

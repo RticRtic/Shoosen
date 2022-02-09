@@ -11,7 +11,7 @@ import FirebaseAuth
 
 struct ContentView: View {
     @EnvironmentObject var signIn: SignIn
-        
+    @AppStorage("isDarkMode") private var isDarkMode = false
     
     
     var body: some View {
@@ -28,6 +28,7 @@ struct ContentView: View {
             signIn.signedIn = signIn.isSignedIn
         } 
         .navigationViewStyle(.stack)
+        .preferredColorScheme(isDarkMode ? .dark : .light)
        
     }
     
