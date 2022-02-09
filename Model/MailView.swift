@@ -12,25 +12,28 @@ import UIKit
 
 
     
-    //@EnvironmentObject var presentation
-    //@Binding var result: Result<MFMailComposeResult, Error>?
-    
-    
-    class Coorinator: NSObject, MFMailComposeViewControllerDelegate {
+public struct MailView: UIViewControllerRepresentable {
+
+    @Environment(\.presentationMode) var presentation
+    @Binding var result: Result<MFMailComposeResult, Error>?
+    public var configure: ((MFMailComposeViewController) -> Void)?
+
+    public class Coordinator: NSObject, MFMailComposeViewControllerDelegate {
+
         @Binding var presentation: PresentationMode
         @Binding var result: Result<MFMailComposeResult, Error>?
-        
-        init(presentation: Binding <PresentationMode>,
+
+        init(presentation: Binding<PresentationMode>,
              result: Binding<Result<MFMailComposeResult, Error>?>) {
             _presentation = presentation
             _result = result
-            
         }
-        
-        func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+
+        public func mailComposeController(_ controller: MFMailComposeViewController,
+                                   didFinishWith result: MFMailComposeResult,
+                                   error: Error?) {
             defer {
                 $presentation.wrappedValue.dismiss()
-                
             }
             guard error == nil else {
                 self.result = .failure(error!)
@@ -38,18 +41,25 @@ import UIKit
             }
             self.result = .success(result)
         }
-        
-        func makeCoordinator() -> Coordinator {
-            
-        }
-        
-        
-        
-        
     }
-    
 
+    public func makeCoordinator() -> Coordinator {
+        return Coordinator(presentation: presentation,
+                           result: $result)
+    }
 
+    public func makeUIViewController(context: UIViewControllerRepresentableContext<MailView>) -> MFMailComposeViewController {
+        let vc = MFMailComposeViewController()
+        vc.mailComposeDelegate = context.coordinator
+        configure?(vc)
+        return vc
+    }
 
+    public func updateUIViewController(
+        _ uiViewController: MFMailComposeViewController,
+        context: UIViewControllerRepresentableContext<MailView>) {
+
+    }
+}
 
 
