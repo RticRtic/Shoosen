@@ -7,6 +7,8 @@
 
 import SwiftUI
 import Firebase
+import UIKit
+import MessageUI
 
 
 
@@ -20,6 +22,8 @@ struct ShoeView: View {
     @State var showingAlert = false
     @State var savedToFavorites = false
     @Environment(\.dismiss) var dismiss
+    @State private var result: Result<MFMailComposeResult, Error>? = nil
+    @State private var isShowingMailView = false
     
     
     
@@ -186,23 +190,29 @@ struct ShoeView: View {
                     Spacer()
                 }
                 Button(action: {
-                    print("Contacting seller")
-                }, label: {
-                    Text("Buy!")
-                        .foregroundColor(.white)
-                        .bold()
-                        .frame(width: 200, height: 40)
-                        .background(Color.gray)
-                        .cornerRadius(15)
-                        .shadow(color: .white, radius: 10, x: 3, y: 3)
-                        .padding(25)
-                })
-                
-                
-            }
-            //.background(.white)
-            //.cornerRadius(30)
-            
+                             if MFMailComposeViewController.canSendMail() {
+                                 self.isShowingMailView.toggle()
+                             } else {
+                                 print("Can't send emails from this device")
+                             }
+                             if result != nil {
+                                 print("Result: \(String(describing: result))")
+                             }
+                         }) {
+                             HStack {
+                                 Image(systemName: "envelope")
+                                 Text("Contact seller")
+                             }
+                         }
+                         // .disabled(!MFMailComposeViewController.canSendMail())
+                     }
+                     .sheet(isPresented: $isShowingMailView) {
+                         MailView(result: $result) { composer in
+                             composer.setSubject("Secret")
+                             composer.setToRecipients(["manne@gmail.com"])
+                             //FIX SO SELLERS EMAIL POPS UP
+                         }
+                     }
             
         }.onAppear{
             fillHeartIf(favorite: selectedShoe)
