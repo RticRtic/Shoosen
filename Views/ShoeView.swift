@@ -15,11 +15,13 @@ struct ShoeView: View {
     var selectedShoe: Shoe
     //var toggleShoe: UserCollection
     //@State var changeFavoriteText = false
-    @State var showingOptions = false
+    @State var isShowingSaveOption = false
     @State var isShowingFavoriteView = false
     @State var showingAlert = false
     @State var savedToFavorites = false
     @Environment(\.dismiss) var dismiss
+    
+    
     
     var db = Firestore.firestore()
     var auth = Auth.auth()
@@ -65,16 +67,10 @@ struct ShoeView: View {
                         NavigationLink(destination: FavoritesView(), isActive: $isShowingFavoriteView) {
                             Button(action: {
                                 
-                                compareShoeId(shoe: selectedShoe)
-                                toggle(favorite: selectedShoe)
-                                //viewModel.saveToFirestore(shoe: selectedShoe)
-                               
-                                
-                                
+                                saveOrDeleteFavorite(shoe: selectedShoe)
+                             
                             }, label: {
                                 VStack {
-                                    
-                                    //Image(systemName: selectedShoe.toggle ? "heart.fill" : "heart")
                                     
                                     if !savedToFavorites {
                                         Text("Add to Favorite")
@@ -101,11 +97,10 @@ struct ShoeView: View {
                         }
                         .padding(.leading)
                         
-                        .actionSheet(isPresented: $showingOptions) {
+                        .actionSheet(isPresented: $isShowingSaveOption) {
                             ActionSheet(title: Text("Added to favorites"), buttons: [
                                 .default(Text("Check out your favorites")) {
                                     isShowingFavoriteView = true
-//                                    viewModel.saveToFirestore(shoe: selectedShoe)
                                 },
                                 .default(Text("Continue shopping")) {
                                     dismiss()
@@ -211,8 +206,7 @@ struct ShoeView: View {
             
             
         }.onAppear{
-            toggle(favorite: selectedShoe)
-            
+            fillHeartIf(favorite: selectedShoe)
             
         }
         
@@ -220,72 +214,45 @@ struct ShoeView: View {
         
     }
     
-    func toggle(favorite: Shoe) {
+    func fillHeartIf(favorite: Shoe) {
         if let id = favorite.id {
             guard let uid = auth.currentUser?.uid else {return}
-            db.collection("UserCollection").document(uid).collection("favorites").getDocuments() {(querySnapshot, err) in
+            db.collection("UserCollection").document(uid).collection("favorites").addSnapshotListener() {(querySnapshot, err) in
                 if let err = err {
                     print("Error getting id: \(err)")
                     
                 } else {
-                    var isInFavorite = false
                     for document in querySnapshot!.documents {
                         if document.documentID == id {
-                            isInFavorite = true
+                            savedToFavorites = true
                             print(document.documentID)
                             print("Exist in favorite: heart.fill")
-                            savedToFavorites.toggle()
-
-
-                        }
-                        if !isInFavorite {
-                            print("Not exist in favorite: heart")
-                            if !savedToFavorites {
-//                                savedToFavorites.toggle()
-
-
-                            }
                             
+                            return
                         }
+                        
                     }
+                    savedToFavorites = false
                 }
             }
             
         }
     }
     
-    
-    
-    func compareShoeId(shoe: Shoe) {
+    func saveOrDeleteFavorite(shoe: Shoe) {
         guard let uid = auth.currentUser?.uid else {return}
         if let shoeId = shoe.id {
-            db.collection("UserCollection").document(uid).collection("favorites").getDocuments() {(querySnapShot, err) in
-                if let err = err {
-                    print("Error getting documents: \(err)")
-                } else {
-                    var alreadyExist = false
-                    for document in querySnapShot!.documents {
-
-                        if document.documentID == shoeId {
-                            alreadyExist = true
-                            showingAlert = true
-                            deleteShoe(shoe: selectedShoe)
-
-                        }
-
-                        if !alreadyExist {
-                            // lös
-                            viewModel.saveToFirestore(shoe: selectedShoe)
-                            showingOptions = true
-
-
-
-                        }
-                    }
-                }
+            if savedToFavorites {
+                deleteShoe(shoe: selectedShoe)
+                showingAlert = true
+                
+                
+            } else {
+                viewModel.saveToFirestore(shoe: selectedShoe)
+                isShowingSaveOption = true
             }
-
-
+            
+            
         }
     }
     
@@ -300,6 +267,8 @@ struct ShoeView: View {
     //            Alert(title: Text("Ops.."), message: Text("The shoe already exsist in your favorites"), dismissButton: .default(Text("Got it!")))
     //        }
     //    }
+    
+    
     func deleteShoe(shoe: Shoe) {
         guard let uid = auth.currentUser?.uid else {return}
         if let shoeId = shoe.id {
