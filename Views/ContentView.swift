@@ -11,6 +11,7 @@ import FirebaseAuth
 
 struct ContentView: View {
     @EnvironmentObject var signIn: SignIn
+        
     
     
     var body: some View {
@@ -27,6 +28,7 @@ struct ContentView: View {
             signIn.signedIn = signIn.isSignedIn
         } 
         .navigationViewStyle(.stack)
+       
     }
     
     

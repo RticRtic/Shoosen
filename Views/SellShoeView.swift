@@ -17,25 +17,28 @@ struct SellShoeView: View {
     var db = Firestore.firestore()
     var auth = Auth.auth()
     @State var shoes = [Shoe]()
-    
+ 
+
     
     
     var body: some View {
         
         VStack {
-        Button("Sell shoe"){
-            showSheet = true
-        }
-        
-        .foregroundColor(.white)
-        
-        .frame(width: 200, height: 40)
-        .background(Color.gray)
-        .cornerRadius(15)
-        .shadow(color: .white, radius: 10, x: 3, y: 3)
-        .padding(80)
-        
-        
+            Button("Sell shoe"){
+                showSheet = true
+            }
+            
+            .foregroundColor(.white)
+            
+            .frame(width: 200, height: 40)
+            .background(Color.gray)
+            .cornerRadius(15)
+            .shadow(color: .white, radius: 10, x: 3, y: 3)
+            .padding(80)
+            
+      
+            
+            
             List {
                 ForEach(shoes) { shoe in
                     
@@ -51,9 +54,9 @@ struct SellShoeView: View {
                                     .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
                                     .shadow(color: Color.black.opacity(0.3), radius: 15, x: 0, y: 10)
                                     .padding()
-                                }
+                            }
                             
-                        
+                            
                         placeholder: {
                             Image(systemName: "photo")
                         }
@@ -64,14 +67,23 @@ struct SellShoeView: View {
                                     .font(.headline)
                                 Text("\(shoe.price) Kr")
                                     .padding()
-                                
                             }
                         }
                     }
                 }
+                .onDelete { offsets in
+                    deleteItem(at: offsets)
+                    shoes.remove(atOffsets: offsets)
+                    
+                }
+                
+            }
+            .toolbar {
+                EditButton()
             }
         }
-
+        
+        
         .sheet(isPresented: $showSheet, content: {
             SellShoeSheetView()
             
@@ -79,7 +91,26 @@ struct SellShoeView: View {
         .onAppear() {
             getMyShoes()
         }
+        
     }
+    
+    
+    
+        
+        func deleteItem(at indexSet: IndexSet) {
+
+            for index in indexSet {
+
+                let item = shoes[index]
+                if let id = item.id {
+                    
+                    db.collection("Shoes").document(id).delete()
+                    }
+                }
+            }
+    
+    
+    
     
     func getMyShoes() {
         
@@ -111,10 +142,10 @@ struct SellShoeView: View {
                     }
                     
                 }
-               
+                
             }
         }
-
+        
         
         
         
