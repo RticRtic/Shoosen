@@ -192,14 +192,9 @@ struct ShoeView: View {
                 Button(action: {
                     
                     viewModel.buyingProposal(shoe: selectedShoe)
-//                             if MFMailComposeViewController.canSendMail() {
-//                                 self.isShowingMailView.toggle()
-//                             } else {
-//                                 print("Can't send emails from this device")
-//                             }
-//                             if result != nil {
-//                                 print("Result: \(String(describing: result))")
-//                             }
+                   //skicka med bilden till homeview
+                    
+
                          }) {
                              HStack {
                                  Image(systemName: "envelope")
@@ -210,13 +205,13 @@ struct ShoeView: View {
                          }
                          // .disabled(!MFMailComposeViewController.canSendMail())
                      }
-                     .sheet(isPresented: $isShowingMailView) {
-                         MailView(result: $result) { composer in
-                             composer.setSubject("Secret")
-                             composer.setToRecipients(["manne@gmail.com"])
-                             //FIX SO SELLERS EMAIL POPS UP
-                         }
-                     }
+//                     .sheet(isPresented: $isShowingMailView) {
+//                         MailView(result: $result) { composer in
+//                             composer.setSubject("Secret")
+//                             composer.setToRecipients(["manne@gmail.com"])
+//                             //FIX SO SELLERS EMAIL POPS UP
+//                         }
+//                     }
             
         }.onAppear{
             fillHeartIf(favorite: selectedShoe)

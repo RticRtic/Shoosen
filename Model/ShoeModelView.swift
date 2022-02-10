@@ -29,7 +29,7 @@ class ShoeModelView: ObservableObject {
                     print(shoe.currentSeller)
                     do {
                     _ = try
-                        self.db.collection("UserCollection").document(shoe.currentSeller).collection("buyingProposal").document(shoeId).setData(["buyerUid" : uid, "buyerEmail" : uidEmail])
+                        self.db.collection("UserCollection").document(shoe.currentSeller).collection("buyingProposal").document(shoeId).setData(["buyerUid" : uid, "buyerEmail" : uidEmail, "id" : shoeId])
                         
                             
                             
