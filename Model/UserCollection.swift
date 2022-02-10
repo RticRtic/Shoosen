@@ -13,6 +13,6 @@ struct UserCollection: Codable, Identifiable {
     //let favorite: String
     let buyerEmail: String
     let buyerUid: String
-    let image: String
+    let shoeId: String
    // var toggle: Bool = false
 }
