@@ -17,6 +17,34 @@ class ShoeModelView: ObservableObject {
     
     //@Published var shoes = [Shoe]()
     
+    func buyingProposal(shoe: Shoe){
+        guard let uid = auth.currentUser?.uid else {return}
+        guard let uidEmail = auth.currentUser?.email else {return}
+        if let shoeId = shoe.id {
+            db.collection("Shoes").whereField("currentSeller", isEqualTo: shoe.currentSeller).getDocuments() {(querySnapshot, err) in
+                if let err = err {
+                    print("Cant get document: \(err)")
+                    
+                } else {
+                    print(shoe.currentSeller)
+                    do {
+                    _ = try
+                        self.db.collection("UserCollection").document(shoe.currentSeller).collection("buyingProposal").document(shoeId).setData(["buyerUid" : uid, "buyerEmail" : uidEmail, "id" : shoeId])
+                        
+                            
+                            
+//                            .setData(["buyerUid" : shoe.currentSeller], ["buyerEmail" : uid])
+                        
+                    } catch {
+                        print("can not set to FB")
+                    }
+                    
+                }
+            }
+            
+            
+        }
+    }
     
     
     
