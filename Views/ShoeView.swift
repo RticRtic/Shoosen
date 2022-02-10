@@ -22,8 +22,8 @@ struct ShoeView: View {
     @State var showingAlert = false
     @State var savedToFavorites = false
     @Environment(\.dismiss) var dismiss
-    @State private var result: Result<MFMailComposeResult, Error>? = nil
-    @State private var isShowingMailView = false
+//    @State private var result: Result<MFMailComposeResult, Error>? = nil
+//    @State private var isShowingMailView = false
     
     
     
@@ -190,18 +190,22 @@ struct ShoeView: View {
                     Spacer()
                 }
                 Button(action: {
-                             if MFMailComposeViewController.canSendMail() {
-                                 self.isShowingMailView.toggle()
-                             } else {
-                                 print("Can't send emails from this device")
-                             }
-                             if result != nil {
-                                 print("Result: \(String(describing: result))")
-                             }
+                    
+                    viewModel.buyingProposal(shoe: selectedShoe)
+//                             if MFMailComposeViewController.canSendMail() {
+//                                 self.isShowingMailView.toggle()
+//                             } else {
+//                                 print("Can't send emails from this device")
+//                             }
+//                             if result != nil {
+//                                 print("Result: \(String(describing: result))")
+//                             }
                          }) {
                              HStack {
                                  Image(systemName: "envelope")
                                  Text("Contact seller")
+                                     .font(.headline)
+                                     
                              }
                          }
                          // .disabled(!MFMailComposeViewController.canSendMail())

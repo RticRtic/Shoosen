@@ -9,17 +9,27 @@ import SwiftUI
 import Firebase
 
 struct HomeView: View {
+    
+    @State var contacts = [Shoe]()
+    
     var body: some View {
 
             Text("HomeView")
             
-                .navigationTitle("")
+                
                 
             
        
         
             
     }
+    
+    
+    
+    func getBuyerContacts() {
+        
+    }
+    
 }
 
 
