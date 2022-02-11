@@ -22,8 +22,8 @@ struct ShoeView: View {
     @State var showingAlert = false
     @State var savedToFavorites = false
     @Environment(\.dismiss) var dismiss
-//    @State private var result: Result<MFMailComposeResult, Error>? = nil
-//    @State private var isShowingMailView = false
+    //    @State private var result: Result<MFMailComposeResult, Error>? = nil
+    //    @State private var isShowingMailView = false
     
     
     
@@ -39,7 +39,7 @@ struct ShoeView: View {
                     image
                         .resizable()
                         .scaledToFit()
-                       
+                    
                     
                         .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
                         .shadow(color: Color.black.opacity(0.3), radius: 15, x: 0, y: 10)
@@ -50,7 +50,7 @@ struct ShoeView: View {
                         .resizable()
                         .scaledToFit()
                         .frame(width: 100, height: 100, alignment: .center)
-                      
+                    
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                     
                     
@@ -62,7 +62,7 @@ struct ShoeView: View {
                         Text(selectedShoe.brand.uppercased())
                             .font(.largeTitle)
                             .bold()
-                                                    
+                        
                             .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
                             .shadow(color: Color.black.opacity(0.3), radius: 15, x: 0, y: 10)
                         
@@ -71,20 +71,20 @@ struct ShoeView: View {
                             Button(action: {
                                 
                                 saveOrDeleteFavorite(shoe: selectedShoe)
-                             
+                                
                             }, label: {
                                 VStack {
                                     
                                     if !savedToFavorites {
                                         Text("Add to Favorite")
-                                            
+                                        
                                             .bold()
                                         Image(systemName: "heart")
                                             .foregroundColor(.red)
                                         
                                     } else {
                                         Text("Delete Favorite")
-                                            
+                                        
                                             .bold()
                                         Image(systemName: "heart.fill")
                                             .foregroundColor(.red)
@@ -122,7 +122,7 @@ struct ShoeView: View {
                             Text("Color: ")
                                 .font(.headline)
                                 .bold()
-                              
+                            
                             
                                 .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
                                 .shadow(color: Color.black.opacity(0.3), radius: 15, x: 0, y: 10)
@@ -138,7 +138,7 @@ struct ShoeView: View {
                                 Text("Shoetype: ")
                                     .font(.headline)
                                     .bold()
-                                  
+                                
                                 
                                     .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
                                     .shadow(color: Color.black.opacity(0.3), radius: 15, x: 0, y: 10)
@@ -154,7 +154,7 @@ struct ShoeView: View {
                                     Text("Size:")
                                         .font(.headline)
                                         .bold()
-                                       
+                                    
                                     
                                         .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
                                         .shadow(color: Color.black.opacity(0.3), radius: 15, x: 0, y: 10)
@@ -170,7 +170,7 @@ struct ShoeView: View {
                                         Text("Price:")
                                             .font(.headline)
                                             .bold()
-                                           
+                                        
                                         
                                             .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
                                             .shadow(color: Color.black.opacity(0.3), radius: 15, x: 0, y: 10)
@@ -192,26 +192,19 @@ struct ShoeView: View {
                 Button(action: {
                     
                     viewModel.buyingProposal(shoe: selectedShoe)
-                   //skicka med bilden till homeview
+                    sendNotificationToSeller(shoe: selectedShoe)
                     
-
-                         }) {
-                             HStack {
-                                 Image(systemName: "envelope")
-                                 Text("Contact seller")
-                                     .font(.headline)
-                                     
-                             }
-                         }
-                         // .disabled(!MFMailComposeViewController.canSendMail())
-                     }
-//                     .sheet(isPresented: $isShowingMailView) {
-//                         MailView(result: $result) { composer in
-//                             composer.setSubject("Secret")
-//                             composer.setToRecipients(["manne@gmail.com"])
-//                             //FIX SO SELLERS EMAIL POPS UP
-//                         }
-//                     }
+                    
+                }) {
+                    HStack {
+                        Image(systemName: "envelope")
+                        Text("Contact seller")
+                            .font(.headline)
+                        
+                    }
+                }
+                
+            }
             
         }.onAppear{
             fillHeartIf(favorite: selectedShoe)
@@ -221,6 +214,8 @@ struct ShoeView: View {
         .ignoresSafeArea(.container, edges: .top)
         
     }
+    
+    
     
     func fillHeartIf(favorite: Shoe) {
         if let id = favorite.id {
@@ -266,15 +261,7 @@ struct ShoeView: View {
     
     
     
-    //    func showAlert() {
-    //        @State var showingAlert = false
-    //        Button("") {
-    //            showingAlert = true
-    //        }
-    //        .alert(isPresented: $showingAlert) {
-    //            Alert(title: Text("Ops.."), message: Text("The shoe already exsist in your favorites"), dismissButton: .default(Text("Got it!")))
-    //        }
-    //    }
+    
     
     
     func deleteShoe(shoe: Shoe) {
@@ -290,6 +277,40 @@ struct ShoeView: View {
             
         }
         
+    }
+    
+    func sendNotificationToSeller(shoe: Shoe) {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
+            if success {
+                print("All set!")
+            } else {
+                if let error = error {
+                    print(error.localizedDescription)
+                }
+            }
+        }
+        guard let uid = auth.currentUser?.uid else {return}
+        guard let uidEmail = auth.currentUser?.email else {return}
+            db.collection("Shoes").whereField("currentSeller", isEqualTo: shoe.currentSeller).getDocuments() {(querySnapshot, err) in
+                if let err = err {
+                    print("Cant get document: \(err)")
+                    
+                } else {
+                    print(shoe.currentSeller)
+                }
+                let content = UNMutableNotificationContent()
+                content.title = "\(uidEmail)"
+                content.subtitle = "is interested to buy one of your shoe/s"
+                content.sound = .default
+                
+                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 2, repeats: false)
+                let request = UNNotificationRequest(identifier: uid, content: content, trigger: trigger)
+                
+                UNUserNotificationCenter.current().add(request)
+                
+            }
+            
+            
     }
 }
 
