@@ -10,18 +10,16 @@ import Firebase
 
 struct HomeView: View {
     
-    private var db = Firestore.firestore()
-    private var auth = Auth.auth()
+    var db = Firestore.firestore()
+    var auth = Auth.auth()
     
-    @State var contacts = [UserCollection]()
+    @State var changeColorOfHomeButton = false
     @State var shoeIntrestImage = [Shoe]()
     
     let columns = [
         GridItem(.adaptive(minimum: 150)),
-       
+        
     ]
-    
-    //@State var userContacts: UserCollection
     
     var body: some View {
         
@@ -30,17 +28,29 @@ struct HomeView: View {
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 20) {
                     ForEach(shoeIntrestImage) { shoe in
-                        AsyncImage(url: URL(string: shoe.image)) { image in
+                        NavigationLink(destination: BuyerInformationView(reciveBuyerInformation: shoe)) {
+                            AsyncImage(url: URL(string: shoe.image)) { image in
                                 image
-                                .resizable()
-                                .scaledToFit()
+                                    .resizable()
+                                    .scaledToFit()
+                                    .background(LinearGradient(gradient: Gradient(colors: [Color(.white).opacity(0.3), Color(.gray)]), startPoint: .top, endPoint: .bottom))
+                                
+                                    .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                                    .shadow(color: Color.black.opacity(0.3), radius: 15, x: 0, y: 10)
+                                    .padding()
                                 
 
                                 
                             } placeholder: {
                                 Image(systemName: "photo")
                             }
+
+                            
+                            
+                        }
+
                             .listRowBackground(Color(UIColor(named: "SecondBackground")!))
+
                     }
                     
                 }
@@ -52,8 +62,9 @@ struct HomeView: View {
             
         }
         .onAppear{
-            //getBuyerInformation()
-            getFavorite()
+            getPropsalBuyerImage()
+            //listenIfChecked()
+            
         }
         .background(Color(UIColor(named: "Background")!))
 
@@ -64,50 +75,54 @@ struct HomeView: View {
         
     }
     
-    func getFavorite() {
-       // favorite.removeAll()
+    func getPropsalBuyerImage() {
+        shoeIntrestImage.removeAll()
         guard let uid = auth.currentUser?.uid else {return}
         var favoritesId: [String] = []
         
         db.collection("UserCollection").document(uid).collection("buyingProposal")
-            .addSnapshotListener() { (querySnapshot, err) in
+            .getDocuments() { (querySnapshot, err) in
                 if let err = err {
                     print("Could not find document: \(err)")
                     //db.collection("UserCollection").document(uid).collection("favorites").addDocument(data: ["favorite" : shoe.id])
                 } else {
-
                     for document in querySnapshot!.documents {
-                        if let data = document.data() as? [String: String] {
-                            if let id = data["shoeId"] {
+
+                        
+                        if let data = document.data() as? [String: Any] {
+                            if let id = data["shoeId"] as? String {
+
                                 favoritesId.append(id)
                                 print(favoritesId[0])
                             }
+                            db.collection("UserCollection").document(uid).collection("buyingProposal").document(document.documentID).updateData(["checked" : true])
                             
                         }
                         
                     }
+                    
                     for id in favoritesId {
                         db.collection("Shoes").document(id).getDocument() {
                             (document, err) in
-
-
+                            
+                            
                             let result = Result {
                                 try document?.data(as: Shoe.self)
                             }
-
+                            
                             switch result {
                             case .success(let shoe):
                                 if let shoe = shoe {
                                     shoeIntrestImage.append(shoe)
-                                    print("FAVORITE SHOE: \(shoe)")
-
+                                    print("Potential shoesell: \(shoe)")
+                                    
                                 } else {
                                     print("document does not exist")
                                 }
                             case .failure(let error):
                                 print("ERROR: \(error)")
                             }
-
+                            
                         }
                     }
                     
@@ -115,39 +130,15 @@ struct HomeView: View {
                 
             }
         
-    }
         
-//        func getBuyerInformation() {
-//            guard let uid = auth.currentUser?.uid else {return}
-//            var shoesForSale: [String] = []
-//            db.collection("UserCollection").document(uid).collection("buyingProposal").addSnapshotListener() {snapshot, err in
-//                guard let snapshot = snapshot else {return}
-//                if let err = err {
-//                    print("Could not find document: \(err)")
-//
-//                } else {
-//                    for document in snapshot.documents {
-//                        let result = Result {
-//                            try document.data(as: UserCollection.self)
-//
-//                        }
-//                        switch result {
-//                        case .success(let contact):
-//                            if let contact = contact {
-//                                print(contact)
-//
-//                            }
-//                        case .failure(let error):
-//                            print("Error decoding contacts: \(error)")
-//                        }
-//                    }
-//                }
-//            }
-//
-//
-//        }
+    }
+    
+    
+    
+    
     
 }
+
 
 
 struct HomeView_Previews: PreviewProvider {
