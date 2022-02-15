@@ -219,7 +219,8 @@ struct ShoeView: View {
         }
         
         .ignoresSafeArea(.container, edges: .top)
-        
+        .background(Color(UIColor(named: "Background")!))
+
     }
     
     func fillHeartIf(favorite: Shoe) {

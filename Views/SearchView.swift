@@ -42,11 +42,13 @@ struct SearchView: View {
                         .onTapGesture {
                             brandInput = suggestion
                             self.tabSelection = 2
-                            
-                            
                         }
+                        .listRowBackground(Color(UIColor(named: "SecondBackground")!))
                     }
+                    
+                    
                 }
+              
                 .tag(1)
                 
                 
@@ -81,6 +83,11 @@ struct SearchView: View {
                         searchForShoe()
                        
                     }
+                    .foregroundColor(.white)
+                    .frame(width: 200, height: 50)
+                    .background(Color(UIColor(named: "SecondBackground")!))
+                    .cornerRadius(8)
+                    .padding()
                     Spacer()
                     
                 }
@@ -90,6 +97,7 @@ struct SearchView: View {
             }
             .tabViewStyle(.page)
             .indexViewStyle(.page(backgroundDisplayMode: .always))
+            .background(Color(UIColor(named: "Background")!))
         
         .navigationViewStyle(.stack)
         

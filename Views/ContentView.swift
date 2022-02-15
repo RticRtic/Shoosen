@@ -26,10 +26,11 @@ struct ContentView: View {
             }
         } .onAppear {
             signIn.signedIn = signIn.isSignedIn
+            UITableView.appearance().backgroundColor = UIColor(Color("Background"))
         } 
         .navigationViewStyle(.stack)
         .preferredColorScheme(isDarkMode ? .dark : .light)
-       
+    
     }
     
     
@@ -43,9 +44,14 @@ struct ContentView: View {
         @EnvironmentObject var signIn: SignIn
         
         var body: some View {
-            NavigationView {
+           // NavigationView {
                 VStack {
-                    //Logo
+                        Image("shoeIcon")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 100, height: 100, alignment: .center)
+                    
+                        
                     VStack {
                         TextField("Email Adress", text: $email)
                             .disableAutocorrection(true)
@@ -69,8 +75,9 @@ struct ContentView: View {
                             Text("Sign in")
                                 .foregroundColor(.white)
                                 .frame(width: 200, height: 50)
-                                .background(.blue)
+                                .background(Color(UIColor(named: "SecondBackground")!))
                                 .cornerRadius(8)
+                                .padding()
                         })
                         
                         NavigationLink("Create Account", destination: SignUpView())
@@ -83,8 +90,8 @@ struct ContentView: View {
                     Spacer()
                 }
                 //.navigationTitle("Sign In")
-            }
-            
+            //}
+            .background(Color(UIColor(named: "Background")!))
         }
         
         
@@ -98,9 +105,14 @@ struct SignUpView: View {
     @EnvironmentObject var signIn: SignIn
     
     var body: some View {
-        NavigationView {
+       // NavigationView {
+            
             VStack {
-                //Logo
+                Image("shoeIcon")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 100, height: 100, alignment: .center)
+
                 VStack {
                     TextField("Email Adress", text: $email)
                         .disableAutocorrection(true)
@@ -124,8 +136,9 @@ struct SignUpView: View {
                         Text("Create Account")
                             .foregroundColor(.white)
                             .frame(width: 200, height: 50)
-                            .background(.blue)
+                            .background(Color(UIColor(named: "SecondBackground")!))
                             .cornerRadius(8)
+                            .padding()
                     })
                     
                     
@@ -135,7 +148,8 @@ struct SignUpView: View {
                 Spacer()
             }
             .navigationTitle("Create Account")
-        }
+            .background(Color(UIColor(named: "Background")!))
+        //}
         
     }
     

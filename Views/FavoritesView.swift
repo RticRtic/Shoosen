@@ -131,7 +131,8 @@ struct FavoritesView: View {
         } .onDisappear {
             //favorite.removeAll()
         }
-        
+        .background(Color(UIColor(named: "Background")!))
+
         
     }
     //        func getFavorite() {

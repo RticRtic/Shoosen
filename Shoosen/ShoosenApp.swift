@@ -23,7 +23,9 @@ struct ShoosenApp: App {
             let signInModel = SignIn()
             ContentView()
                 .environmentObject(signInModel)
+                
         }
+        
     }
 }
 

@@ -16,6 +16,7 @@ struct CategoryView: View {
     var db = Firestore.firestore()
     @State var brandLogos = [BrandLogo]()
     
+    
     var body: some View {
         
 
@@ -32,6 +33,7 @@ struct CategoryView: View {
                             
                                 .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
                                 .shadow(color: Color.black.opacity(0.3), radius: 15, x: 0, y: 10)
+                                
                             
                             
                             
@@ -41,14 +43,13 @@ struct CategoryView: View {
                         }
                         
                     }
-                    
+                    .listRowBackground(Color(UIColor(named: "SecondBackground")!))
                 }
             }
             .onAppear() {
                 listenToFireStore()
-                
+               
             }
-            
             
             
         } 
