@@ -23,10 +23,12 @@ struct TapBar: View {
             HomeView()
                 .tabItem {
                     if changeColor {
-                        Label("Home", systemImage: "house")
+                        Label("New Shoe!", systemImage: "star")
+                            .background(Color.green)
                         
                     } else {
                         Label("Home", systemImage: "house")
+                            .foregroundColor(.green)
                         
                     }
                 }
