@@ -15,7 +15,8 @@ class ShoeModelView: ObservableObject {
     private var db = Firestore.firestore()
     private var auth = Auth.auth()
     
-    //@Published var shoes = [Shoe]()
+    @Published var newShoeAdded = [UserCollection]()
+    
     
     func buyingProposal(shoe: Shoe){
         guard let uid = auth.currentUser?.uid else {return}
@@ -28,12 +29,13 @@ class ShoeModelView: ObservableObject {
                 } else {
                     print(shoe.currentSeller)
                     do {
-                    _ = try
-                        self.db.collection("UserCollection").document(shoe.currentSeller).collection("buyingProposal").document(shoeId).setData(["buyerUid" : uid, "buyerEmail" : uidEmail, "shoeId" : shoeId])
+                        let buyingInfo = UserCollection(buyerEmail: uidEmail, buyerUid: uid, shoeId: shoeId)
+                        _ = try
+                       self.db.collection("UserCollection").document(shoe.currentSeller).collection("buyingProposal").document(shoeId).setData(from: buyingInfo)
                         
-                            
-                            
-//                            .setData(["buyerUid" : shoe.currentSeller], ["buyerEmail" : uid])
+                        
+                        
+                        //                            .setData(["buyerUid" : shoe.currentSeller], ["buyerEmail" : uid])
                         
                     } catch {
                         print("can not set to FB")
@@ -53,8 +55,6 @@ class ShoeModelView: ObservableObject {
         guard let uid = auth.currentUser?.uid else {return}
         if let shoeId = shoe.id {
             do {
-                // if let shoe.id
-                print("HEJ!!!!")
                 _ = try db.collection("UserCollection").document(uid).collection("favorites").document(shoeId).setData(["favorite" : shoeId])
                 
             } catch {
@@ -64,5 +64,43 @@ class ShoeModelView: ObservableObject {
         
     }
     
-    
+    func listenToChangesInBuyingProposal() {
+        guard let uid = auth.currentUser?.uid else {return}
+        //var newBuyingProposalShoe: [String] = []
+        db.collection("UserCollection").document(uid).collection("buyingProposal").addSnapshotListener() {(querySnapshot, err) in
+            if let err = err {
+                print("Error getting document!!!!!!!!: \(err)")
+                
+            } else {
+                print("It works!!!")
+                
+                for document in querySnapshot!.documents {
+                    let result = Result {
+                        try document.data(as: UserCollection.self)
+
+                    }
+                    switch result {
+                    case .success(let newShoe):
+                        if let newShoe = newShoe {
+                            self.newShoeAdded.append(newShoe)
+                            print(newShoe)
+
+                        }
+                    case .failure(let error):
+                        print("Error decoding contacts: \(error)")
+                    }
+                    
+                    
+                }
+
+                
+            }
+            
+        }
+        
+    }
 }
+
+    
+    
+    

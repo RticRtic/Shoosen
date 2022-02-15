@@ -13,7 +13,7 @@ struct HomeView: View {
     var db = Firestore.firestore()
     var auth = Auth.auth()
     
-    
+    @State var changeColorOfHomeButton = false
     @State var shoeIntrestImage = [Shoe]()
     
     let columns = [
@@ -43,8 +43,8 @@ struct HomeView: View {
                                 Image(systemName: "photo")
                             }
                             
-                        
-                    }
+                            
+                        }
                     }
                 }
                 
@@ -56,7 +56,7 @@ struct HomeView: View {
         }
         .onAppear{
             getPropsalBuyerImage()
-            
+            //listenIfChecked()
             
         }
         
@@ -73,22 +73,24 @@ struct HomeView: View {
         var favoritesId: [String] = []
         
         db.collection("UserCollection").document(uid).collection("buyingProposal")
-            .addSnapshotListener() { (querySnapshot, err) in
+            .getDocuments() { (querySnapshot, err) in
                 if let err = err {
                     print("Could not find document: \(err)")
                     //db.collection("UserCollection").document(uid).collection("favorites").addDocument(data: ["favorite" : shoe.id])
                 } else {
-                    
                     for document in querySnapshot!.documents {
-                        if let data = document.data() as? [String: String] {
-                            if let id = data["shoeId"] {
+                        
+                        if let data = document.data() as? [String: Any] {
+                            if let id = data["shoeId"] as? String {
                                 favoritesId.append(id)
                                 print(favoritesId[0])
                             }
+                            db.collection("UserCollection").document(uid).collection("buyingProposal").document(document.documentID).updateData(["checked" : true])
                             
                         }
                         
                     }
+                    
                     for id in favoritesId {
                         db.collection("Shoes").document(id).getDocument() {
                             (document, err) in
@@ -102,7 +104,7 @@ struct HomeView: View {
                             case .success(let shoe):
                                 if let shoe = shoe {
                                     shoeIntrestImage.append(shoe)
-                                    print("Potential sheosell: \(shoe)")
+                                    print("Potential shoesell: \(shoe)")
                                     
                                 } else {
                                     print("document does not exist")
@@ -118,39 +120,15 @@ struct HomeView: View {
                 
             }
         
+        
     }
     
-    //        func getBuyerInformation() {
-    //            guard let uid = auth.currentUser?.uid else {return}
-    //            var shoesForSale: [String] = []
-    //            db.collection("UserCollection").document(uid).collection("buyingProposal").addSnapshotListener() {snapshot, err in
-    //                guard let snapshot = snapshot else {return}
-    //                if let err = err {
-    //                    print("Could not find document: \(err)")
-    //
-    //                } else {
-    //                    for document in snapshot.documents {
-    //                        let result = Result {
-    //                            try document.data(as: UserCollection.self)
-    //
-    //                        }
-    //                        switch result {
-    //                        case .success(let contact):
-    //                            if let contact = contact {
-    //                                print(contact)
-    //
-    //                            }
-    //                        case .failure(let error):
-    //                            print("Error decoding contacts: \(error)")
-    //                        }
-    //                    }
-    //                }
-    //            }
-    //
-    //
-    //        }
+    
+    
+    
     
 }
+
 
 
 struct HomeView_Previews: PreviewProvider {

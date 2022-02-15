@@ -11,8 +11,11 @@ import Firebase
 @main
 struct ShoosenApp: App {
     
-   @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
+   @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+//    var selectedShoe: Shoe
+    
+   
 //    init () {
 //        FirebaseApp.configure()
 //    

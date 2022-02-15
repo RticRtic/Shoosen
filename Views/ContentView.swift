@@ -11,7 +11,9 @@ import FirebaseAuth
 
 struct ContentView: View {
     @EnvironmentObject var signIn: SignIn
+    //var selectedShoe: Shoe
     @AppStorage("isDarkMode") private var isDarkMode = false
+    
     
     
     var body: some View {
