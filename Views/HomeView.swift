@@ -35,11 +35,14 @@ struct HomeView: View {
                                 .resizable()
                                 .scaledToFit()
                                 
+
+                                
                             } placeholder: {
                                 Image(systemName: "photo")
                             }
-                        
+                            .listRowBackground(Color(UIColor(named: "SecondBackground")!))
                     }
+                    
                 }
                 
             }
@@ -52,7 +55,8 @@ struct HomeView: View {
             //getBuyerInformation()
             getFavorite()
         }
-        
+        .background(Color(UIColor(named: "Background")!))
+
         
         
         
@@ -74,7 +78,7 @@ struct HomeView: View {
 
                     for document in querySnapshot!.documents {
                         if let data = document.data() as? [String: String] {
-                            if let id = data["image"] {
+                            if let id = data["shoeId"] {
                                 favoritesId.append(id)
                                 print(favoritesId[0])
                             }

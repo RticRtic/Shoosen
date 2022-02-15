@@ -37,6 +37,7 @@ struct ShoeBrandView: View {
                         
                     }
                     
+                    .listRowBackground(Color(UIColor(named: "SecondBackground")!))
                 }
                 
                 
@@ -44,7 +45,9 @@ struct ShoeBrandView: View {
             } .onAppear {
                 getMultiple()
             }
+            
             //.ignoresSafeArea(.container, edges: .top)
+            .background(Color(UIColor(named: "Background")!))
         }
         
         
