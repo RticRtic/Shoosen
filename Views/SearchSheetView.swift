@@ -7,17 +7,21 @@
 
 import Foundation
 import SwiftUI
+import FirebaseAuth
 
 struct SearchSheetView : View {
    
     var shoes : [Shoe]
+    var auth = Auth.auth()
+
     
     var body: some View {
         
         VStack {
+            
             List {
+                if shoes.count > 0 {
                 ForEach(shoes) { shoe in
-                    
                     HStack {
                         NavigationLink(destination: ShoeView(selectedShoe: shoe)) {
                             AsyncImage(url: URL(string: shoe.image)) {image in
@@ -47,9 +51,28 @@ struct SearchSheetView : View {
                             }
                         }
                     }
+                    .listRowBackground(Color(UIColor(named: "SecondBackground")!))
                 }
+                }
+                else {
+                    HStack {
+                        Image(systemName: "magnifyingglass")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 50, height: 50)
+                    Text("Sorry no shoes available, search again")
+                            .fixedSize()
+                            
+                    }
+                }
+            
             }
+           
+
         }
+        
+        .background(Color(UIColor(named: "Background")!))
+
     }
 }
 

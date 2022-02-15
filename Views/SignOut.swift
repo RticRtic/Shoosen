@@ -17,6 +17,7 @@ struct SignOut: View {
         VStack {
         
             Toggle("Dark mode", isOn: $isDarkMode)
+                .padding()
         
         
             Button(action: {
@@ -26,10 +27,8 @@ struct SignOut: View {
             }).padding()
             
         }
-            
-        
-        
     }
+        
 }
 
 struct SignOut_Previews: PreviewProvider {

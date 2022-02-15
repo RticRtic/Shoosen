@@ -39,13 +39,20 @@ struct HomeView: View {
                                     .shadow(color: Color.black.opacity(0.3), radius: 15, x: 0, y: 10)
                                     .padding()
                                 
+
+                                
                             } placeholder: {
                                 Image(systemName: "photo")
                             }
+
                             
                             
                         }
+
+                            .listRowBackground(Color(UIColor(named: "SecondBackground")!))
+
                     }
+                    
                 }
                 
             }
@@ -59,7 +66,8 @@ struct HomeView: View {
             //listenIfChecked()
             
         }
-        
+        .background(Color(UIColor(named: "Background")!))
+
         
         
         
@@ -79,9 +87,11 @@ struct HomeView: View {
                     //db.collection("UserCollection").document(uid).collection("favorites").addDocument(data: ["favorite" : shoe.id])
                 } else {
                     for document in querySnapshot!.documents {
+
                         
                         if let data = document.data() as? [String: Any] {
                             if let id = data["shoeId"] as? String {
+
                                 favoritesId.append(id)
                                 print(favoritesId[0])
                             }

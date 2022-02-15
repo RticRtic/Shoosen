@@ -75,6 +75,7 @@ struct SellShoeSheetView : View {
                         .onTapGesture {
                             brandInput = suggestion
                         }
+                        .listRowBackground(Color(UIColor(named: "SecondBackground")!))
                     }
                     
                     
@@ -262,7 +263,7 @@ struct SellShoeSheetView : View {
                         Image(uiImage: selectedImage!)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: 100, height: 100)
+                            .frame(width: 250, height: 250)
                         
                     } else {
                         Image(systemName: "photo")
@@ -292,9 +293,12 @@ struct SellShoeSheetView : View {
                     Button("Save"){
                         addToFireStore()
                         presentationMode.wrappedValue.dismiss()
-                    }.padding()
-                        .buttonStyle(.bordered)
-                        .font(.headline)
+                    }
+                    .foregroundColor(.white)
+                    .frame(width: 200, height: 50)
+                    .background(Color(UIColor(named: "SecondBackground")!))
+                    .cornerRadius(8)
+                    .padding()
                     Spacer()
                     
                     
@@ -309,6 +313,8 @@ struct SellShoeSheetView : View {
             ImagePickerView(selectedImage: self.$selectedImage, sourceType: self.sourceType)
                 
         }
+        .background(Color(UIColor(named: "Background")!))
+
     }
     
     

@@ -212,7 +212,8 @@ struct ShoeView: View {
         }
         
         .ignoresSafeArea(.container, edges: .top)
-        
+        .background(Color(UIColor(named: "Background")!))
+
     }
     
     

@@ -24,17 +24,15 @@ struct SellShoeView: View {
     var body: some View {
         
         VStack {
-            Button("Sell shoe"){
+            Button("Sell a shoe"){
                 showSheet = true
             }
             
             .foregroundColor(.white)
-            
-            .frame(width: 200, height: 40)
-            .background(Color.gray)
-            .cornerRadius(15)
-            .shadow(color: .white, radius: 10, x: 3, y: 3)
-            .padding(80)
+            .frame(width: 200, height: 50)
+            .background(Color(UIColor(named: "SecondBackground")!))
+            .cornerRadius(8)
+            .padding()
             
       
             
@@ -70,6 +68,7 @@ struct SellShoeView: View {
                             }
                         }
                     }
+                    .listRowBackground(Color(UIColor(named: "SecondBackground")!))
                 }
                 .onDelete { offsets in
                     deleteItem(at: offsets)
@@ -78,6 +77,7 @@ struct SellShoeView: View {
                 }
                 
             }
+           
             .toolbar {
                 EditButton()
             }
@@ -91,7 +91,8 @@ struct SellShoeView: View {
         .onAppear() {
             getMyShoes()
         }
-        
+        .background(Color(UIColor(named: "Background")!))
+
     }
     
     

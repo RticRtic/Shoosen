@@ -29,11 +29,13 @@ class ShoeModelView: ObservableObject {
                 } else {
                     print(shoe.currentSeller)
                     do {
+
                         let buyingInfo = UserCollection(buyerEmail: uidEmail, buyerUid: uid, shoeId: shoeId)
                         _ = try
                        self.db.collection("UserCollection").document(shoe.currentSeller).collection("buyingProposal").document(shoeId).setData(from: buyingInfo)
                         
                         
+
                         
                         //                            .setData(["buyerUid" : shoe.currentSeller], ["buyerEmail" : uid])
                         
