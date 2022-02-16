@@ -7,6 +7,7 @@
 
 import Foundation
 import Firebase
+import SwiftUI
 
 
 class ShoeModelView: ObservableObject {
@@ -34,11 +35,6 @@ class ShoeModelView: ObservableObject {
                         _ = try
                        self.db.collection("UserCollection").document(shoe.currentSeller).collection("buyingProposal").document(shoeId).setData(from: buyingInfo)
                         
-                        
-
-                        
-                        //                            .setData(["buyerUid" : shoe.currentSeller], ["buyerEmail" : uid])
-                        
                     } catch {
                         print("can not set to FB")
                     }
@@ -65,6 +61,8 @@ class ShoeModelView: ObservableObject {
         }
         
     }
+    
+    
     
 //    func listenToChangesInBuyingProposal() {
 //        guard let uid = auth.currentUser?.uid else {return}

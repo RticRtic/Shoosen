@@ -24,7 +24,7 @@ struct TapBar: View {
                 .tabItem {
                     if changeColor {
                         Label("New Shoe!", systemImage: "star")
-                            .background(Color.green)
+                        
                         
                     } else {
                         Label("Home", systemImage: "house")
@@ -71,9 +71,11 @@ struct TapBar: View {
                     if let data = document.data() as? [String : Any] {
                         if let checked = data["checked"] as? Bool {
                             
-                            print("ööÖÖ: \(checked)")
+                            print("Checked?: \(checked)")
                             if !checked {
                                 changeColor = true
+                                
+                                
                                 return
                             }
                             
@@ -91,7 +93,10 @@ struct TapBar: View {
         
         
     }
+    
 }
+
+
 
 //struct TapBar_Previews: PreviewProvider {
 //    static var previews: some View {
