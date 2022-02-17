@@ -13,7 +13,7 @@ struct HomeView: View {
     var db = Firestore.firestore()
     var auth = Auth.auth()
     
-    @State var changeColorOfHomeButton = false
+    @State var startGreenFrame = false
     @State var shoeIntrestImage = [Shoe]()
     
     let columns = [
@@ -29,28 +29,52 @@ struct HomeView: View {
                 LazyVGrid(columns: columns, spacing: 20) {
                     ForEach(shoeIntrestImage) { shoe in
                         NavigationLink(destination: BuyerInformationView(reciveBuyerInformation: shoe)) {
+//                            Button(action: {
+//                                imageGetGreenFrameIf(selectedShoe: shoe)
+//
+//                            }, label: {
+                                
+                            
                             AsyncImage(url: URL(string: shoe.image)) { image in
                                 image
+                                
                                     .resizable()
                                     .scaledToFit()
                                     .background(LinearGradient(gradient: Gradient(colors: [Color(.white).opacity(0.3), Color(.gray)]), startPoint: .top, endPoint: .bottom))
                                 
                                     .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
                                     .shadow(color: Color.black.opacity(0.3), radius: 15, x: 0, y: 10)
+//                                    .overlay {
+//                                        if startGreenFrame {
+//                                            RoundedRectangle(cornerRadius: 10)
+//                                                .stroke(Color.white, lineWidth: 4)
+//                                            
+//                                            
+//                                        } else {
+//                                            RoundedRectangle(cornerRadius: 10)
+//                                                .stroke(Color.green, lineWidth: 4)
+//                                        }
+//                                        
+//                                        
+//                                    }
+                                
+                               
                                     .padding()
                                 
-
+                                
                                 
                             } placeholder: {
-                                Image(systemName: "photo")
+                                Image(systemName: "star")
+                                
                             }
-
+                            //})
+                            
+                            
                             
                             
                         }
-
-                            .listRowBackground(Color(UIColor(named: "SecondBackground")!))
-
+                        .listRowBackground(Color(UIColor(named: "SecondBackground")!))
+                        
                     }
                     
                 }
@@ -62,12 +86,15 @@ struct HomeView: View {
             
         }
         .onAppear{
-            getPropsalBuyerImage()
-            //listenIfChecked()
+            getProposalBuyerImage()
+           
+            
             
         }
         .background(Color(UIColor(named: "Background")!))
-
+        
+        
+        
         
         
         
@@ -75,7 +102,7 @@ struct HomeView: View {
         
     }
     
-    func getPropsalBuyerImage() {
+    func getProposalBuyerImage() {
         shoeIntrestImage.removeAll()
         guard let uid = auth.currentUser?.uid else {return}
         var favoritesId: [String] = []
@@ -87,11 +114,11 @@ struct HomeView: View {
                     //db.collection("UserCollection").document(uid).collection("favorites").addDocument(data: ["favorite" : shoe.id])
                 } else {
                     for document in querySnapshot!.documents {
-
+                        
                         
                         if let data = document.data() as? [String: Any] {
                             if let id = data["shoeId"] as? String {
-
+                                
                                 favoritesId.append(id)
                                 print(favoritesId[0])
                             }
@@ -132,6 +159,33 @@ struct HomeView: View {
         
         
     }
+    
+//    func imageGetGreenFrameIf(selectedShoe: Shoe) {
+//        if let id = selectedShoe.id {
+//            guard let uid = auth.currentUser?.uid else {return}
+//            db.collection("UserCollection").document(uid).collection("buyingProposal").addSnapshotListener() {(querySnapshot, err) in
+//                if let err = err {
+//                    print("Error getting id: \(err)")
+//
+//                } else {
+//                    for document in querySnapshot!.documents {
+//                        if document.documentID == id {
+//                            startGreenFrame = true
+//                            print(document.documentID)
+//                            print("Green frame")
+//
+//                            return
+//                        }
+//
+//                    }
+//                    startGreenFrame = false
+//                }
+//            }
+//
+//        }
+//    }
+    
+    
     
     
     

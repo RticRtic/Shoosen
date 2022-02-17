@@ -16,14 +16,15 @@ struct ShoeView: View {
     
     var selectedShoe: Shoe
     //var toggleShoe: UserCollection
-    //@State var changeFavoriteText = false
+    
     @State var isShowingSaveOption = false
     @State var isShowingFavoriteView = false
     @State var showingAlert = false
     @State var savedToFavorites = false
+    @State var buyerAlert = false
+    @State var sellerIsContacted = false
     @Environment(\.dismiss) var dismiss
-    //    @State private var result: Result<MFMailComposeResult, Error>? = nil
-    //    @State private var isShowingMailView = false
+    
     
     
     
@@ -115,6 +116,8 @@ struct ShoeView: View {
                         
                         
                         
+                        
+                        
                     }
                     
                     VStack(alignment: .leading) {
@@ -193,27 +196,46 @@ struct ShoeView: View {
                     
                     viewModel.buyingProposal(shoe: selectedShoe)
                     sendNotificationToSeller(shoe: selectedShoe)
-                    
+                    changeTextSellerButton(shoe: selectedShoe)
+//                    sellerIsContacted = true
+                    buyerAlert.toggle()
+                                      
                     
                 }) {
+                    
                     HStack {
                         Image(systemName: "envelope")
-                        Text("Contact seller")
-                            .font(.headline)
+                        if !sellerIsContacted {
+                            Text("Contact seller")
+                                .font(.headline)
+                        } else {
+                            Text("Seller is contacted")
+                                .font(.headline)
+                        }
+                        
+                        
                         
                     }
+                    .alert(isPresented: $buyerAlert) {
+                        Alert(title: Text(""), message: Text("Seller is contacted!"), dismissButton: .default(Text("Got it!")))
+                        
+                    }
+                    
                 }
+                
                 
             }
             
+            
         }.onAppear{
             fillHeartIf(favorite: selectedShoe)
+            listenIfContacted(shoe: selectedShoe)
             
         }
         
         .ignoresSafeArea(.container, edges: .top)
         .background(Color(UIColor(named: "Background")!))
-
+        
     }
     
     
@@ -238,10 +260,65 @@ struct ShoeView: View {
                     }
                     savedToFavorites = false
                 }
+                
             }
             
         }
     }
+    
+    
+    
+    func listenIfContacted(shoe: Shoe) {
+        guard let uid = auth.currentUser?.uid else {return}
+        db.collection("UserCollection").document(uid).collection("buyingProposal").addSnapshotListener() {(querySnapshot, err) in
+            if let err = err {
+                print("Can not find document!: \(err)")
+                
+            } else {
+                for document in querySnapshot!.documents {
+                    if let data = document.data() as? [String : Any] {
+                        if let contacted = data["isContacted"] as? Bool {
+                            print("Contacted?: \(contacted)")
+                            if !contacted {
+                                sellerIsContacted = true
+                                
+                                
+                                return
+                            }
+                            
+                        }
+                    }
+                    
+                    sellerIsContacted = false
+                    
+                    
+                    
+                }
+            }
+        }
+        
+        
+        
+    }
+    
+    func changeTextSellerButton(shoe: Shoe) {
+            guard let uid = auth.currentUser?.uid else {return}
+            db.collection("UserCollection").document(uid).collection("buyingProposal").getDocuments() {(querySnapshot, err) in
+                if let err = err {
+                    print("Error getting document: \(err)")
+                    
+                } else {
+                    for document in querySnapshot!.documents {
+                        db.collection("UserCollection").document(uid).collection("buyingProposal").document(document.documentID).updateData(["isContacted" :true])
+                            
+                        }
+                        
+                    }
+                    
+                }
+        }
+    
+    
     
     func saveOrDeleteFavorite(shoe: Shoe) {
         guard let uid = auth.currentUser?.uid else {return}
@@ -292,28 +369,29 @@ struct ShoeView: View {
         }
         guard let uid = auth.currentUser?.uid else {return}
         guard let uidEmail = auth.currentUser?.email else {return}
-            db.collection("Shoes").whereField("currentSeller", isEqualTo: shoe.currentSeller).getDocuments() {(querySnapshot, err) in
-                if let err = err {
-                    print("Cant get document: \(err)")
-                    
-                } else {
-                    print(shoe.currentSeller)
-                }
-                let content = UNMutableNotificationContent()
-                content.title = "\(uidEmail)"
-                content.subtitle = "is interested to buy one of your shoe/s"
-                content.sound = .default
+        db.collection("Shoes").whereField("currentSeller", isEqualTo: shoe.currentSeller).getDocuments() {(querySnapshot, err) in
+            if let err = err {
+                print("Cant get document: \(err)")
                 
-                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 2, repeats: false)
-                let request = UNNotificationRequest(identifier: uid, content: content, trigger: trigger)
-                
-                UNUserNotificationCenter.current().add(request)
-                
+            } else {
+                print(shoe.currentSeller)
             }
+            let content = UNMutableNotificationContent()
+            content.title = "\(uidEmail)"
+            content.subtitle = "is interested to buy one of your shoe/s"
+            content.sound = .default
             
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 2, repeats: false)
+            let request = UNNotificationRequest(identifier: uid, content: content, trigger: trigger)
             
+            UNUserNotificationCenter.current().add(request)
+            
+        }
+        
+        
     }
 }
+
 
 
 
