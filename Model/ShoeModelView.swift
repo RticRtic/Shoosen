@@ -57,7 +57,7 @@ class ShoeModelView: ObservableObject {
                     
                     do {
 
-                        let sellerInfo = ContactSeller(id: uid, seller: shoe.currentSeller, shoe: shoeId)
+                        let sellerInfo = ContactSellers(id: uid, seller: shoe.currentSeller, shoe: shoeId)
                         _ = try
                        self.db.collection("UserCollection").document(shoe.currentSeller).collection("contactedSellers").document(shoeId).setData(from: sellerInfo)
                         print("!!!: \(sellerInfo)")
