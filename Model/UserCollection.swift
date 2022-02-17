@@ -16,7 +16,7 @@ struct UserCollection: Codable, Identifiable {
     let shoeId: String
 
     var checked: Bool = false
-    var isContacted: Bool = false
+    //var isContacted: Bool = false
     //var image: String
 
 

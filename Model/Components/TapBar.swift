@@ -10,7 +10,7 @@ import Firebase
 
 struct TapBar: View {
     @StateObject var viewModel = ShoeModelView()
-    @State var changeColor = false
+    @State var changeText = false
     
     var db = Firestore.firestore()
     var auth = Auth.auth()
@@ -22,7 +22,7 @@ struct TapBar: View {
         TabView {
             HomeView()
                 .tabItem {
-                    if changeColor {
+                    if changeText {
                         Label("New Shoe!", systemImage: "star")
                         
                         
@@ -73,7 +73,7 @@ struct TapBar: View {
                             
                             print("Checked?: \(checked)")
                             if !checked {
-                                changeColor = true
+                                changeText = true
                                 
                                 
                                 return
@@ -82,7 +82,7 @@ struct TapBar: View {
                         }
                     }
                     
-                    changeColor = false
+                    changeText = false
                     
                     
                     

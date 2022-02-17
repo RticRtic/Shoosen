@@ -195,11 +195,11 @@ struct ShoeView: View {
                 Button(action: {
                     
                     viewModel.buyingProposal(shoe: selectedShoe)
+                    viewModel.contactSeller(shoe: selectedShoe)
                     sendNotificationToSeller(shoe: selectedShoe)
-                    changeTextSellerButton(shoe: selectedShoe)
-//                    sellerIsContacted = true
+                    
                     buyerAlert.toggle()
-                                      
+                    
                     
                 }) {
                     
@@ -270,29 +270,36 @@ struct ShoeView: View {
     
     func listenIfContacted(shoe: Shoe) {
         guard let uid = auth.currentUser?.uid else {return}
-        db.collection("UserCollection").document(uid).collection("buyingProposal").addSnapshotListener() {(querySnapshot, err) in
-            if let err = err {
-                print("Can not find document!: \(err)")
-                
-            } else {
-                for document in querySnapshot!.documents {
-                    if let data = document.data() as? [String : Any] {
-                        if let contacted = data["isContacted"] as? Bool {
-                            print("Contacted?: \(contacted)")
-                            if !contacted {
-                                sellerIsContacted = true
+        if let shoeId = shoe.id {
+            db.collection("UserCollection").document(uid).collection("contactedSellers").addSnapshotListener() {(querySnapshot, err) in
+                if let err = err {
+                    print("Can not find document!: \(err)")
+                    
+                } else {
+                    for document in querySnapshot!.documents {
+                        //if shoeId == document.documentID {
+                            if let data = document.data() as? [String : String] {
+                                if let seller = data["seller"] {
+                                    print("Contacted seller: \(seller)" + " Shoe => \(document.documentID)")
+                                    
+                                    if shoeId == document.documentID {
+                                        sellerIsContacted = true
+
+
+                                        return
+                                    }
+                                    
+                                }
                                 
-                                
-                                return
                             }
                             
-                        }
+                            sellerIsContacted = false
+                            
+                            
+                            
+                       // }
                     }
-                    
-                    sellerIsContacted = false
-                    
-                    
-                    
+                    //sellerIsContacted = true
                 }
             }
         }
@@ -301,22 +308,28 @@ struct ShoeView: View {
         
     }
     
-    func changeTextSellerButton(shoe: Shoe) {
-            guard let uid = auth.currentUser?.uid else {return}
-            db.collection("UserCollection").document(uid).collection("buyingProposal").getDocuments() {(querySnapshot, err) in
-                if let err = err {
-                    print("Error getting document: \(err)")
-                    
-                } else {
-                    for document in querySnapshot!.documents {
-                        db.collection("UserCollection").document(uid).collection("buyingProposal").document(document.documentID).updateData(["isContacted" :true])
-                            
-                        }
-                        
-                    }
-                    
-                }
-        }
+//    func changeTextSellerButton(shoe: Shoe) {
+//        if let shoeId = shoe.id {
+//            guard let uid = auth.currentUser?.uid else {return}
+//            db.collection("UserCollection").document(uid).collection("buyingProposal").getDocuments() {(querySnapshot, err) in
+//                if let err = err {
+//                    print("Error getting document: \(err)")
+//
+//                } else {
+//                    for document in querySnapshot!.documents {
+//                        if shoeId == document.documentID {
+//                            db.collection("UserCollection").document(uid).collection("buyingProposal").document(shoeId).updateData(["isContacted" :true])
+//                            //print("?!?!?!?!?!: \(shoeId)")
+//                        }
+//
+//
+//                    }
+//
+//                }
+//
+//            }
+//        }
+//    }
     
     
     
