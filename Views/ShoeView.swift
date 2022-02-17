@@ -277,7 +277,7 @@ struct ShoeView: View {
                     
                 } else {
                     for document in querySnapshot!.documents {
-                        //if shoeId == document.documentID {
+                        
                             if let data = document.data() as? [String : String] {
                                 if let seller = data["seller"] {
                                     print("Contacted seller: \(seller)" + " Shoe => \(document.documentID)")
@@ -297,9 +297,9 @@ struct ShoeView: View {
                             
                             
                             
-                       // }
+                      
                     }
-                    //sellerIsContacted = true
+                 
                 }
             }
         }
@@ -308,30 +308,7 @@ struct ShoeView: View {
         
     }
     
-//    func changeTextSellerButton(shoe: Shoe) {
-//        if let shoeId = shoe.id {
-//            guard let uid = auth.currentUser?.uid else {return}
-//            db.collection("UserCollection").document(uid).collection("buyingProposal").getDocuments() {(querySnapshot, err) in
-//                if let err = err {
-//                    print("Error getting document: \(err)")
-//
-//                } else {
-//                    for document in querySnapshot!.documents {
-//                        if shoeId == document.documentID {
-//                            db.collection("UserCollection").document(uid).collection("buyingProposal").document(shoeId).updateData(["isContacted" :true])
-//                            //print("?!?!?!?!?!: \(shoeId)")
-//                        }
-//
-//
-//                    }
-//
-//                }
-//
-//            }
-//        }
-//    }
-    
-    
+
     
     func saveOrDeleteFavorite(shoe: Shoe) {
         guard let uid = auth.currentUser?.uid else {return}

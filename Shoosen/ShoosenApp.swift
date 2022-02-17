@@ -13,13 +13,7 @@ struct ShoosenApp: App {
     
     
    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-//    var selectedShoe: Shoe
-    
-   
-//    init () {
-//        FirebaseApp.configure()
-//    
-//    }
+
     
     var body: some Scene {
         WindowGroup {

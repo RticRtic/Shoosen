@@ -95,11 +95,3 @@ struct TapBar: View {
     }
     
 }
-
-
-
-//struct TapBar_Previews: PreviewProvider {
-//    static var previews: some View {
-//        TapBar()
-//    }
-//}

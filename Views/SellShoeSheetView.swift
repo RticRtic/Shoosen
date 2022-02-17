@@ -225,11 +225,7 @@ struct SellShoeSheetView : View {
                             .buttonStyle(.bordered)
                             .foregroundColor(.black)
                             .background(LinearGradient(gradient: Gradient(colors: [Color(.yellow).opacity(0.3), Color(.purple)]), startPoint: .top, endPoint: .bottom)).background(LinearGradient(gradient: Gradient(colors: [Color(.green).opacity(0.3), Color(.red)]), startPoint: .top, endPoint: .bottom))
-
-
-                            
-                            
-                        }
+                            }
                     }
                     Spacer()
                     
