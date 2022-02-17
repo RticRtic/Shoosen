@@ -94,57 +94,6 @@ struct CategoryView: View {
             }
         }
     }
-    
-    //    func getMultiple() {
-    //        db.collection("Shoes").whereField("brand", isEqualTo: "adidas")
-    //            .getDocuments() { (querySnapshot, err) in
-    //                //guard let querySnaphot = querySnapshot else {return}
-    //                if let err = err {
-    //                    print("Could not find document: \(err)")
-    //
-    //                } else {
-    //                    shoes.removeAll()
-    //                    for document in querySnapshot!.documents {
-    //                        let result = Result {
-    //                            try document.data(as: Shoe.self)
-    //                        }
-    //                        switch result {
-    //                        case .success(let shoe):
-    //                            if let shoe = shoe {
-    //                                shoes.append(shoe)
-    //                                print("A D I D A S \(shoe)")
-    ////                                let addShoe = Shoe(id:shoe.id, brand: shoe.brand, color: shoe.color, shoetype: shoe.shoetype, price: shoe.price, size: shoe.price, image: shoe.image, brandlogo: shoe.brandlogo, showshoe: shoe.showshoe)
-    ////                                shoes.append(addShoe)
-    //                                //print("A D I D A S shoe is in the newlist: \(addShoe)")
-    //                            } else {
-    //                                print("Error to get document")
-    //                            }
-    //                        case .failure(let error):
-    //                            print("Error \(error)")
-    //                        }
-    //                    }
-    //                }
-    //
-    //            }
-    //
-    //
-    //    }
-    
-    
-    //    func getMultiple() {
-    //        db.collection("Shoes").whereField("brand", isEqualTo: "adidas")
-    //            .getDocuments() { (querySnapshot, err) in
-    //                if let err = err {
-    //                    print("Error getting documents: \(err)")
-    //                } else {
-    //                    for document in querySnapshot!.documents {
-    //                        print("SHOE!: \(document.documentID) => \(document.data())")
-    //                    }
-    //
-    //                }
-    //            }
-    //
-    //    }
 }
 
 struct CategoryView_Previews: PreviewProvider {

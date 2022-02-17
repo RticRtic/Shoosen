@@ -87,44 +87,6 @@ class ShoeModelView: ObservableObject {
         }
         
     }
-    
-    
-    
-//    func listenToChangesInBuyingProposal() {
-//        guard let uid = auth.currentUser?.uid else {return}
-//        //var newBuyingProposalShoe: [String] = []
-//        db.collection("UserCollection").document(uid).collection("buyingProposal").addSnapshotListener() {(querySnapshot, err) in
-//            if let err = err {
-//                print("Error getting document!!!!!!!!: \(err)")
-//
-//            } else {
-//                print("It works!!!")
-//
-//                for document in querySnapshot!.documents {
-//                    let result = Result {
-//                        try document.data(as: UserCollection.self)
-//
-//                    }
-//                    switch result {
-//                    case .success(let newShoe):
-//                        if let newShoe = newShoe {
-//                            self.newShoeAdded.append(newShoe)
-//                            print(newShoe)
-//
-//                        }
-//                    case .failure(let error):
-//                        print("Error decoding contacts: \(error)")
-//                    }
-//
-//
-//                }
-//
-//
-//            }
-//
-//        }
-//
-//    }
 }
 
     

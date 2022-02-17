@@ -46,7 +46,7 @@ struct ContentView: View {
         @EnvironmentObject var signIn: SignIn
         
         var body: some View {
-           // NavigationView {
+           
                 VStack {
                         Image("shoeIcon")
                         .resizable()
@@ -91,8 +91,7 @@ struct ContentView: View {
                     
                     Spacer()
                 }
-                //.navigationTitle("Sign In")
-            //}
+            
             .background(Color(UIColor(named: "Background")!))
         }
         
@@ -107,7 +106,7 @@ struct SignUpView: View {
     @EnvironmentObject var signIn: SignIn
     
     var body: some View {
-       // NavigationView {
+      
             
             VStack {
                 Image("shoeIcon")
@@ -151,7 +150,7 @@ struct SignUpView: View {
             }
             .navigationTitle("Create Account")
             .background(Color(UIColor(named: "Background")!))
-        //}
+       
         
     }
     

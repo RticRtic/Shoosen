@@ -10,14 +10,11 @@ import FirebaseFirestoreSwift
 
 struct UserCollection: Codable, Identifiable {
     @DocumentID var id: String?
-    //let favorite: String
     let buyerEmail: String
     let buyerUid: String
     let shoeId: String
 
     var checked: Bool = false
-    //var isContacted: Bool = false
-    //var image: String
-
+   
 
 }

@@ -29,11 +29,7 @@ struct HomeView: View {
                 LazyVGrid(columns: columns, spacing: 20) {
                     ForEach(shoeIntrestImage) { shoe in
                         NavigationLink(destination: BuyerInformationView(reciveBuyerInformation: shoe)) {
-//                            Button(action: {
-//                                imageGetGreenFrameIf(selectedShoe: shoe)
-//
-//                            }, label: {
-                                
+                            
                             
                             AsyncImage(url: URL(string: shoe.image)) { image in
                                 image
@@ -44,21 +40,9 @@ struct HomeView: View {
                                 
                                     .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
                                     .shadow(color: Color.black.opacity(0.3), radius: 15, x: 0, y: 10)
-//                                    .overlay {
-//                                        if startGreenFrame {
-//                                            RoundedRectangle(cornerRadius: 10)
-//                                                .stroke(Color.white, lineWidth: 4)
-//                                            
-//                                            
-//                                        } else {
-//                                            RoundedRectangle(cornerRadius: 10)
-//                                                .stroke(Color.green, lineWidth: 4)
-//                                        }
-//                                        
-//                                        
-//                                    }
                                 
-                               
+                                
+                                
                                     .padding()
                                 
                                 
@@ -67,11 +51,6 @@ struct HomeView: View {
                                 Image(systemName: "star")
                                 
                             }
-                            //})
-                            
-                            
-                            
-                            
                         }
                         .listRowBackground(Color(UIColor(named: "SecondBackground")!))
                         
@@ -80,27 +59,14 @@ struct HomeView: View {
                 }
                 
             }
-            
-            
-            
-            
         }
         .onAppear{
             getProposalBuyerImage()
-           
-            
-            
         }
         .background(Color(UIColor(named: "Background")!))
-        
-        
-        
-        
-        
-        
-        
-        
     }
+    
+    
     
     func getProposalBuyerImage() {
         shoeIntrestImage.removeAll()
@@ -111,7 +77,7 @@ struct HomeView: View {
             .getDocuments() { (querySnapshot, err) in
                 if let err = err {
                     print("Could not find document: \(err)")
-                    //db.collection("UserCollection").document(uid).collection("favorites").addDocument(data: ["favorite" : shoe.id])
+                    
                 } else {
                     for document in querySnapshot!.documents {
                         
@@ -159,38 +125,6 @@ struct HomeView: View {
         
         
     }
-    
-//    func imageGetGreenFrameIf(selectedShoe: Shoe) {
-//        if let id = selectedShoe.id {
-//            guard let uid = auth.currentUser?.uid else {return}
-//            db.collection("UserCollection").document(uid).collection("buyingProposal").addSnapshotListener() {(querySnapshot, err) in
-//                if let err = err {
-//                    print("Error getting id: \(err)")
-//
-//                } else {
-//                    for document in querySnapshot!.documents {
-//                        if document.documentID == id {
-//                            startGreenFrame = true
-//                            print(document.documentID)
-//                            print("Green frame")
-//
-//                            return
-//                        }
-//
-//                    }
-//                    startGreenFrame = false
-//                }
-//            }
-//
-//        }
-//    }
-    
-    
-    
-    
-    
-    
-    
 }
 
 

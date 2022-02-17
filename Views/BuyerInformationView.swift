@@ -28,11 +28,6 @@ struct BuyerInformationView: View {
                     
                 }
             }
-            
-            
-            
-            
-            
         }
         .onAppear{
             getBuyerInformation(shoe: reciveBuyerInformation)
@@ -72,8 +67,3 @@ struct BuyerInformationView: View {
     
 }
 
-//struct BuyerInformationView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        BuyerInformationView()
-//    }
-//}
