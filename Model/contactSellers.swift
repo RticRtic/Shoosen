@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseFirestoreSwift
 
-struct ContactSeller: Codable, Identifiable {
+struct ContactSellers: Codable, Identifiable {
     @DocumentID var id: String?
     
     let seller: String
