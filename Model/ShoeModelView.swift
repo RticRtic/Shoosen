@@ -46,6 +46,32 @@ class ShoeModelView: ObservableObject {
         }
     }
     
+    func contactSeller(shoe: Shoe) {
+        guard let uid = auth.currentUser?.uid else {return}
+        if let shoeId = shoe.id {
+            db.collection("Shoes").whereField("currentSeller", isEqualTo: shoe.currentSeller).getDocuments() {(querySnapshot, err) in
+                if let err = err {
+                    print("can not find document: \(err)")
+                    
+                } else {
+                    
+                    do {
+
+                        let sellerInfo = ContactSeller(id: uid, seller: shoe.currentSeller, shoe: shoeId)
+                        _ = try
+                       self.db.collection("UserCollection").document(shoe.currentSeller).collection("contactedSellers").document(shoeId).setData(from: sellerInfo)
+                        print("!!!: \(sellerInfo)")
+                        
+                    } catch {
+                        print("can not set to FB")
+                    }
+                    
+                    
+                }
+            }
+        }
+    }
+    
     
     
     func saveToFirestore(shoe: Shoe) {

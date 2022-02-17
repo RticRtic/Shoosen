@@ -23,6 +23,7 @@
 		898F1F49278C64BC00955BBB /* FavoritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898F1F48278C64BC00955BBB /* FavoritesView.swift */; };
 		898F1F4B278C651E00955BBB /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898F1F4A278C651E00955BBB /* SearchView.swift */; };
 		898F1F4D278C659300955BBB /* SellShoeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898F1F4C278C659300955BBB /* SellShoeView.swift */; };
+		89C3A09627BE593A00D8839D /* contactSeller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C3A09527BE593A00D8839D /* contactSeller.swift */; };
 		89DA1F422788741800AB247F /* ShoosenApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DA1F412788741800AB247F /* ShoosenApp.swift */; };
 		89DA1F442788741800AB247F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DA1F432788741800AB247F /* ContentView.swift */; };
 		89DA1F462788741900AB247F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 89DA1F452788741900AB247F /* Assets.xcassets */; };
@@ -86,6 +87,7 @@
 		898F1F48278C64BC00955BBB /* FavoritesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesView.swift; sourceTree = "<group>"; };
 		898F1F4A278C651E00955BBB /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		898F1F4C278C659300955BBB /* SellShoeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SellShoeView.swift; sourceTree = "<group>"; };
+		89C3A09527BE593A00D8839D /* contactSeller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = contactSeller.swift; sourceTree = "<group>"; };
 		89DA1F3E2788741800AB247F /* Shoosen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Shoosen.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		89DA1F412788741800AB247F /* ShoosenApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoosenApp.swift; sourceTree = "<group>"; };
 		89DA1F432788741800AB247F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 				89040591278EC80A00F1DA05 /* BrandLogo.swift */,
 				898F1F3C278C1FBA00955BBB /* Shoe.swift */,
 				8919CD9327A005D800BB1568 /* ShoeModelView.swift */,
+				89C3A09527BE593A00D8839D /* contactSeller.swift */,
 				897D641927B3EA990022CB83 /* MailView.swift */,
 				8953B36127999C2800D898B9 /* Components */,
 			);
@@ -425,6 +428,7 @@
 				897D641A27B3EA990022CB83 /* MailView.swift in Sources */,
 				DC0C161127A41F0F00071879 /* BrandsCache.swift in Sources */,
 				89247857278DC6FD00DB3239 /* ShoeBrandView.swift in Sources */,
+				89C3A09627BE593A00D8839D /* contactSeller.swift in Sources */,
 				89247857278DC6FD00DB3239 /* ShoeBrandView.swift in Sources */,
 				898F1F49278C64BC00955BBB /* FavoritesView.swift in Sources */,
 				897D641E27B542A40022CB83 /* BuyerInformationView.swift in Sources */,

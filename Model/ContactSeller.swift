@@ -6,3 +6,11 @@
 //
 
 import Foundation
+import FirebaseFirestoreSwift
+
+struct ContactSeller: Codable, Identifiable {
+    @DocumentID var id: String?
+    
+    let seller: String
+    let shoe: String
+}
