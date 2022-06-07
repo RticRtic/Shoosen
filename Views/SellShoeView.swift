@@ -85,7 +85,7 @@ struct SellShoeView: View {
         
         
         .sheet(isPresented: $showSheet, content: {
-            SellShoeSheetView()
+            SellShoeSheetView(colorInput: "")
             
         } )
         .onAppear() {

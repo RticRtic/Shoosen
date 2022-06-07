@@ -15,7 +15,6 @@ import MessageUI
 struct ShoeView: View {
     
     var selectedShoe: Shoe
-    //var toggleShoe: UserCollection
     
     @State var isShowingSaveOption = false
     @State var isShowingFavoriteView = false
@@ -24,9 +23,6 @@ struct ShoeView: View {
     @State var buyerAlert = false
     @State var sellerIsContacted = false
     @Environment(\.dismiss) var dismiss
-    
-    
-    
     
     var db = Firestore.firestore()
     var auth = Auth.auth()
@@ -53,10 +49,7 @@ struct ShoeView: View {
                         .frame(width: 100, height: 100, alignment: .center)
                     
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    
-                    
                 }
-                
                 
                 VStack(spacing: 30) {
                     HStack {
@@ -91,11 +84,8 @@ struct ShoeView: View {
                                             .foregroundColor(.red)
                                         
                                     }
-                                    
-                                    
+                                
                                 }
-                                
-                                
                                 
                             })
                         }
@@ -113,10 +103,6 @@ struct ShoeView: View {
                         .alert(isPresented: $showingAlert) {
                             Alert(title: Text(""), message: Text("Deleted from favorites"), dismissButton: .default(Text("Got it!")))
                         }
-                        
-                        
-                        
-                        
                         
                     }
                     
@@ -193,8 +179,6 @@ struct ShoeView: View {
                     Spacer()
                 }
                 Button(action: {
-                    
-                    viewModel.buyingProposal(shoe: selectedShoe)
                     viewModel.contactSeller(shoe: selectedShoe)
                     sendNotificationToSeller(shoe: selectedShoe)
                     
@@ -223,9 +207,7 @@ struct ShoeView: View {
                     
                 }
                 
-                
             }
-            
             
         }.onAppear{
             fillHeartIf(favorite: selectedShoe)
@@ -237,7 +219,6 @@ struct ShoeView: View {
         .background(Color(UIColor(named: "Background")!))
         
     }
-    
     
     
     func fillHeartIf(favorite: Shoe) {
@@ -267,7 +248,6 @@ struct ShoeView: View {
     }
     
     
-    
     func listenIfContacted(shoe: Shoe) {
         guard let uid = auth.currentUser?.uid else {return}
         if let shoeId = shoe.id {
@@ -278,59 +258,41 @@ struct ShoeView: View {
                 } else {
                     for document in querySnapshot!.documents {
                         
-                            if let data = document.data() as? [String : String] {
-                                if let seller = data["seller"] {
-                                    print("Contacted seller: \(seller)" + " Shoe => \(document.documentID)")
+                        if let data = document.data() as? [String : String] {
+                            if let seller = data["seller"] {
+                                print("Contacted seller: \(seller)" + " Shoe => \(document.documentID)")
+                                
+                                if shoeId == document.documentID {
+                                    sellerIsContacted = true
                                     
-                                    if shoeId == document.documentID {
-                                        sellerIsContacted = true
-
-
-                                        return
-                                    }
                                     
+                                    return
                                 }
                                 
                             }
                             
-                            sellerIsContacted = false
-                            
-                            
-                            
-                      
+                        }
+                        
+                        sellerIsContacted = false
+                        
                     }
-                 
+                    
                 }
             }
         }
-        
-        
-        
     }
-    
-
     
     func saveOrDeleteFavorite(shoe: Shoe) {
-        guard let uid = auth.currentUser?.uid else {return}
-        if let shoeId = shoe.id {
-            if savedToFavorites {
-                deleteShoe(shoe: selectedShoe)
-                showingAlert = true
-                
-                
-            } else {
-                viewModel.saveToFirestore(shoe: selectedShoe)
-                isShowingSaveOption = true
-            }
+        if savedToFavorites {
+            deleteShoe(shoe: selectedShoe)
+            showingAlert = true
             
             
+        } else {
+            viewModel.saveToFirestore(shoe: selectedShoe)
+            isShowingSaveOption = true
         }
     }
-    
-    
-    
-    
-    
     
     func deleteShoe(shoe: Shoe) {
         guard let uid = auth.currentUser?.uid else {return}
@@ -381,13 +343,6 @@ struct ShoeView: View {
         
     }
 }
-
-
-
-
-
-
-
 
 
 

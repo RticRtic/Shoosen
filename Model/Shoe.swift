@@ -18,7 +18,6 @@ struct Shoe: Identifiable, Codable {
     let size: Int
     var image: String
     let brandlogo: String
-
     var showshoe: Bool
     var currentSeller: String
 

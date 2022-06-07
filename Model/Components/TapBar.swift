@@ -15,9 +15,6 @@ struct TapBar: View {
     var db = Firestore.firestore()
     var auth = Auth.auth()
     
-    //var selectedShoe: Shoe
-    
-    
     var body: some View {
         TabView {
             HomeView()
