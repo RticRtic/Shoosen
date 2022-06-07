@@ -9,8 +9,6 @@ import SwiftUI
 import Firebase
 import FirebaseAuth
 
-
-
 struct SellShoeView: View {
     
     @State private var showSheet = false
@@ -18,24 +16,16 @@ struct SellShoeView: View {
     var auth = Auth.auth()
     @State var shoes = [Shoe]()
  
-
-    
-    
     var body: some View {
-        
         VStack {
             Button("Sell a shoe"){
                 showSheet = true
             }
-            
             .foregroundColor(.white)
             .frame(width: 200, height: 50)
             .background(Color(UIColor(named: "SecondBackground")!))
             .cornerRadius(8)
             .padding()
-            
-      
-            
             
             List {
                 ForEach(shoes) { shoe in
@@ -53,7 +43,6 @@ struct SellShoeView: View {
                                     .shadow(color: Color.black.opacity(0.3), radius: 15, x: 0, y: 10)
                                     .padding()
                             }
-                            
                             
                         placeholder: {
                             Image(systemName: "photo")
@@ -83,7 +72,6 @@ struct SellShoeView: View {
             }
         }
         
-        
         .sheet(isPresented: $showSheet, content: {
             SellShoeSheetView()
             
@@ -95,9 +83,6 @@ struct SellShoeView: View {
 
     }
     
-    
-    
-        
         func deleteItem(at indexSet: IndexSet) {
 
             for index in indexSet {
@@ -109,9 +94,6 @@ struct SellShoeView: View {
                     }
                 }
             }
-    
-    
-    
     
     func getMyShoes() {
         
@@ -146,15 +128,7 @@ struct SellShoeView: View {
                 
             }
         }
-        
-        
-        
-        
-        
     }
-    
-    
-    
 }
 
 struct SellShoeView_Previews: PreviewProvider {

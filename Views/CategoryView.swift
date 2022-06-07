@@ -8,18 +8,12 @@
 import SwiftUI
 import Firebase
 
-
-
-
 struct CategoryView: View {
     
     var db = Firestore.firestore()
     @State var brandLogos = [BrandLogo]()
     
-    
     var body: some View {
-        
-
         VStack {
             List {
                 ForEach(brandLogos) { logo in
@@ -34,36 +28,21 @@ struct CategoryView: View {
                                 .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
                                 .shadow(color: Color.black.opacity(0.3), radius: 15, x: 0, y: 10)
                                 
-                            
-                            
-                            
                         } placeholder: {
                             Image(systemName: "photo")
 
                         }
-                        
                     }
                     .listRowBackground(Color(UIColor(named: "SecondBackground")!))
                 }
             }
             .onAppear() {
                 listenToFireStore()
-               
             }
-            
-            
-        } 
-        
-        
-        
-        
-        
-        
-    
+        }
     }
     
     func listenToFireStore() {
-        
         db.collection("BrandLogos").addSnapshotListener { snapshot, err in
             guard let snapshot = snapshot else {return}
             

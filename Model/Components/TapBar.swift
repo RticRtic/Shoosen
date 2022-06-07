@@ -15,9 +15,6 @@ struct TapBar: View {
     var db = Firestore.firestore()
     var auth = Auth.auth()
     
-    //var selectedShoe: Shoe
-    
-    
     var body: some View {
         TabView {
             HomeView()
@@ -74,8 +71,6 @@ struct TapBar: View {
                             print("Checked?: \(checked)")
                             if !checked {
                                 changeText = true
-                                
-                                
                                 return
                             }
                             
@@ -84,13 +79,9 @@ struct TapBar: View {
                     
                     changeText = false
                     
-                    
-                    
                 }
             }
         }
-        
-        
         
     }
     

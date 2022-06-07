@@ -16,7 +16,7 @@ class SignIn: ObservableObject {
     @Published var signedIn = false
     
     var isSignedIn: Bool {
-        // Om det inte är nil == true
+
         return auth.currentUser != nil
     }
     

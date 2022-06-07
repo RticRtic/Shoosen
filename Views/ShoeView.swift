@@ -10,12 +10,9 @@ import Firebase
 import UIKit
 import MessageUI
 
-
-
 struct ShoeView: View {
     
     var selectedShoe: Shoe
-    //var toggleShoe: UserCollection
     
     @State var isShowingSaveOption = false
     @State var isShowingFavoriteView = false
@@ -24,9 +21,6 @@ struct ShoeView: View {
     @State var buyerAlert = false
     @State var sellerIsContacted = false
     @Environment(\.dismiss) var dismiss
-    
-    
-    
     
     var db = Firestore.firestore()
     var auth = Auth.auth()
@@ -92,10 +86,7 @@ struct ShoeView: View {
                                         
                                     }
                                     
-                                    
                                 }
-                                
-                                
                                 
                             })
                         }
@@ -113,11 +104,6 @@ struct ShoeView: View {
                         .alert(isPresented: $showingAlert) {
                             Alert(title: Text(""), message: Text("Deleted from favorites"), dismissButton: .default(Text("Got it!")))
                         }
-                        
-                        
-                        
-                        
-                        
                     }
                     
                     VStack(alignment: .leading) {
@@ -148,7 +134,7 @@ struct ShoeView: View {
                                     .padding()
                                 
                                 
-                                Text(selectedShoe.shoetype.uppercased())
+                                Text(selectedShoe.shoeType.uppercased())
                                     .font(.headline)
                             }
                             
@@ -266,8 +252,6 @@ struct ShoeView: View {
         }
     }
     
-    
-    
     func listenIfContacted(shoe: Shoe) {
         guard let uid = auth.currentUser?.uid else {return}
         if let shoeId = shoe.id {
@@ -294,43 +278,25 @@ struct ShoeView: View {
                             }
                             
                             sellerIsContacted = false
-                            
-                            
-                            
-                      
                     }
                  
                 }
             }
         }
-        
-        
-        
     }
     
 
     
     func saveOrDeleteFavorite(shoe: Shoe) {
-        guard let uid = auth.currentUser?.uid else {return}
-        if let shoeId = shoe.id {
             if savedToFavorites {
                 deleteShoe(shoe: selectedShoe)
                 showingAlert = true
-                
-                
+            
             } else {
                 viewModel.saveToFirestore(shoe: selectedShoe)
                 isShowingSaveOption = true
             }
-            
-            
-        }
     }
-    
-    
-    
-    
-    
     
     func deleteShoe(shoe: Shoe) {
         guard let uid = auth.currentUser?.uid else {return}
@@ -377,22 +343,11 @@ struct ShoeView: View {
             UNUserNotificationCenter.current().add(request)
             
         }
-        
-        
     }
 }
 
-
-
-
-
-
-
-
-
-
 struct ShoeView_Previews: PreviewProvider {
     static var previews: some View {
-        ShoeView(selectedShoe: Shoe(id: "", brand: "birkenstock", color: "green", shoetype: "sandal", price: 110, size: 41, image: "https://firebasestorage.googleapis.com/v0/b/shoosen-413a3.appspot.com/o/Default%20Pictures%2Fbirkenstock_green.jpeg?alt=media&token=fca4a817-8a74-4b50-9dda-285d89967616", brandlogo: "", showshoe: false, currentSeller: ""))
+        ShoeView(selectedShoe: Shoe(id: "", brand: "birkenstock", color: "green", shoeType: "sandal", price: 110, size: 41, image: "https://firebasestorage.googleapis.com/v0/b/shoosen-413a3.appspot.com/o/Default%20Pictures%2Fbirkenstock_green.jpeg?alt=media&token=fca4a817-8a74-4b50-9dda-285d89967616", brandLogo: "", showShoe: false, currentSeller: ""))
     }
 }

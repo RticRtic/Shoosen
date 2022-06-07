@@ -11,15 +11,16 @@ import Firebase
 
 struct SearchView: View {
     
+    
     var db = Firestore.firestore()
     
     @State var shoes = [Shoe]()
-    @State  var brandInput: String = ""
+    @State var brandInput: String = ""
     @State var sizeInput : Int?
-    @State var shoetypeInput : String = ""
+    @State var shoeTypeInput : String = ""
     @State var priceInput : Int?
     @State var colorInput : String = ""
-    @ObservedObject private var autocomplete = AutocompleteObject()
+    @ObservedObject private var autoComplete = AutocompleteObject()
     @State private var tabSelection = 1
     @State var isActive = false
     
@@ -38,15 +39,14 @@ struct SearchView: View {
     var body: some View {
        TabView(selection: $tabSelection) {
                 VStack {
-                    
                     TextField("Search by brand", text: $brandInput)
                         .textFieldStyle(.roundedBorder)
                         .padding()
                         .onChange(of: brandInput) { newValue in
-                            autocomplete.autocomplete(brandInput)
+                            autoComplete.autocomplete(brandInput)
                         }
                     
-                    List(autocomplete.suggestions, id: \.self) { suggestion in
+                    List(autoComplete.suggestions, id: \.self) { suggestion in
                         ZStack {
                             Text(suggestion)
                         }
@@ -57,13 +57,9 @@ struct SearchView: View {
                         }
                         .listRowBackground(Color(UIColor(named: "SecondBackground")!))
                     }
-                    
-                    
                 }
-              
+           
                 .tag(1)
-                
-                
                 
                 VStack {
                     
@@ -81,123 +77,11 @@ struct SearchView: View {
                         .textFieldStyle(.roundedBorder)
                         .padding()
                     
-                    TextField("Search by shoetype",text: $shoetypeInput)
+                    TextField("Search by shoetype",text: $shoeTypeInput)
                         .textFieldStyle(.roundedBorder)
                         .padding()
                     
-                    VStack {
-                        HStack{
-                            Button(self.brownButton) {
-                                colorInput = "brown"
-                                brownButton = "X"
-                                
-                            }
-                            .background(.brown)
-                            .buttonStyle(.bordered)
-                            .foregroundColor(.black)
-                            
-                            
-                            Button(self.blackButton) {
-                                colorInput = "black"
-                                blackButton = "X"
-                                
-                            }
-                            .background(.black)
-                            .buttonStyle(.bordered)
-                            .foregroundColor(.white)
-                            
-                            Button(self.whiteButton) {
-                                colorInput = "white"
-                                whiteButton = "X"
-                                
-                            }
-                            .background(.white)
-                            .buttonStyle(.bordered)
-                            .foregroundColor(.black)
-                        }
-                        HStack {
-                            Button(self.greyButton) {
-                                colorInput = "grey"
-                                greyButton = "X"
-                                
-                            }
-                            .background(.white)
-                            .buttonStyle(.bordered)
-                            .foregroundColor(.black)
-                            
-                            Button(self.greenButton) {
-                                greenButton = "X"
-                                colorInput = "green"
-                                
-                            }
-                            .background(.green)
-                            .buttonStyle(.bordered)
-                            .foregroundColor(.black)
-                            
-                            
-                            Button(self.blueButton) {
-                                colorInput = "blue"
-                                blueButton = "X"
-                                
-                            }
-                            .background(.blue)
-                            .buttonStyle(.bordered)
-                            .foregroundColor(.black)
-                        }
-                        HStack {
-                            Button(self.redButton) {
-                                colorInput = "red"
-                                redButton = "X"
-                                
-                            }
-                            .background(.red)
-                            .buttonStyle(.bordered)
-                            .foregroundColor(.black)
-                            
-                            Button(self.yellowButton) {
-                                colorInput = "yellow"
-                                yellowButton = "X"
-                                
-                            }
-                            .background(.yellow)
-                            .buttonStyle(.bordered)
-                            .foregroundColor(.black)
-                            
-                            Button(self.orangeButton) {
-                                colorInput = "orange"
-                                orangeButton = "X"
-                                
-                            }
-                            .background(.orange)
-                            .buttonStyle(.bordered)
-                            .foregroundColor(.black)
-                        }
-                        HStack {
-                            
-                            Button(self.purpleButton) {
-                                colorInput = "purple"
-                                purpleButton = "X"
-                                
-                            }
-                            .background(.purple)
-                            .buttonStyle(.bordered)
-                            .foregroundColor(.black)
-                            
-                            Button(self.multiButton) {
-                                colorInput = "multi"
-                                multiButton = "X"
-                                
-                            }
-                            .buttonStyle(.bordered)
-                            .foregroundColor(.black)
-                            .background(LinearGradient(gradient: Gradient(colors: [Color(.yellow).opacity(0.3), Color(.purple)]), startPoint: .top, endPoint: .bottom)).background(LinearGradient(gradient: Gradient(colors: [Color(.green).opacity(0.3), Color(.red)]), startPoint: .top, endPoint: .bottom))
-
-
-                            
-                            
-                        }
-                    }
-
+                    ColorButtonsView(colorInput: $colorInput)
                     
                     NavigationLink(destination: SearchSheetView(shoes: shoes), isActive: $isActive) { EmptyView() 
                         }
@@ -219,16 +103,13 @@ struct SearchView: View {
              changeColorButtonsToDefault()
             }
                 
-                
             }
             .tabViewStyle(.page)
             .indexViewStyle(.page(backgroundDisplayMode: .always))
             .background(Color(UIColor(named: "Background")!))
         
         .navigationViewStyle(.stack)
-        
     }
-    
     
     func changeColorButtonsToDefault() {
         brownButton = "brown"
@@ -264,8 +145,8 @@ struct SearchView: View {
         if priceInput != nil {
             query = query.whereField("price", isLessThanOrEqualTo: priceInput!)
         }
-        if shoetypeInput != ""{
-            query = query.whereField("shoetype", isEqualTo: shoetypeInput.lowercased())
+        if shoeTypeInput != ""{
+            query = query.whereField("shoetype", isEqualTo: shoeTypeInput.lowercased())
         }
         query.getDocuments() { (querySnapshot, err) in
             if let err = err {
@@ -294,8 +175,6 @@ struct SearchView: View {
             }
         }
     }
-    
-    
     
     func listenToFireStore() {
         
@@ -329,9 +208,6 @@ struct SearchView: View {
             }
         }
     }
-    
-    
-    
 }
 
 struct SearchView_Previews: PreviewProvider {
