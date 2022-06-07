@@ -28,7 +28,7 @@ struct HomeView: View {
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 20) {
                     ForEach(shoeIntrestImage) { shoe in
-                        NavigationLink(destination: BuyerInformationView(reciveBuyerInformation: shoe)) {
+                        NavigationLink(destination: BuyerInformationView(receiveBuyerInformation: shoe)) {
                             
                             
                             AsyncImage(url: URL(string: shoe.image)) { image in

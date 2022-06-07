@@ -15,5 +15,4 @@ struct BrandLogo: Identifiable, Codable {
     let brandname: String
     let image: String
     
-    
 }

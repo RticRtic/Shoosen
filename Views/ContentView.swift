@@ -11,10 +11,7 @@ import FirebaseAuth
 
 struct ContentView: View {
     @EnvironmentObject var signIn: SignIn
-    //var selectedShoe: Shoe
     @AppStorage("isDarkMode") private var isDarkMode = false
-    
-    
     
     var body: some View {
         NavigationView {
@@ -34,10 +31,6 @@ struct ContentView: View {
         .preferredColorScheme(isDarkMode ? .dark : .light)
     
     }
-    
-    
-    
-    
     
     struct SignInView: View {
         
@@ -107,7 +100,6 @@ struct SignUpView: View {
     
     var body: some View {
       
-            
             VStack {
                 Image("shoeIcon")
                     .resizable()
@@ -151,10 +143,7 @@ struct SignUpView: View {
             .navigationTitle("Create Account")
             .background(Color(UIColor(named: "Background")!))
        
-        
     }
-    
-    
 }
 
 

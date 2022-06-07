@@ -39,22 +39,15 @@ struct ShoeBrandView: View {
                     
                     .listRowBackground(Color(UIColor(named: "SecondBackground")!))
                 }
-                
-                
-                
+    
             } .onAppear {
                 getMultiple()
             }
             
-           
             .background(Color(UIColor(named: "Background")!))
         }
         
-    
-        
     }
-    
-    
     
     func getMultiple() {
         db.collection("Shoes").whereField("brand", isEqualTo: brandName.brandname)
@@ -83,7 +76,6 @@ struct ShoeBrandView: View {
                 }
                 
             }
-        
     }
 }
 

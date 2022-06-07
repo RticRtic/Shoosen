@@ -9,9 +9,7 @@ import SwiftUI
 import Firebase
 import simd
 
-
 struct FavoritesView: View {
-    
     
     @State var favorite = [Shoe]()
     @State var isShowingDeleteOptions = false
@@ -21,12 +19,10 @@ struct FavoritesView: View {
     
     var db = Firestore.firestore()
     var auth = Auth.auth()
-    //let data = (1...20).map { "Shoe \($0)" }
+    
     let columns = [
         GridItem(.adaptive(minimum: 150)),
-       
     ]
-    
     
     var body: some View {
         
@@ -56,7 +52,7 @@ struct FavoritesView: View {
                                                 .foregroundColor(.black)
                                                 .padding()
                                         } .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
-                              
+                                        
                                     }
                                 
                             } placeholder: {
@@ -74,16 +70,9 @@ struct FavoritesView: View {
         } .onAppear {
             getFavorite()
             
-            
-        } .onDisappear {
-            //favorite.removeAll()
         }
         .background(Color(UIColor(named: "Background")!))
-
-        
     }
-
-    
     
     func getFavorite() {
         favorite.removeAll()
@@ -94,57 +83,45 @@ struct FavoritesView: View {
             .getDocuments() { (querySnapshot, err) in
                 if let err = err {
                     print("Could not find document: \(err)")
-                   
+                    
                 } else {
-
+                    
                     for document in querySnapshot!.documents {
                         if let data = document.data() as? [String: String] {
                             if let id = data["favorite"] {
                                 favoritesId.append(id)
                                 print(favoritesId[0])
                             }
-                            
                         }
-                        
                     }
                     for id in favoritesId {
                         db.collection("Shoes").document(id).getDocument() {
                             (document, err) in
-
-
+                            
                             let result = Result {
                                 try document?.data(as: Shoe.self)
                             }
-
+                            
                             switch result {
                             case .success(let shoe):
                                 if let shoe = shoe {
                                     favorite.append(shoe)
                                     print("FAVORITE SHOE: \(shoe)")
-
+                                    
                                 } else {
+                                    
                                     print("document does not exist")
+                                    
                                 }
                             case .failure(let error):
                                 print("ERROR: \(error)")
                             }
-
                         }
                     }
-                    
                 }
-                
             }
-        
+        }
     }
-}
-
-
-
-
-
-
-
 
 struct FavoritesView_Previews: PreviewProvider {
     static var previews: some View {

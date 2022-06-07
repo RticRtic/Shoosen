@@ -13,13 +13,13 @@ struct Shoe: Identifiable, Codable {
     
     let brand: String
     let color: String
-    let shoetype: String
+    let shoeType: String
     let price: Int
     let size: Int
     var image: String
-    let brandlogo: String
+    let brandLogo: String
 
-    var showshoe: Bool
+    var showShoe: Bool
     var currentSeller: String
 
 

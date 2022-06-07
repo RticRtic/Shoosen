@@ -12,15 +12,14 @@ import Firebase
 public class StorageManager: ObservableObject{
     let storage = Storage.storage()
     
-    
     func upload(image : UIImage, completion :  @escaping (String) -> () ){
         
         let id = UUID()
         let storageRef = storage.reference().child("Default Pictures/\(id).jpg")
         
-        let reziedImage = image
+        let rezisedImage = image
         
-        let data = reziedImage.jpegData(compressionQuality: 0.2)
+        let data = rezisedImage.jpegData(compressionQuality: 0.2)
         
         let metadata = StorageMetadata()
         metadata.contentType = "image/jpg"
@@ -37,9 +36,6 @@ public class StorageManager: ObservableObject{
                         if let url = url{
                             completion(url.absoluteString)
                             print("!!! ! ! !!!!! ! !", url.absoluteString)
-                            
-                            
-                            
                             
                         }
                     }

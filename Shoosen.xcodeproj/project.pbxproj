@@ -41,6 +41,7 @@
 		89DA1F7D278874F200AB247F /* FirebaseInAppMessagingSwift-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 89DA1F7C278874F200AB247F /* FirebaseInAppMessagingSwift-Beta */; };
 		89DA1F7F278874F200AB247F /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 89DA1F7E278874F200AB247F /* FirebaseMessaging */; };
 		89DA1F81278874F200AB247F /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 89DA1F80278874F200AB247F /* FirebaseStorage */; };
+		912C792F284F45DA001FCAB3 /* ColorButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 912C792E284F45D9001FCAB3 /* ColorButtonsView.swift */; };
 		DC0C160727981E6E00071879 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0C160627981E6E00071879 /* StorageManager.swift */; };
 		DC0C1609279826FE00071879 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0C1608279826FE00071879 /* ImagePickerView.swift */; };
 		DC0C161127A41F0F00071879 /* BrandsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0C161027A41F0F00071879 /* BrandsCache.swift */; };
@@ -97,6 +98,7 @@
 		89DA1F5C2788741900AB247F /* ShoosenUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoosenUITests.swift; sourceTree = "<group>"; };
 		89DA1F5E2788741900AB247F /* ShoosenUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoosenUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		89DA1F6B2788748800AB247F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		912C792E284F45D9001FCAB3 /* ColorButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorButtonsView.swift; sourceTree = "<group>"; };
 		DC0C160627981E6E00071879 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StorageManager.swift; path = Views/StorageManager.swift; sourceTree = SOURCE_ROOT; };
 		DC0C1608279826FE00071879 /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ImagePickerView.swift; path = Views/ImagePickerView.swift; sourceTree = SOURCE_ROOT; };
 		DC0C161027A41F0F00071879 /* BrandsCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandsCache.swift; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 				895DA2F5278ED36300F353D3 /* ShoeView.swift */,
 				DC0C162327A954C700071879 /* SellShoeSheetView.swift */,
 				89247856278DC6FD00DB3239 /* ShoeBrandView.swift */,
+				912C792E284F45D9001FCAB3 /* ColorButtonsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -430,6 +433,7 @@
 				897D641E27B542A40022CB83 /* BuyerInformationView.swift in Sources */,
 				89DA1F442788741800AB247F /* ContentView.swift in Sources */,
 				89DA1F422788741800AB247F /* ShoosenApp.swift in Sources */,
+				912C792F284F45DA001FCAB3 /* ColorButtonsView.swift in Sources */,
 				89040592278EC80A00F1DA05 /* BrandLogo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

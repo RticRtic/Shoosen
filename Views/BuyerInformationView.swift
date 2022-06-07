@@ -15,14 +15,14 @@ struct BuyerInformationView: View {
     var auth = Auth.auth()
     
     @State var contacts = [UserCollection]()
-    var reciveBuyerInformation: Shoe
+    var receiveBuyerInformation: Shoe
     
     
     var body: some View {
         VStack {
             List {
                 ForEach(contacts) {contact in
-                    if contact.shoeId == reciveBuyerInformation.id {
+                    if contact.shoeId == receiveBuyerInformation.id {
                         Text(contact.buyerEmail)
                     }
                     
@@ -30,7 +30,7 @@ struct BuyerInformationView: View {
             }
         }
         .onAppear{
-            getBuyerInformation(shoe: reciveBuyerInformation)
+            getBuyerInformation(shoe: receiveBuyerInformation)
         }
     }
     
